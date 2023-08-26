@@ -8,7 +8,6 @@ I copy this project directly from [here](https://github.com/zhaoolee/WordPressXM
 
 A blog post is a `.md` file, and it should stay in the `_posts` directory. Each post should follow the template below:
 
-- Make sure there are absolutely no ":" in the `<title>` otherwise the automated posting WILL fail.
 - Tags act like keywords in research papers.
 - Categories are the selectors for a quick location of a specific post.
 
@@ -53,6 +52,5 @@ Setting `USERNAME`, `PASSWORD`, and `XMLRPC_PHP` at "Settings" $\rightarrow$ "Se
   ```bash
   git pull && git add _posts && git commit -m "update" && git push
   ```
-
 
   
