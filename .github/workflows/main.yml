@@ -1,4 +1,4 @@
-name: fangyuanxiaozhan
+name: davidyang.blog
 on:
   push:
     branches:    

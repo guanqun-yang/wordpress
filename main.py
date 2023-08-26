@@ -10,23 +10,23 @@ import markdown
 import re
 import urllib.parse
 
-config_file_txt = ""
+# config_file_txt = ""
 
-if((os.path.exists(os.path.join(os.getcwd(), "diy_config.txt")) == True)):
-    config_file_txt = os.path.join(os.getcwd(), "diy_config.txt")
-else:
-    config_file_txt = os.path.join(os.getcwd(), "config.txt")
+# if((os.path.exists(os.path.join(os.getcwd(), "diy_config.txt")) == True)):
+#     config_file_txt = os.path.join(os.getcwd(), "diy_config.txt")
+# else:
+#     config_file_txt = os.path.join(os.getcwd(), "config.txt")
 
-config_info = {}
+# config_info = {}
+    
+
+# with open (config_file_txt, 'rb') as f:
+#     config_info = json.loads(f.read())
 
 
-with open (config_file_txt, 'rb') as f:
-    config_info = json.loads(f.read())
-
-
-username = config_info["USERNAME"]
-password = config_info["PASSWORD"]
-xmlrpc_php = config_info["XMLRPC_PHP"]
+# username = config_info["USERNAME"]
+# password = config_info["PASSWORD"]
+# xmlrpc_php = config_info["XMLRPC_PHP"]
 
 try:
     if(os.environ["USERNAME"]):
@@ -215,7 +215,7 @@ def insert_index_info_in_readme():
         insert_info = insert_info + "[" + title +"](" + "https://"+domain_name + "/p/" + os.path.basename(md).split(".")[0] +"/" + ")\n\n"
     # 替换 ---start--- 到 ---end--- 之间的内容
 
-    insert_info = "---start---\n## 目录(" + time.strftime('%Y年%m月%d日') + "更新)" +"\n" + insert_info + "---end---"
+    insert_info = "---start---\n## Table of Contents(Updated on" + time.strftime('%Y-%m-%d') +"\n" + insert_info + "---end---"
 
     # 获取README.md内容
     with open (os.path.join(os.getcwd(), "README.md"), 'r', encoding='utf-8') as f:

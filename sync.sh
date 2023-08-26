@@ -1,0 +1,1 @@
+rsync -avu --delete /home/yang/Dropbox/readings _posts/
