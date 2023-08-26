@@ -3,4 +3,5 @@ title: DeepGini: Prioritizing Massive Tests to Enhance the Robustness of Deep Ne
 tags: 
 - Test Case Prioritization (TCP)
 categories:
+- Reading
 ---

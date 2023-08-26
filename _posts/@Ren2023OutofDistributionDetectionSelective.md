@@ -5,7 +5,7 @@ tags:
 - Selective Generation
 - OOD
 categories:
-
+- Reading
 ---
 
 # Notes
