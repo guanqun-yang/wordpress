@@ -16,7 +16,7 @@ categories:
 
 ## Problem Settings
 
-The paper tries to solve the data selection problem for language model pretraining. Suppose a collection of high-quality samples $x_ 1' \cdots, x_ n'$ have a distribution $p$, with another collection of $N$ low-quality samples available; how could we sample a high-quality subset $x_ 1, \cdots, x_ k\quad (k \ll N)$ with an underlying distribution $q$ that approximates $p$?
+The paper tries to solve the data selection problem for language model pretraining. Suppose a collection of high-quality samples $x_1' \cdots, x_n'$ have a distribution $p$, with another collection of $N$ low-quality samples available; how could we sample a high-quality subset $x_1, \cdots, x_k\quad (k \ll N)$ with an underlying distribution $q$ that approximates $p$?
 
 ## Heuristic Classification
 
@@ -24,7 +24,7 @@ This is the approach used by GPT-3, EleutherAI's Pile dataset, PaLM to select tr
 
 - Training a fasttext regression model $f: \mathcal{X} \rightarrow [0, 1]$ using unigrams and bigrams from high-quality datasets.
 
-- Applying the trained classifier to the low-quality data collection and sampling $x_ i$ if `np.random.pareto(alpha) > 1 - score`. `alpha` is chosen as 9 in the GPT-3 paper:
+- Applying the trained classifier to the low-quality data collection and sampling $x_i$ if `np.random.pareto(alpha) > 1 - score`. `alpha` is chosen as 9 in the GPT-3 paper:
 
   > We chose $\alpha=9$ in order to take mostly documents the classifier scored highly, but still include some documents that were out of distribution. 
   
@@ -35,7 +35,7 @@ This is the approach used by GPT-3, EleutherAI's Pile dataset, PaLM to select tr
 The issue of the heuristic classification is that it does not explicitly model the underlying distribution $q$. Instead, the authors of DSIR explicitly model the distribution of a corpus as follows:
 
 $$
-p(z; \gamma)=\prod_ {j=1}^{10000} \gamma_ j^{z_ j}
+p(z; \gamma)=\prod_{j=1}^{10000} \gamma_j^{z_j}
 $$
 
 where
@@ -43,7 +43,7 @@ where
 - $z$ is a 10000-dimensional vector; its entries represent the index of the hashed unigrams and bigrams (with potential collisions).
 - $\gamma$ is the parameter to learn.
 
-After learning the distributions $p$ and $q$, we could assign a weight to each sample of the pool $w_ i = \frac{p(z_ i)}{q(z_ i)},\ i =1, \cdots, N$. We could then sample the pool with weights $w_ 1, \cdots, w_ N$ until we have collected $k$ samples. The authors sample the data without replacement and explain this choice theoretically. They could have explained it better, as deduplication is one key aspect for language model pretraining ([Falcon paper](https://arxiv.org/pdf/2306.01116.pdf)).
+After learning the distributions $p$ and $q$, we could assign a weight to each sample of the pool $w_i = \frac{p(z_i)}{q(z_i)},\ i =1, \cdots, N$. We could then sample the pool with weights $w_1, \cdots, w_N$ until we have collected $k$ samples. The authors sample the data without replacement and explain this choice theoretically. They could have explained it better, as deduplication is one key aspect for language model pretraining ([Falcon paper](https://arxiv.org/pdf/2306.01116.pdf)).
 
 ## Experiments
 
