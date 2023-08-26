@@ -20,7 +20,7 @@ The paper proposes to teach the encoder-decoder language models (the Transformer
 
 ## Method
 
-Given a domain-specific dataset $\mathcal{D}_ 1 = \{ (x_ 1, y_ 1), \cdots, (x_ N, y_ N)\}$ and a general-domain dataset (for example, C4) $\mathcal{D}_ 0$, the authors fit 4 Mahalanobis distance metric defined as $\mathrm{MD}(\mathbf{x}; \mu, \Sigma) = (\mathbf{x} - \mu )^T \Sigma^{-1} (\mathbf{x} - \mu )$.
+Given a domain-specific dataset $\mathcal{D}_1 = \{ (x_1, y_1), \cdots, (x_N, y_N)\}$ and a general-domain dataset (for example, C4) $\mathcal{D}_0$, the authors fit 4 Mahalanobis distance metric defined as $\mathrm{MD}(\mathbf{x}; \mu, \Sigma) = (\mathbf{x} - \mu )^T \Sigma^{-1} (\mathbf{x} - \mu )$.
 
 - Background:
 - Input:
