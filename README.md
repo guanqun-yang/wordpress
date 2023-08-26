@@ -53,7 +53,5 @@ Setting `USERNAME`, `PASSWORD`, and `XMLRPC_PHP` at "Settings" $\rightarrow$ "Se
   git pull && git add _posts && git commit -m "update" && git push
   ```
 
-## Optional Steps
-
 
   
