@@ -1,1 +1,1 @@
-rsync -avu --delete /home/yang/Dropbox/readings _posts/
+rsync -avu --delete /home/yang/Dropbox/readings/ /home/yang/wordpress/_posts/
