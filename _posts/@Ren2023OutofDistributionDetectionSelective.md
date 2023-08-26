@@ -1,5 +1,5 @@
 ---
-title: Out-of-Distribution Detection and Selective Generation for Conditional Language Models
+title: Reading Notes | Out-of-Distribution Detection and Selective Generation for Conditional Language Models
 tags: 
 - Seq2Seq
 - Selective Generation

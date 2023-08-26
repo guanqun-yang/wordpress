@@ -1,3 +1,14 @@
+---
+title: Reading Notes | Data Selection for Language Models via Importance Resampling
+tags: 
+- LLM
+- Pretraining
+- Data Selection
+categories:
+
+---
+
+
 # Notes
 
 > [[Semantic Scholar](https://www.semanticscholar.org/paper/Data-Selection-for-Language-Models-via-Importance-Xie-Santurkar/a008cc894024329d832d2c9c489d57440e3fa234)] - [Code] - [Tweet] - [Video]
