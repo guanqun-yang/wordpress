@@ -28,11 +28,11 @@ jobs:
           PASSWORD: ${{ secrets.PASSWORD }}
           XMLRPC_PHP: ${{ secrets.XMLRPC_PHP }}
         run: pipenv run build
-      - name: Commit and push if changed   # 将.md_sha1 README.md 更新到仓库
-        run: |
-          git diff
-          git config --global user.email "zhaoolee@gmail.com"
-          git config --global user.name "zhaoolee"
-          git add .md_sha1 README.md
-          git commit -m "Github Action auto Updated"
-          git push
+      # - name: Commit and push if changed   # 将.md_sha1 README.md 更新到仓库
+      #   run: |
+      #     git diff
+      #     git config --global user.email "guanqun.yang@outlook.com"
+      #     git config --global user.name "Guanqun Yang"
+      #     git add .md_sha1 README.md
+      #     git commit -m "Github Action auto Updated"
+      #     git push
