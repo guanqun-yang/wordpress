@@ -41,11 +41,7 @@ Given a domain-specific dataset $\mathcal{D}_1 = \{ (x_1, y_1), \cdots, (x_N, y_
 
 1. [[1705.08500] Selective Classification for Deep Neural Networks](https://arxiv.org/abs/1705.08500)
 
-2. [[1612.01474] Simple and Scalable Predictive Uncertainty Estimation using Deep Ensembles](https://arxiv.org/abs/1612.01474)
+2. [[1612.01474] Simple and Scalable Predictive Uncertainty Estimation using Deep Ensembles](https://arxiv.org/abs/1612.01474): This paper works on predictive uncertainty of deep classification models. Their proposed approach tries to approximate the state-of-the-art Bayesian NNs while being easy to implement and parallelize.
 
-   This paper works on predictive uncertainty of deep classification models. Their proposed approach tries to approximate the state-of-the-art Bayesian NNs while being easy to implement and parallelize.
-
-3. [[2106.09022] A Simple Fix to Mahalanobis Distance for Improving Near-OOD Detection](https://arxiv.org/abs/2106.09022)
-
-   For a classification problem of $K$ classes, we could fit $K$ class-dependent Gaussian and 1 background Gaussian. Then we could use these $(K+1)$ Gaussians to detect anomalies: a negative score in class $k$ indicates that the sample is in the domain $k$ and a positive score means it is OOD; a more positive score shows that the sample deviates more from that domain.
+3. [[2106.09022] A Simple Fix to Mahalanobis Distance for Improving Near-OOD Detection](https://arxiv.org/abs/2106.09022): For a classification problem of $K$ classes, we could fit $K$ class-dependent Gaussian and 1 background Gaussian. Then we could use these $(K+1)$ Gaussians to detect anomalies: a negative score in class $k$ indicates that the sample is in the domain $k$ and a positive score means it is OOD; a more positive score shows that the sample deviates more from that domain.
 
