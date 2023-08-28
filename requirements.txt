@@ -1,0 +1,7 @@
+# scientific computing
+
+
+# WP and markdown
+markdown
+frontmatter
+python-wordpress-xmlrpc

@@ -1,0 +1,6 @@
+Great changes have taken place in the past 30 years.
+- Computer Science
+	- Machine Learning
+	- Deep Learning
+	- Theoretical Computer Science
+- Electrical Engineering
