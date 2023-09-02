@@ -22,8 +22,8 @@ This set of evaluation metrics I discuss in this post is organized based on the 
 
 The $\mathbf{C}_{ij}$ means the number of samples of class $i$ receive the prediction $j$; the rows are the true classes while the columns are the predictions.
 
-- When there are only two classes, we could define $\mathrm{TN} = \mathbf{C}_{11}, \mathrm{FP}=\mathbf{C}_{12}, \mathrm{FN}=\mathbf{C}_{21}$, and $\mathrm{TP}=\mathbf{C}_{22}$:
-    
+- When there are only two classes, we could define $\mathrm{TN} = \mathbf{C} _ {11}, \mathrm{FP}=\mathbf{C} _ {12}, \mathrm{FN}=\mathbf{C} _ {21}$, and $\mathrm{TP}=\mathbf{C} _ {22}$:
+     
     Bases on these 4 numbers, we could define
 
     - $\mathrm{TPR}$, $\mathrm{FPR}$, $\mathrm{FNR}$, and $\mathrm{TNR}$: they are the normalized version of the confusion matrix on the true number of samples in each class. 
