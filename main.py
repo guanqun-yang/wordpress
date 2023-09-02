@@ -1,15 +1,18 @@
-from wordpress_xmlrpc import Client, WordPressPost
-from wordpress_xmlrpc.methods.posts import GetPosts, NewPost, EditPost
-from urllib.parse import urlparse
-import frontmatter
-import time
-import os
-from hashlib import md5, sha1
-import json
-import markdown
 import re
+import os
+import time
+import json
+import shutil
+import pathlib
+import markdown
+import frontmatter
 import urllib.parse
 
+from hashlib import md5, sha1
+from urllib.parse import urlparse
+
+from wordpress_xmlrpc import Client, WordPressPost
+from wordpress_xmlrpc.methods.posts import GetPosts, NewPost, EditPost
 
 try:
     if(os.environ["USERNAME"]):

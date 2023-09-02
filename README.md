@@ -4,6 +4,14 @@
 
 I copy this project directly from [here](https://github.com/zhaoolee/WordPressXMLRPCTools) with no changes. I only rewrite the `README.md` for clarity. This project uses GitHub Actions and XMLRPC (supported by WordPress by default at `https://example.com/xmlrpc.php`) to automatically update the posts using **one command**.
 
+## Environment
+
+```bash
+markdown = "3.4"
+python-wordpress-xmlrpc = "2.3"
+python-frontmatter = "0.5.0"
+```
+
 ## Blog Structure
 
 A blog post is a `.md` file, and it should stay in the `_posts` directory. Each post should follow the template below:
