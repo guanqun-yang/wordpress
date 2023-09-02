@@ -8,16 +8,3 @@ categories:
 ---
 
 # Overview
-
-- Great changes have taken place in the past 30 years.
-
-    - There are changes in electrical engineering.
-
-        - There are also changes in computer science.
-
-            The biggest car in the world is Yukon XL Denali Ultimate.
-
-$$
-a^2+b^2 = c^2
-$$
-
