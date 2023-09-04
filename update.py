@@ -1,7 +1,13 @@
+import re
 import time
 import shutil
 import pathlib
+import hashlib
 import frontmatter
+
+
+def get_sha256(text):
+    return hashlib.sha256(text.encode("utf-8")).hexdigest()
 
 
 def read_md(file_path):
@@ -12,6 +18,7 @@ def read_md(file_path):
         content = post.content
         metadata = post.metadata
     return (content, metadata)
+
 
 base_paths = [
     pathlib.Path("/home/yang/Dropbox/readings"),
@@ -28,20 +35,29 @@ forbidden_list = [
     "@Xie2023DataSelectionLanguage.md"
 ]
 
+pattern = "\d{4}-\d{2}-\d{2}-(.*).md"
+existing_name_dict = {
+    re.search(pattern, filename.name)[1]: filename.stem
+    for filename in pathlib.Path("_posts").glob("*.md")
+}
 
-    
 for base_path in base_paths:
     for source_path in base_path.glob("*.md"):
         if source_path.name in forbidden_list:
             continue
 
-        print(source_path)
-        
-        _, metadata = read_md(source_path)
-        filename = "{}-{}".format(
-            time.strftime('%Y-%m-%d'),
-            metadata["title"].replace(" | ", "-").replace(" - ", "-").replace(" ", "-")
-        ).lower()
+        content, metadata = read_md(source_path)
+        title = metadata["title"].replace(" | ", "-").replace(" - ", "-").replace(" ", "-").lower()
+
+        # if making an update, then reusing the previous filename
+        if title in existing_name_dict:
+            filename = existing_name_dict[title]
+        else:
+            # if creating a new post, then using a new filename
+            filename = "{}-{}".format(
+                time.strftime('%Y-%m-%d'),
+                title,
+            )
 
         print("Moving {} to _posts directory".format(source_path.name))
         shutil.copyfile(source_path, f"_posts/{filename}.md")
