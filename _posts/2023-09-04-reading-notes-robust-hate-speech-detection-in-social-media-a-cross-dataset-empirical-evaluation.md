@@ -24,10 +24,42 @@ For the multi-class classification setting, the authors devise 7 classes: racism
 For all 13 datasets, the authors apply a 7:1:2 ratio of data splitting; they also create a small external test set (i.e., `Indep`). With test sets kept untouched, the authors consider 3 ways of preparing data:
 
 1. Training on the single dataset.
-
 2. Training on an aggregation of 13 datasets.
-
 3. Training on a sampled dataset from the aggregation in 2. Specifically, the authors (1) find the dataset size that leads to the highest score in 1, (2) sample the dataset proportionally by the each of 13 datasets' sizes and the the ratio of hate versus non-hate to exactly 1:1.
+
+The processed datasets are not provided by the authors. We need to follow the guides below to obtain them; the index of the datasets is kept consistent with the [HuggingFace model hub](https://huggingface.co/cardiffnlp/twitter-roberta-base-hate-latest) and their names follow the main paper.
+
+| Index | Dataset Name | Source                                                       |
+| ----- | ------------ | ------------------------------------------------------------ |
+| 1     | HatE         | [Link](http://hatespeech.di.unito.it/hateval.html) that requires filling in a Google form. |
+| 2     | MHS          | [`ucberkeley-dlab/measuring-hate-speech`](https://huggingface.co/datasets/ucberkeley-dlab/measuring-hate-speech) |
+| 3     | DEAP         | [Zenodo](https://zenodo.org/record/3816667)                  |
+| 4     | CMS          | [Link](https://search.gesis.org/research_data/SDN-10.7802-2251?doi=10.7802/2251) that requires registration and email verification. |
+| 5     | Offense      | [Link](https://sites.google.com/site/offensevalsharedtask/olid); this dataset is also called OLID. |
+| 6     | HateX        | [`hatexplain`](https://huggingface.co/datasets/hatexplain) and [GitHub](https://github.com/hate-alert/HateXplain) |
+| 7     | LSC          | [GitHub](https://github.com/ENCASEH2020/hatespeech-twitter.git) |
+| 8     | MMHS         | [`nedjmaou/MLMA_hate_speech`](https://huggingface.co/datasets/nedjmaou/MLMA_hate_speech) and [GitHub](https://github.com/HKUST-KnowComp/MLMA_hate_speech) |
+| 9     | HASOC        | [Link](https://hasocfire.github.io/hasoc/2020/dataset.html) that requires uploading a signed agreement. |
+| 10    | AYR          | [GitHub](https://github.com/zeeraktalat/hatespeech)          |
+| 11    | AHSD         | [GitHub](https://github.com/t-davidson/hate-speech-and-offensive-language) |
+| 12    | HTPO         | [Link](https://www.ims.uni-stuttgart.de/forschung/ressourcen/korpora/stance-hof/) |
+| 13    | HSHP         | [GitHub](https://github.com/zeeraktalat/hatespeech)          |
+
+The following are the papers that correspond to the list of datasets:
+
+1. [SemEval-2019 Task 5: Multilingual Detection of Hate Speech Against Immigrants and Women in Twitter](https://aclanthology.org/S19-2007) (Basile et al., SemEval 2019)
+2. [The Measuring Hate Speech Corpus: Leveraging Rasch Measurement Theory for Data Perspectivism](https://aclanthology.org/2022.nlperspectives-1.11) (Sachdeva et al., NLPerspectives 2022)
+3. [Detecting East Asian Prejudice on Social Media](https://aclanthology.org/2020.alw-1.19) (Vidgen et al., ALW 2020)
+4. [[2004.12764] "Call me sexist, but...": Revisiting Sexism Detection Using Psychological Scales and Adversarial Samples](https://arxiv.org/abs/2004.12764) (Samory et al.)
+5. [Predicting the Type and Target of Offensive Posts in Social Media](https://aclanthology.org/N19-1144) (Zampieri et al., NAACL 2019)
+6. [[2012.10289] HateXplain: A Benchmark Dataset for Explainable Hate Speech Detection](https://arxiv.org/abs/2012.10289) (Mathew et al.)
+7. [[1802.00393] Large Scale Crowdsourcing and Characterization of Twitter Abusive Behavior](https://arxiv.org/abs/1802.00393) (Founta et al.)
+8. [Multilingual and Multi-Aspect Hate Speech Analysis](https://aclanthology.org/D19-1474) (Ousidhoum et al., EMNLP-IJCNLP 2019)
+9. [[2108.05927] Overview of the HASOC track at FIRE 2020: Hate Speech and Offensive Content Identification in Indo-European Languages](https://arxiv.org/abs/2108.05927) (Mandal et al.)
+10. [Are You a Racist or Am I Seeing Things? Annotator Influence on Hate Speech Detection on Twitter](https://aclanthology.org/W16-5618) (Waseem, NLP+CSS 2016)
+11. [[1703.04009] Automated Hate Speech Detection and the Problem of Offensive Language](https://arxiv.org/abs/1703.04009) (Davidson et al.)
+12. [Hate Towards the Political Opponent: A Twitter Corpus Study of the 2020 US Elections on the Basis of Offensive Speech and Stance Detection](https://aclanthology.org/2021.wassa-1.18) (Grimminger & Klinger, WASSA 2021)
+13. [Hateful Symbols or Hateful People? Predictive Features for Hate Speech Detection on Twitter](https://aclanthology.org/N16-2013) (Waseem & Hovy, NAACL 2016)
 
 ### Models and Fine-Tuning
 
