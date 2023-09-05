@@ -27,23 +27,23 @@ For all 13 datasets, the authors apply a 7:1:2 ratio of data splitting; they als
 2. Training on an aggregation of 13 datasets.
 3. Training on a sampled dataset from the aggregation in 2. Specifically, the authors (1) find the dataset size that leads to the highest score in 1, (2) sample the dataset proportionally by the each of 13 datasets' sizes and the the ratio of hate versus non-hate to exactly 1:1.
 
-The processed datasets are not provided by the authors. We need to follow the guides below to obtain them; the index of the datasets is kept consistent with the [HuggingFace model hub](https://huggingface.co/cardiffnlp/twitter-roberta-base-hate-latest) and their names follow the main paper.
+The processed datasets are not provided by the authors. We need to follow the guides below to obtain them; the index of the datasets is kept consistent with the [HuggingFace model hub](https://huggingface.co/cardiffnlp/twitter-roberta-base-hate-latest) and and main paper's Table 1.
 
-| Index | Dataset Name | Source                                                       | Notes      |
-| ----- | ------------ | ------------------------------------------------------------ | ---------- |
-| 1     | HatE         | [Link](http://hatespeech.di.unito.it/hateval.html) that requires filling in a Google form. |            |
-| 2     | MHS          | [`ucberkeley-dlab/measuring-hate-speech`](https://huggingface.co/datasets/ucberkeley-dlab/measuring-hate-speech) |            |
-| 3     | DEAP         | [Zenodo](https://zenodo.org/record/3816667)                  |            |
-| 4     | CMS          | [Link](https://search.gesis.org/research_data/SDN-10.7802-2251?doi=10.7802/2251) that requires registration and email verification. |            |
-| 5     | Offense      | [Link](https://sites.google.com/site/offensevalsharedtask/olid); this dataset is also called OLID. |            |
-| 6     | HateX        | [`hatexplain`](https://huggingface.co/datasets/hatexplain) and [GitHub](https://github.com/hate-alert/HateXplain) |            |
-| 7     | LSC          | [GitHub](https://github.com/ENCASEH2020/hatespeech-twitter.git) | Dehydrated |
-| 8     | MMHS         | [`nedjmaou/MLMA_hate_speech`](https://huggingface.co/datasets/nedjmaou/MLMA_hate_speech) and [GitHub](https://github.com/HKUST-KnowComp/MLMA_hate_speech) |            |
-| 9     | HASOC        | [Link](https://hasocfire.github.io/hasoc/2020/dataset.html) that requires uploading a signed agreement; this agreement takes up to 15 days to approve. |            |
-| 10    | AYR          | [GitHub](https://github.com/zeeraktalat/hatespeech)          | Dehydrated |
-| 11    | AHSD         | [GitHub](https://github.com/t-davidson/hate-speech-and-offensive-language) |            |
-| 12    | HTPO         | [Link](https://www.ims.uni-stuttgart.de/forschung/ressourcen/korpora/stance-hof/) |            |
-| 13    | HSHP         | [GitHub](https://github.com/zeeraktalat/hatespeech)          | Dehydrated |
+| Index | Dataset Name | Source                                                       | Notes         |
+| ----- | ------------ | ------------------------------------------------------------ | ------------- |
+| 1     | HatE         | [Link](http://hatespeech.di.unito.it/hateval.html) that requires filling in a Google form. |               |
+| 2     | MHS          | [`ucberkeley-dlab/measuring-hate-speech`](https://huggingface.co/datasets/ucberkeley-dlab/measuring-hate-speech) |               |
+| 3     | DEAP         | [Zenodo](https://zenodo.org/record/3816667)                  |               |
+| 4     | CMS          | [Link](https://search.gesis.org/research_data/SDN-10.7802-2251?doi=10.7802/2251) that requires registration and email verification. |               |
+| 5     | Offense      | [Link](https://sites.google.com/site/offensevalsharedtask/olid); this dataset is also called OLID. |               |
+| 6     | HateX        | [`hatexplain`](https://huggingface.co/datasets/hatexplain) and [GitHub](https://github.com/hate-alert/HateXplain) |               |
+| 7     | LSC          | [GitHub](https://github.com/ENCASEH2020/hatespeech-twitter.git) | Dehydrated    |
+| 8     | MMHS         | [`nedjmaou/MLMA_hate_speech`](https://huggingface.co/datasets/nedjmaou/MLMA_hate_speech) and [GitHub](https://github.com/HKUST-KnowComp/MLMA_hate_speech) |               |
+| 9     | HASOC        | [Link](https://hasocfire.github.io/hasoc/2020/dataset.html) that requires uploading a signed agreement; this agreement takes up to 15 days to approve. | Not Available |
+| 10    | AYR          | [GitHub](https://github.com/zeeraktalat/hatespeech)          | Dehydrated    |
+| 11    | AHSD         | [GitHub](https://github.com/t-davidson/hate-speech-and-offensive-language) |               |
+| 12    | HTPO         | [Link](https://www.ims.uni-stuttgart.de/forschung/ressourcen/korpora/stance-hof/) |               |
+| 13    | HSHP         | [GitHub](https://github.com/zeeraktalat/hatespeech)          | Dehydrated    |
 
 The following are the papers that correspond to the list of datasets:
 
@@ -60,6 +60,10 @@ The following are the papers that correspond to the list of datasets:
 11. [[1703.04009] Automated Hate Speech Detection and the Problem of Offensive Language](https://arxiv.org/abs/1703.04009) (Davidson et al.)
 12. [Hate Towards the Political Opponent: A Twitter Corpus Study of the 2020 US Elections on the Basis of Offensive Speech and Stance Detection](https://aclanthology.org/2021.wassa-1.18) (Grimminger & Klinger, WASSA 2021)
 13. [Hateful Symbols or Hateful People? Predictive Features for Hate Speech Detection on Twitter](https://aclanthology.org/N16-2013) (Waseem & Hovy, NAACL 2016)
+
+Despite the availability of the sources, it is **quite hard** to reproduce the original dataset as (1) many of the datasets in the table do not come with the predefiend splits; the only datasets that are available and have such splits are `HatE`, `HatX`, and `HTPO`, (2) how the authors unify (for example, deriving binary label from potentially complicated provided labels) the datasets is unknown, and (3) how the authors process the texts is also unknown.
+
+It is better to find a model whose checkpoints and exact training datasets are both available; one such example is the Alpaca language model.
 
 ### Models and Fine-Tuning
 
