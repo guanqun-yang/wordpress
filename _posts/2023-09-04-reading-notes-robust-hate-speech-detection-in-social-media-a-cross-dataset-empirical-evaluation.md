@@ -29,21 +29,21 @@ For all 13 datasets, the authors apply a 7:1:2 ratio of data splitting; they als
 
 The processed datasets are not provided by the authors. We need to follow the guides below to obtain them; the index of the datasets is kept consistent with the [HuggingFace model hub](https://huggingface.co/cardiffnlp/twitter-roberta-base-hate-latest) and their names follow the main paper.
 
-| Index | Dataset Name | Source                                                       |
-| ----- | ------------ | ------------------------------------------------------------ |
-| 1     | HatE         | [Link](http://hatespeech.di.unito.it/hateval.html) that requires filling in a Google form. |
-| 2     | MHS          | [`ucberkeley-dlab/measuring-hate-speech`](https://huggingface.co/datasets/ucberkeley-dlab/measuring-hate-speech) |
-| 3     | DEAP         | [Zenodo](https://zenodo.org/record/3816667)                  |
-| 4     | CMS          | [Link](https://search.gesis.org/research_data/SDN-10.7802-2251?doi=10.7802/2251) that requires registration and email verification. |
-| 5     | Offense      | [Link](https://sites.google.com/site/offensevalsharedtask/olid); this dataset is also called OLID. |
-| 6     | HateX        | [`hatexplain`](https://huggingface.co/datasets/hatexplain) and [GitHub](https://github.com/hate-alert/HateXplain) |
-| 7     | LSC          | [GitHub](https://github.com/ENCASEH2020/hatespeech-twitter.git) |
-| 8     | MMHS         | [`nedjmaou/MLMA_hate_speech`](https://huggingface.co/datasets/nedjmaou/MLMA_hate_speech) and [GitHub](https://github.com/HKUST-KnowComp/MLMA_hate_speech) |
-| 9     | HASOC        | [Link](https://hasocfire.github.io/hasoc/2020/dataset.html) that requires uploading a signed agreement. |
-| 10    | AYR          | [GitHub](https://github.com/zeeraktalat/hatespeech)          |
-| 11    | AHSD         | [GitHub](https://github.com/t-davidson/hate-speech-and-offensive-language) |
-| 12    | HTPO         | [Link](https://www.ims.uni-stuttgart.de/forschung/ressourcen/korpora/stance-hof/) |
-| 13    | HSHP         | [GitHub](https://github.com/zeeraktalat/hatespeech)          |
+| Index | Dataset Name | Source                                                       | Notes      |
+| ----- | ------------ | ------------------------------------------------------------ | ---------- |
+| 1     | HatE         | [Link](http://hatespeech.di.unito.it/hateval.html) that requires filling in a Google form. |            |
+| 2     | MHS          | [`ucberkeley-dlab/measuring-hate-speech`](https://huggingface.co/datasets/ucberkeley-dlab/measuring-hate-speech) |            |
+| 3     | DEAP         | [Zenodo](https://zenodo.org/record/3816667)                  |            |
+| 4     | CMS          | [Link](https://search.gesis.org/research_data/SDN-10.7802-2251?doi=10.7802/2251) that requires registration and email verification. |            |
+| 5     | Offense      | [Link](https://sites.google.com/site/offensevalsharedtask/olid); this dataset is also called OLID. |            |
+| 6     | HateX        | [`hatexplain`](https://huggingface.co/datasets/hatexplain) and [GitHub](https://github.com/hate-alert/HateXplain) |            |
+| 7     | LSC          | [GitHub](https://github.com/ENCASEH2020/hatespeech-twitter.git) | Dehydrated |
+| 8     | MMHS         | [`nedjmaou/MLMA_hate_speech`](https://huggingface.co/datasets/nedjmaou/MLMA_hate_speech) and [GitHub](https://github.com/HKUST-KnowComp/MLMA_hate_speech) |            |
+| 9     | HASOC        | [Link](https://hasocfire.github.io/hasoc/2020/dataset.html) that requires uploading a signed agreement; this agreement takes up to 15 days to approve. |            |
+| 10    | AYR          | [GitHub](https://github.com/zeeraktalat/hatespeech)          | Dehydrated |
+| 11    | AHSD         | [GitHub](https://github.com/t-davidson/hate-speech-and-offensive-language) |            |
+| 12    | HTPO         | [Link](https://www.ims.uni-stuttgart.de/forschung/ressourcen/korpora/stance-hof/) |            |
+| 13    | HSHP         | [GitHub](https://github.com/zeeraktalat/hatespeech)          | Dehydrated |
 
 The following are the papers that correspond to the list of datasets:
 
