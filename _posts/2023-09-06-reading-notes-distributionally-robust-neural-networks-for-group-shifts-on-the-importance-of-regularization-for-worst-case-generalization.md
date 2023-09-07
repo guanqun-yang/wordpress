@@ -25,6 +25,7 @@ categories:
 $$
 \hat{\theta} _ \mathrm{ERM} := \mathbb{E} _ {(x, y) \sim \hat{P}} \left[  \ell((x, y); \theta)\right]
 $$
+
 - DRO
 
     DRO tries to find $\theta$ that minimizes the worst-group risk $\hat{\mathcal{R}}(\theta)$. The practical form of DRO is called group DRO (i.e., gDRO). See the application section on how the groups are defined.
@@ -41,7 +42,7 @@ $$
 
 - Improving Training on Data Mixture
 
-    Training a classifier using a mixture of datasets $\cup_{k=1}^K \mathcal{D} _ k$ with the same label space $\mathcal{Y}$; this will give us $K \times \vert \mathcal{Y}\vert$ groups. This is a more natural application of DRO as we have well-defined $\mathcal{A}$ that does not depend on prior knowledge.
+    Training a classifier using a mixture of datasets $\cup _ {k=1}^K \mathcal{D} _ k$ with the same label space $\mathcal{Y}$; this will give us $K \times \vert \mathcal{Y}\vert$ groups. This is a more natural application of DRO as we have well-defined $\mathcal{A}$ that does not depend on prior knowledge.
 
 # Method
 
