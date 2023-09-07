@@ -13,6 +13,7 @@ categories:
 > Change Logs:
 >
 > - 2023-09-06: First draft. This paper appears at ICLR '20.
+> - 2023-09-07: Add the "example" section for easy visualization.
 
 # Background
 
@@ -34,6 +35,33 @@ $$
 \hat{\theta} _ \mathrm{DRO} := \arg\min _ \theta \left\{ \hat{\mathcal{R}}(\theta):=\max _ {g \in \mathcal{G}}\mathbb{E} _ {(x, y) \sim \hat{P} _ g} \left[  \ell(x, y); \theta)\right]\right\}
 $$
 
+## Example
+
+To better visualize the strength of gDRO over ERM, we can look at a linear regression example; this example is taken from [Stanford CS 221](https://stanford-cs221.github.io/autumn2022-extra/modules/machine-learning/group-dro.pdf).
+
+The objective of linear regression is Mean Square Error (MSE) $\arg\min_{\mathbf{w}} (\mathbf{w}^T\mathbf{x} -y) ^ 2$; fitting the entire datasets gives a much higher group A loss (i.e. 21.26) than group B loss (i.e. 0.31) even though the total loss is 7.29.
+
+```python
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_squared_error
+
+x = np.array([1, 2, 5, 6, 7, 8])[:, np.newaxis]
+y = np.array([4, 8, 5, 6, 7, 8])
+
+reg = LinearRegression(fit_intercept=False)
+reg.fit(x, y)
+
+print(mean_squared_error(reg.predict(x[:2]), y[:2]))
+print(mean_squared_error(reg.predict(x[2:]), y[2:]))
+print(mean_squared_error(reg.predict(x), y))
+```
+
+Note that the second plot shows how changing $\mathbf{w}$ leads to differences in the loss over each group (yellow or blue) and the aggregated group (red). We can see that optimizing the aggregated loss leads to a solution that bias group B. However, if we optimize the pointwise maximum (purple), we could improve have a more reasonable curve.
+
+![image-20230907124813672](https://raw.githubusercontent.com/guanqun-yang/remote-images/master/2023/09/upgit_20230907_1694105293.png)
+
+![image-20230907123929901](https://raw.githubusercontent.com/guanqun-yang/remote-images/master/2023/09/upgit_20230907_1694104769.png)
+
 ## Application
 
 - Mitigating Spurious Correlation
@@ -42,7 +70,7 @@ $$
 
 - Improving Training on Data Mixture
 
-    Training a classifier using a mixture of datasets $\cup _ {k=1}^K \mathcal{D} _ k$ with the same label space $\mathcal{Y}$; this will give us $K \times \vert \mathcal{Y}\vert$ groups. This is a more natural application of DRO as we have well-defined $\mathcal{A}$ that does not depend on prior knowledge.
+    Training a classifier using a mixture of datasets $\cup _  {k=1}^K \mathcal{D}  _  k$ with the same label space $\mathcal{Y}$; this will give us $K \times \vert \mathcal{Y}\vert$ groups. This is a more natural application of DRO as we have well-defined $\mathcal{A}$ that does not depend on prior knowledge.
 
 # Method
 
@@ -68,7 +96,7 @@ The authors propose to add simple regularization to gDRO to address the problem;
 
 - Measures of Robustness
 
-    
+  The paper uses the generalization on the worst-accuracy group as a proxy for robustness.
 
 # Reference
 
