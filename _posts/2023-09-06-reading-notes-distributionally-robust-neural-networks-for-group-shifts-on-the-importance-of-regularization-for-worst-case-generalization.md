@@ -32,7 +32,7 @@ $$
     DRO tries to find $\theta$ that minimizes the worst-group risk $\hat{\mathcal{R}}(\theta)$. The practical form of DRO is called group DRO (i.e., gDRO). See the application section on how the groups are defined.
 
 $$
-\hat{\theta} _ \mathrm{DRO} := \arg\min _ \theta \left\{ \hat{\mathcal{R}}(\theta):=\max _ {g \in \mathcal{G}}\mathbb{E} _ {(x, y) \sim \hat{P} _ g} \left[  \ell(x, y); \theta) \right] \right\}
+\hat{\theta} _ \mathrm{DRO} := \arg\min _ \theta \left[ \hat{\mathcal{R}}(\theta):=\max _ {g \in \mathcal{G}}\mathbb{E} _ {(x, y) \sim \hat{P} _ g} \left[  \ell(x, y); \theta) \right] \right]
 $$
 
 ## Example
