@@ -1,6 +1,7 @@
 import re
 import time
 import shutil
+import string
 import pathlib
 import hashlib
 import frontmatter
@@ -47,7 +48,7 @@ for base_path in base_paths:
             continue
 
         content, metadata = read_md(source_path)
-        title = metadata["title"].replace(" | ", "-").replace(" - ", "-").replace(" ", "-").lower()
+        title = "-".join(re.findall("\w+", metadata["title"])).lower()
 
         # if making an update, then reusing the previous filename
         if title in existing_name_dict:
