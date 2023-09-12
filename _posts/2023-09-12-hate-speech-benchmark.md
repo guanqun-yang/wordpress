@@ -18,7 +18,7 @@ The current data aggregation includes [1] through [5], where the [5] only includ
 4. [Hate Towards the Political Opponent: A Twitter Corpus Study of the 2020 US Elections on the Basis of Offensive Speech and Stance Detection](https://aclanthology.org/2021.wassa-1.18) (Grimminger & Klinger, WASSA 2021)
 5. [Latent Hatred: A Benchmark for Understanding Implicit Hate Speech](https://aclanthology.org/2021.emnlp-main.29) (ElSherief et al., EMNLP 2021)
 
-# [`cardiffnlp/twitter-roberta-base-hate-latest`](https://huggingface.co/cardiffnlp/twitter-roberta-base-hate-latest) Collection
+# `cardiffnlp/twitter-roberta-base-hate-latest` Collection
 
 The follow are the datasets used for the model [`cardiffnlp/twitter-roberta-base-hate-latest`](cardiffnlp/twitter-roberta-base-hate-latest) or the paper below:
 
@@ -56,7 +56,7 @@ The following are the papers that correspond to the list of datasets:
 12. [Hate Towards the Political Opponent: A Twitter Corpus Study of the 2020 US Elections on the Basis of Offensive Speech and Stance Detection](https://aclanthology.org/2021.wassa-1.18) (Grimminger & Klinger, WASSA 2021)
 13. [Hateful Symbols or Hateful People? Predictive Features for Hate Speech Detection on Twitter](https://aclanthology.org/N16-2013) (Waseem & Hovy, NAACL 2016)
 
-# Additional Datasets from [`hatespeechdata.com`](https://hatespeechdata.com/)
+# Additional Datasets from `hatespeechdata.com`
 
 The following the the additional datasets from [`hatespeechdata.com`](https://hatespeechdata.com/) that are not included in the above mentioned sources. The dataset names are either available from the original paper or created here for easy reference.
 
