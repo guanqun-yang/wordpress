@@ -7,11 +7,13 @@ categories:
 - Reading
 ---
 
-> [Semantic Scholar] - [Code] - [Tweet] - [Video] - [[Website](https://wilds.stanford.edu/datasets/)] - [Slide] - [[Leaderboard](https://wilds.stanford.edu/leaderboard/)]
+> [[Semantic Scholar](https://www.semanticscholar.org/paper/WILDS%3A-A-Benchmark-of-in-the-Wild-Distribution-Koh-Sagawa/40848b41ed8c9c255ecd8a920006877691b52d03)] - [[Code](https://github.com/p-lambda/wilds/tree/main/examples/algorithms)] - [Tweet] - [Video] - [[Website](https://wilds.stanford.edu/datasets/)] - [Slide] - [[Leaderboard](https://wilds.stanford.edu/leaderboard/)]
 >
 > Change Logs:
 >
-> - 2023-09-06: First draft. 
+> - 2023-09-06: First draft. The paper provides a standardized package for many domain generalization algorithms, including group DRO, DANN, and Coral.
+
+# Background
 
 Distribution shifts happen when test conditions are "newer" or "smaller" compared to training conditions. The paper defines them as
 
@@ -54,8 +56,6 @@ Importantly, the authors note that performance drop is a necessary condition of 
 - Challenge Sets vs. Distribution Shifts
 
     The CheckList-style challenge sets, such as HANS, PAWS, CheckList, and counterfactually-augmented datasets like [5], are intentionally created different from the training set.
-
-
 
 # Reference
 
