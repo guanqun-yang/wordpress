@@ -5,7 +5,7 @@ tags:
 - Content Moderation
 - OpenAI
 categories:
-- Talks
+- Talk
 ---
 > [[Website](https://multimodal-content-moderation.github.io/)] - [[Paper](https://arxiv.org/abs/2208.03274)] - [[Blog](https://openai.com/blog/new-and-improved-content-moderation-tooling)]
 > 
@@ -23,8 +23,8 @@ There are two main iterations to build an end-to-end content moderator.
 ## Annotation Iteration
 - Labeling guidelines need to be clarified and updated multiple times with more and more edges surface. The specifications from OpenAI are finally turned into training materials of their label providers to educate their annotators.
 - There should be sessions that
-  - Calibrating the annotators by clarifying the annotation guidelines.
-  - Auditing data that are flagged harmful either by the annotators or the model. Removing annotations from the annotator that has low per-category F1 scores. This process could be accelerated using cross-auditing with multiple annotators.
+	- Calibrating the annotators by clarifying the annotation guidelines.
+	- Auditing data that are flagged harmful either by the annotators or the model. Removing annotations from the annotator that has low per-category F1 scores. This process could be accelerated using cross-auditing with multiple annotators.
   
 
 ## Main Iteration
@@ -41,9 +41,9 @@ There following are the diagrams that outline the steps above:
   One of the things the OpenAI could not solve well is the calibration.
 
 - Step $k+1$: Using $\mathcal{M}_k$ to run inference on the **unlabeled** production data; the probabilities are used to select the subset for annotation. Three methods are compared:
-  - Purely Random Sampling
-  - Random Sampling for Samples Above a Threshold
-  - Uncertainty Sampling
+	- Purely Random Sampling
+	- Random Sampling for Samples Above a Threshold
+	- Uncertainty Sampling
   
   Active learning substantially improves the ratio of harmful contents in the user traffic (10 - 22 times).
   
@@ -51,8 +51,8 @@ There following are the diagrams that outline the steps above:
   
 - Step $k+2$: Running the following steps to further improve the training data.
   
-  - Overfitted Phrase Detection.
-  - Mislabeling Detection.
+	- Overfitted Phrase Detection.
+	- Mislabeling Detection.
   
 - Step $k+3$: Internal red teaming.
 
@@ -71,13 +71,13 @@ Here is a more detailed diagram; it is same as the one provided in the paper.
 
 ## Future Direction
 - Dataset
-  - A more systematic approach to create synthetic dataset. The current approach OpenAI uses is described ad-hoc.
-  - Robustness to prompt injection and ciphers.
+	- A more systematic approach to create synthetic dataset. The current approach OpenAI uses is described ad-hoc.
+	- Robustness to prompt injection and ciphers.
   
 - Continuous GPT-Assisted Red Teaming
 - Active Leraning
-  - The current active learning approach relies on the model $\mathcal{M}_k$ at Step $k+1$, which the model $\mathcal{M}_k$ may not be able to generalize.
-  - The presenter also mentions anomaly detection; it is not prioritized in OpenAI due to time constraint.
+	- The current active learning approach relies on the model $\mathcal{M}_k$ at Step $k+1$, which the model $\mathcal{M}_k$ may not be able to generalize.
+	- The presenter also mentions anomaly detection; it is not prioritized in OpenAI due to time constraint.
 
 
 ## Reference
