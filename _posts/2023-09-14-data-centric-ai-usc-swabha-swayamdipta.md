@@ -9,7 +9,7 @@ categories:
 
 # Outline
 
-The following is the course schedule (indeed a course schedule) compiled from the [course website](https://swabhs.com/csci699-dcnlp/details/detailed_calendar/) for quick reference.
+The following is the course schedule (indeed a reading list) compiled from the [course website](https://swabhs.com/csci699-dcnlp/details/detailed_calendar/) for quick reference.
 
 | Section | Date   | Topic                                                 | Readings                                                     |
 | ------ | ----------------------------------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
