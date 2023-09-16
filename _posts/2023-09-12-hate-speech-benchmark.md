@@ -56,6 +56,14 @@ The following are the papers that correspond to the list of datasets:
 12. [Hate Towards the Political Opponent: A Twitter Corpus Study of the 2020 US Elections on the Basis of Offensive Speech and Stance Detection](https://aclanthology.org/2021.wassa-1.18) (Grimminger & Klinger, WASSA 2021)
 13. [Hateful Symbols or Hateful People? Predictive Features for Hate Speech Detection on Twitter](https://aclanthology.org/N16-2013) (Waseem & Hovy, NAACL 2016)
 
+It is possible to approximate a subset of the original training mixture (8 of 12 datasets excluding the MMHS dataset, which only includes hate speech) following the Table 2 of the original paper. Something to note is that:
+
+- AYR, HASOC, HSHP, and LSC are not usable.
+- Offense does not exactly match the sizes in Table 2.
+- We **disregard** any splits and try to match the number in Table 2. When matching number is not possible, we try to make sure the ratio of `on-hate` versus `hate` is same.
+
+
+
 # Additional Datasets from hatespeechdata.com
 
 The following the the additional datasets from [`hatespeechdata.com`](https://hatespeechdata.com/) that are not included in the above mentioned sources. The dataset names are either available from the original paper or created here for easy reference.
