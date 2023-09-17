@@ -62,7 +62,7 @@ It is possible to approximate a subset of the original training mixture (8 of 12
 - Offense does not exactly match the sizes in Table 2.
 - We **disregard** any splits and try to match the number in Table 2. When matching number is not possible, we try to make sure the ratio of `on-hate` versus `hate` is same.
 
-
+![](https://raw.githubusercontent.com/guanqun-yang/remote-images/master/2023/09/upgit_20230916_1694922903.png)
 
 # Additional Datasets from hatespeechdata.com
 
