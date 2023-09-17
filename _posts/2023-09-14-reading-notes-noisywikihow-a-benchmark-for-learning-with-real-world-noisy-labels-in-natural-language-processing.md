@@ -23,7 +23,9 @@ categories:
 
 # Additional Note
 
+# Comments
 
+- The reason why creating a new dataset is necessary is that the users could customize the noise level to compare performances of different algorithms in a controlled setting. 
 
 # Reference
 
@@ -31,3 +33,4 @@ categories:
 2. [[1710.09412] mixup: Beyond Empirical Risk Minimization](https://arxiv.org/abs/1710.09412) (Zhang et al., ICLR 2018, 7.6K citations).
 3. [Nonlinear Mixup: Out-of-Manifold Data Augmentation for Text Classification](https://ojs.aaai.org/index.php/AAAI/article/view/5822) (Guo, AAAI 2020). One application of MixUp regularization in NLP. It is based on a CNN classifier and the improvement is quite marginal.
 4. [[2006.06049] On Mixup Regularization](https://arxiv.org/abs/2006.06049) (Carratino et al., JMLR): A theoretical analysis of MixUp regularization.
+5. [Learning with Noisy Labels](https://proceedings.neurips.cc/paper_files/paper/2013/file/3871bd64012152bfb53fdf04b401193f-Paper.pdf) (Natarajan et al., NIPS 2013): This paper is the first paper that (theoretically) studies LNL. It considers the binary classification problem where labels are **randomly** flipped, which is theoretically appealing but less relevant empirically according to the main paper.
