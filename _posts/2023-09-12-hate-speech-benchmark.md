@@ -8,7 +8,30 @@ categories:
 - Research
 ---
 
-# Existing Datasets
+# Overview
+
+There does not exist a unified benchmark such as GLUE in hate speech detection domain that conducts a leaderboard style performance comparison of different open-source hate speech classifiers. This prevents the practitioners from making informed decisions when choosing which model to use for their own hate speech detection applications.
+
+The benchmark will provide the following:
+
+- The entire training and validation set for future study. However, the labels from public test sets will not be released for benchmarking purposes; there will be additional private test sets. 
+- The ranking of the models based on the average aggregated metrics (for example, F1 score) on the public and private test sets. 
+
+# Protocol
+
+- Step 1: Randomly select a test set and a validation set. 
+
+    The two datasets must be randomly selected as this makes the two datasets independent from each other in terms of label distribution and source distribution. Throughout the experiments, the test and validation sets are the same; this is helpful as we could see the (dis)advantages of one method in the `wandb` dashboard.
+
+- Step 2: Sampling train set using different (a) data selection methods. 
+
+- Step 3: Training or fine-tuning (b) different models with (c) different techniques for local improvements, for example, objective function, and regularization.
+
+- Step 4: Comparing different combinations of (a), (b), and (c). If we have $m$ combinations and $n$ test sets, then we will end up with a table of $(m, n+1)$, where the first column lists all the combinations.
+
+# Candidate Datasets
+
+## Collected Datasets from Diverse Topics
 
 The current data aggregation includes [1] through [5], where the [5] only includes hate speech. 
 
@@ -18,7 +41,7 @@ The current data aggregation includes [1] through [5], where the [5] only includ
 4. [Hate Towards the Political Opponent: A Twitter Corpus Study of the 2020 US Elections on the Basis of Offensive Speech and Stance Detection](https://aclanthology.org/2021.wassa-1.18) (Grimminger & Klinger, WASSA 2021)
 5. [Latent Hatred: A Benchmark for Understanding Implicit Hate Speech](https://aclanthology.org/2021.emnlp-main.29) (ElSherief et al., EMNLP 2021)
 
-# cardiffnlp/twitter-roberta-base-hate-latest Collection
+## cardiffnlp/twitter-roberta-base-hate-latest Collection
 
 The follow are the datasets used for the model [`cardiffnlp/twitter-roberta-base-hate-latest`](cardiffnlp/twitter-roberta-base-hate-latest) or the paper below:
 
@@ -64,7 +87,7 @@ It is possible to approximate a subset of the original training mixture (8 of 12
 
 ![](https://raw.githubusercontent.com/guanqun-yang/remote-images/master/2023/09/upgit_20230916_1694922903.png)
 
-# Additional Datasets from hatespeechdata.com
+## Additional Datasets from hatespeechdata.com
 
 The following the the additional datasets from [`hatespeechdata.com`](https://hatespeechdata.com/) that are not included in the above mentioned sources. The dataset names are either available from the original paper or created here for easy reference.
 

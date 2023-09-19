@@ -38,10 +38,19 @@ With the test sets finalized, we could now work on sampling training sets, i.e.,
 # Reference
 
 1. [NoisywikiHow: A Benchmark for Learning with Real-world Noisy Labels in Natural Language Processing](https://aclanthology.org/2023.findings-acl.299) (Wu et al., Findings 2023)
-1. [[2202.01327] Adaptive Sampling Strategies to Construct Equitable Training Datasets](https://arxiv.org/abs/2202.01327) (Cai et al., FAccT 2023)
-1. [[2301.04272] Data Distillation: A Survey](https://arxiv.org/abs/2301.04272) (Sachdeva and McAuley, JMLR).
-1. [[1811.10959] Dataset Distillation](https://arxiv.org/abs/1811.10959) (Wang et al.)
-1. [[1910.02551] Soft-Label Dataset Distillation and Text Dataset Distillation](https://arxiv.org/abs/1910.02551) (Sucholutsky and Schonlau, IJCNN 2020). This is the **only** paper referenced in 3 describing the dataset distillation for texts. This paper is based on the **very original** data distillation objective proposed in 4.
-1. [[2302.03169] Data Selection for Language Models via Importance Resampling](https://arxiv.org/abs/2302.03169) (Xie et al.)
-1. [[2305.10429] DoReMi: Optimizing Data Mixtures Speeds Up Language Model Pretraining](https://arxiv.org/abs/2305.10429) (Xie et al.)
-1. [[2306.11670] GIO: Gradient Information Optimization for Training Dataset Selection](https://arxiv.org/abs/2306.11670) (Everaert and Potts): This paper has similar settings as the DSIR paper [6]: we are selecting new samples by minimizing their KL divergence with an existing set of unlabeled samples.
+
+2. [[2202.01327] Adaptive Sampling Strategies to Construct Equitable Training Datasets](https://arxiv.org/abs/2202.01327) (Cai et al., FAccT 2023)
+
+3. [[2301.04272] Data Distillation: A Survey](https://arxiv.org/abs/2301.04272) (Sachdeva and McAuley, JMLR).
+
+4. [[1811.10959] Dataset Distillation](https://arxiv.org/abs/1811.10959) (Wang et al.)
+
+5. [[1910.02551] Soft-Label Dataset Distillation and Text Dataset Distillation](https://arxiv.org/abs/1910.02551) (Sucholutsky and Schonlau, IJCNN 2020). This is the **only** paper referenced in 3 describing the dataset distillation for texts. This paper is based on the **very original** data distillation objective proposed in 4.
+
+6. [[2302.03169] Data Selection for Language Models via Importance Resampling](https://arxiv.org/abs/2302.03169) (Xie et al.)
+
+7. [[2305.10429] DoReMi: Optimizing Data Mixtures Speeds Up Language Model Pretraining](https://arxiv.org/abs/2305.10429) (Xie et al.)
+
+8. [[2306.11670] GIO: Gradient Information Optimization for Training Dataset Selection](https://arxiv.org/abs/2306.11670) (Everaert and Potts): This paper has similar settings as the DSIR paper [6]: we are selecting new samples by minimizing their KL divergence with an existing set of unlabeled samples. The paper claims an advantage over the DSIR as the proposed algorithm requires fewer samples:
+
+    > Like GIO, these heuristic methods aim to select a subset of data that is higher quality and more relevant. However, they are either highly tailored to their particular tasks or they require very large numbers of examples (to develop classifiers or construct target probabilities). By contrast, GIO is task- and domain-agnostic, it can be applied plug-and-play to a new task and dataset, and it requires comparatively few gold examples X to serve as the target distribution.
