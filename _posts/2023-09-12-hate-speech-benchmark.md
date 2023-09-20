@@ -114,4 +114,3 @@ The following the the additional datasets from [`hatespeechdata.com`](https://ha
 8. [A Large Labeled Corpus for Online Harassment Research](https://dl.acm.org/doi/10.1145/3091478.3091509) (Golbeck et al., WebSci 2017)
 9. [Twitter Hate Speech Dataset](https://app.surgehq.ai/datasets/twitter-hate-speech) (Surge AI)
 10. [Twitter Sentiment Analysis](https://www.kaggle.com/datasets/arkhoshghalb/twitter-sentiment-analysis-hatred-speech) (Kaggle)
-
