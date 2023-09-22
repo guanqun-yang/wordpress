@@ -1,0 +1,197 @@
+---
+title: Coding Notes | HuggingFace Reference
+tags: 
+categories:
+- Coding
+---
+
+[toc]
+
+# Basics
+
+## Hyperparameters
+
+- The hyperparameters are specified through [`TrainingArguments`](https://huggingface.co/docs/transformers/main_classes/trainer#transformers.TrainingArguments) and [`Seq2SeqTrainingArguments`](https://huggingface.co/docs/transformers/main_classes/trainer#transformers.Seq2SeqTrainingArguments).
+- `model_name_or_path` and `output_dir` are the only two required arguments. However, we should also set other critical hyperparameters, including `num_train_epochs`, `per_device_train_batch_size`, `per_device_eval_batch_size`, `learning_rate`.
+
+## Evaluation, Logging, and Saving
+
+- It is better to specify both `logging_steps` and`eval_steps` as  `1 / n` (with `logging_strategy` and `eval_strategy` set to `"steps"`), where `n` is number of loggings or evaluations. This will help collect enough samples even if we have fewer training steps or training epochs.
+- `save_strategy`, `save_steps` , and `save_total_limit` should be set to reasonable numbers as saving checkpoints could take long time. For larger models, it is better to save once per epoch.
+- It is recommended to use `wandb`. In order to do so, we need to set `report_to` and `run_name`. Note that if we need to use custom name on `wandb` portal, we should **not** rename the default output directory.
+
+## Checkpoints
+
+If a model has been fine-tuned, then most likely there will be only updates in `pytorch_model.bin` file. We could reuse the original `config.json` and the tokenizer.
+
+- A runnable model only consists of a `pytorch_model.bin` and a `config.json` file. The `config.json` documents the metadata of the model.
+
+- A tokenizer consists of a list of files:
+
+    ```bash
+    tokenizer/
+    ├── added_tokens.json
+    ├── merges.txt
+    ├── special_tokens_map.json
+    ├── tokenizer_config.json
+    ├── tokenizer.json
+    └── vocab.json
+    ```
+
+However, if we save checkpoints during training, then the code of saving checkpoints has already been taken care of.
+
+# Instruction Tuning
+
+It is possible to instruction-tune a language model using the [official example script](https://github.com/huggingface/transformers/tree/main/examples/pytorch/language-modeling) `run_clm.py` working with `gpt2` or the [Phil Schimid's blog](https://www.philschmid.de/fine-tune-flan-t5-deepspeed) working with `google/flan-t5-xl`. However, the `SFTTrainer()` provided in the `trl` provides an another layer of abstraction; this makes instruction-tuning even easier and cleaner.
+
+
+
+# Tuning Large Models with Constrained Hardware
+
+## Overview
+
+We have the following decision matrix when we are working on the single node; there may be other considerations when working with multiple nodes; a node means a machine’s GPUs are physically connected.
+
+|  | Single GPU | Multiple GPUs |
+| --- | --- | --- |
+| Mode Fits into Single GPU | -  | DDP <br>ZeRO (may or may not be faster) |
+| Model Does not Fit into Single GPU | ZeRO + Offload CPU + MCT (optional) + NVMe (optional) | PP (preferred) if NVLink or NVSwitch is not available <br>ZeRO <br>TP |
+| Largest Layer Does not Fit into Single GPU | ZeRO + Offload CPU + MCT + NVMe (optional)   |TP <br>ZeRO + Offload CPU + MCT + NVMe (optional) |
+
+- One single 7B LLaMA model is already almost 30 GB on HuggingFace; the 13B version will be even larger.
+
+- When using custom training loops. The `accelerate` library improves `pytorch.distributed` and makes it possible that the same code could be run on any hardware settings without making updates to the code.
+
+    When using `Trainer()`, all of the distributed training settings could be done without using `accelerate`.
+
+- ZeRO is implemented using `deepspeed`.
+
+## Using a Single GPU
+
+- A typical model with AdamW optimizer requires 18 bytes per parameter.
+- Besides the methods described below, one could try `accelerate` library to use same `torch` code for any hardware configuration (CPU, single GPU, and multiple GPUs).
+
+- Besides the methods described below, one could try `accelerate` library to use same `torch` code for any hardware configuration (CPU, single GPU, and multiple GPUs).
+
+| Method | Speed📈 | Memory📉 | Note |
+| --- | --- | --- | --- |
+| Batch Size | Yes | Yes | It should be default to 8. But choosing a batch size that makes most of GPUs is complicated. |
+| Dataloader | Yes | No | Always set `pin_memory=True` and` num_workers=4` (or 8, 16, …) when possible. |
+| Optimizer | Yes | Yes | Using Adafactor saves 50% compared to Adam or AdamW. But it does not converge fast. This is supported out-of-box.<br>One could alternatively use 8-bit AdamW to save more than 50% memory when bibsandbytes is installed and used. |
+| Gradient Checkpointing | No | Yes | Supported by `Trainer(..., gradient_checkpointing=True, ...)`. |
+| Gradient Accumulation | No | Yes | Supported by `Trainer(..., gradient_accumulation_steps=4,...)`. |
+| Mixed Precision Training | Yes | No | `fp16` is supported in `TrainingArguments(.., fp16=True, ...)`. <br>With Ampere GPUs such as A100 or RTX-3090, `bf16=True` or `tf32=True` (with `torch.beakends.cuda.mamul.allow_tf32=True`) could be set. |
+| DeepSpeed ZeRO | No | Yes | The model with the smallest batch size does not fit into the GPU. Using Trainer() is supported out-of-box. |
+
+We could use the code below to measure the GPU utilization:
+
+```python
+from pynvml import *
+
+def print_gpu_utilization():
+    nvmlInit()
+    handle = nvmlDeviceGetHandleByIndex(0)
+    info = nvmlDeviceGetMemoryInfo(handle)
+    print(f"GPU memory occupied: {info.used//1024**2} MB.")
+```
+
+For example, when tuning a `bert-large-uncased` model with some dummy data, we could see on top of the following vanilla code:
+
+- Vanilla Code to Tune a Classification Model
+
+```python
+import os
+os.environ["CUDA_VISIBLE_DEVICES"] = str(0)
+
+import numpy as np
+
+from datasets import Dataset
+from transformers import (
+Trainer,
+logging,
+TrainingArguments,
+AutoModelForSequenceClassification,
+)
+
+from utils.common import print_gpu_utilization
+
+##################################################
+logging.set_verbosity_error()
+
+dataset_size, seq_len = 512, 512
+train_dataset = Dataset.from_dict(
+{
+"input_ids": np.random.randint(100, 30000, (dataset_size, seq_len)),
+"labels": np.random.randint(0, 1, dataset_size),
+}
+)
+train_dataset.set_format("pt")
+print_gpu_utilization()
+
+##################################################
+
+default_args = {
+"output_dir": "tmp",
+"evaluation_strategy": "steps",
+"num_train_epochs": 1,
+"log_level": "error",
+"report_to": "none"
+}
+
+training_args = TrainingArguments(
+per_device_train_batch_size=4,
+**default_args
+)
+
+model = AutoModelForSequenceClassification.from_pretrained("bert-large-uncased").to("cuda")
+print_gpu_utilization()
+
+trainer = Trainer(
+model=model,
+args=training_args,
+train_dataset=train_dataset
+)
+result = trainer.train()
+```
+
+After making updates to the vanilla code, we could see the changes in the memory usage.
+
+| Basic Setup                                                  | Memory (MB) |
+| ------------------------------------------------------------ | ----------- |
+| Loading Dummy Data                                           | 2631        |
+| Loading Model with per_device_train_batch_size=4             | 14949       |
+| Loading Model with per_device_train_batch_size=4 + 8-bit Adam | 13085       |
+| Loading Model with per_device_train_batch_size=4 + optim="adafactor" | 12295       |
+| Loading Model with per_device_train_batch_size=4 + fp16=True | 13939       |
+| Loading Model with per_device_train_batch_size=4 + fp16=True + gradient_checking=True | 7275        |
+| Loading Model with per_device_train_batch_size=1 + gradient_accumulation_steps=4 | 8681        |
+| Loading Model with per_device_train_batch_size=1 + gradient_accumulation_steps=4+ gradient_checkpointing=True | 6775        |
+| Loading Model with per_device_train_batch_size=1 + gradient_accumulation_steps=4+ gradient_checkpointing=True + fp16=True and using accelerate. | 5363        |
+
+## Using Multiple GPUs
+
+There are data, tensor, and pipeline parallelism when working with multiple GPUs. Each of them has pros and cons, there does not exist an universally good solution that fits into any situation.
+
+- Data Parallelism (DP): The same setup is replicated on all devices but we split the data and send them to different devices. One may see the acronym DDP, which refers to Distributed DP.
+
+- Tensor Parallelism (TP): Splitting a tensor into multiple shards and process each shard on different devices; it is also called horizontal parallelism.
+
+    ZeRO (Zero Redundancy Optimizer, ZeRO) is a preferred type of TP that does not require make changes to the model.
+
+- Pipeline Parallelism (PP): Splitting a few layers of the model into a single GPU; it is also called vertical parallelism.
+
+According to [Jason Phang](https://github.com/zphang/minimal-llama), the ZeRO is the more efficient method than PEFT and PP:
+
+> There ought to be more efficient methods of tuning (DeepSpeed / ZeRO, NeoX) than the ones presented here, but folks may find this useful already.
+
+## Reference
+
+| Index | Name                                                         | Note                                           |
+| ----- | ------------------------------------------------------------ | ---------------------------------------------- |
+| 1     | https://huggingface.co/docs/transformers/perf_train_gpu_one  | Official Tutorial                              |
+| 2     | https://huggingface.co/docs/transformers/perf_train_gpu_many | Official Tutorial                              |
+| 3     | https://github.com/zphang/minimal-llama                      | Jason Phang                                    |
+| 4     | https://huggingface.co/docs/transformers/main_classes/deepspeed | HuggingFace Documentation                      |
+| 5     | https://huggingface.co/blog/4bit-transformers-bitsandbytes   | Fine-Tuning LLMs like llama, gpt-neox, and t5. |
+| 6     | https://huggingface.co/blog/pytorch-ddp-accelerate-transformers | Official Tutorial                              |
+

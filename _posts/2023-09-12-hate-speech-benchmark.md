@@ -21,7 +21,11 @@ The benchmark will provide the following:
 
 - Step 1: Randomly select a test set and a validation set. 
 
-    The two datasets must be randomly selected as this makes the two datasets independent from each other in terms of label distribution and source distribution. Throughout the experiments, the test and validation sets are the same; this is helpful as we could see the (dis)advantages of one method in the `wandb` dashboard.
+    The two datasets **must be** randomly selected for the following reasons:
+
+    1. The distribution of the validation set will be similar to the test set. Using the randomly sampled validation set will help select the models that more are likely to perform well on the test set.
+
+    2. This makes the two datasets independent from each other in terms of label distribution and source distribution. Throughout the experiments, the test and validation sets are the same; this is helpful as we could see the (dis)advantages of one method in the `wandb` dashboard.
 
 - Step 2: Sampling train set using different (a) data selection methods. 
 
