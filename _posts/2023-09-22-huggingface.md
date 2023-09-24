@@ -17,8 +17,20 @@ categories:
 ## Evaluation, Logging, and Saving
 
 - It is better to specify both `logging_steps` and`eval_steps` as  `1 / n` (with `logging_strategy` and `eval_strategy` set to `"steps"`), where `n` is number of loggings or evaluations. This will help collect enough samples even if we have fewer training steps or training epochs.
-- `save_strategy`, `save_steps` , and `save_total_limit` should be set to reasonable numbers as saving checkpoints could take long time. For larger models, it is better to save once per epoch.
+
+- After setting `eval_steps` to a decimal number, `save_strategy` has to be set to `"steps"`, `save_steps` has to be multiple of `eval_steps`. As saving larger models will take long time, we need to set `save_steps` to a reasonable number. For example, if we would like to evaluate the model for 10 times (i.e., `eval_steps` is set to 0.1), we should save twice (i.e., `save_steps` is set to 0.5).
+
+    Besides, to prevent the checkpoints to use too much space, we need to also set `save_total_limit` to a reasonable number. 
+
 - It is recommended to use `wandb`. In order to do so, we need to set `report_to` and `run_name`. Note that if we need to use custom name on `wandb` portal, we should **not** rename the default output directory.
+
+## Testing Training Scripts
+
+| Index | Hyperparameter                                              | Value   | Notes |
+| ----- | ----------------------------------------------------------- | ------- | ----- |
+| 1     | `max_train_samples`, `max_eval_samples`, `max_test_samples` | 100     |       |
+| 2     | `save_strategy`                                             | `no`    |       |
+| 3     | `load_best_model_at_end`                                    | `False` |       |
 
 ## Checkpoints
 
@@ -40,11 +52,44 @@ If a model has been fine-tuned, then most likely there will be only updates in `
 
 However, if we save checkpoints during training, then the code of saving checkpoints has already been taken care of.
 
+# Inference
+
+It does not seem to easily make inferences on multiple devices. However, we could use optimized attention implemented `torch>=2.0.0` and `optimum` to reduce the time and space requirement.
+
 # Instruction Tuning
 
-It is possible to instruction-tune a language model using the [official example script](https://github.com/huggingface/transformers/tree/main/examples/pytorch/language-modeling) `run_clm.py` working with `gpt2` or the [Phil Schimid's blog](https://www.philschmid.de/fine-tune-flan-t5-deepspeed) working with `google/flan-t5-xl`. However, the `SFTTrainer()` provided in the `trl` provides an another layer of abstraction; this makes instruction-tuning even easier and cleaner.
+## Using the Basic transformers Library
 
+It is possible to instruction-tune a language model using the [official example script](https://github.com/huggingface/transformers/tree/main/examples/pytorch/language-modeling) `run_clm.py` working with `gpt2` or the [Phil Schimid's blog](https://www.philschmid.de/fine-tune-flan-t5-deepspeed) working with `google/flan-t5-xl`. 
 
+## Using the trl Library
+
+ `SFTTrainer()` provided in the `trl` provides an another layer of abstraction; this makes instruction-tuning even easier and cleaner. However, the downsides are (1) it could not work well with `deepspeed`, and (2) it does not support everything (for example, setting `save_steps` to a decimal number) defined in `transformers.TraingingArguments`; this limits its flexibility.
+
+- Tuning a Model with the Language Modeling Objective
+
+    This could be done in fewer than 14 lines of code. For example, tuning an LM on the `imdb` dataset. We could add more configurations to the code skeleton below (for example, PEFT, 4-bit / 8-bit) following the example script [here](https://github.com/huggingface/trl/blob/main/examples/scripts/sft_trainer.py).
+
+```python
+from datasets import load_dataset
+from transformers import AutoModelForCausalLM
+from trl import SFTTrainer
+
+dataset = load_dataset("imdb", split="train")
+model = AutoModelForCausalLM.from_pretrained("facebook/opt-350m")
+
+trainer = SFTTrainer(
+    model,
+    train_dataset=dataset,
+    dataset_text_field="text",
+    max_seq_length=512,
+)
+trainer.train()
+```
+
+- Tuning a Model using the Completions - Self-Instruction
+
+    
 
 # Tuning Large Models with Constrained Hardware
 
