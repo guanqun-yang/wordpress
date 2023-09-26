@@ -16,11 +16,19 @@ categories:
 
 ## Evaluation, Logging, and Saving
 
-- It is better to specify both `logging_steps` and`eval_steps` as  `1 / n` (with `logging_strategy` and `eval_strategy` set to `"steps"`), where `n` is number of loggings or evaluations. This will help collect enough samples even if we have fewer training steps or training epochs.
+- It is better to set `logging_steps` to `1` and `logging_strategy` to `step` as logging is beneficial whatsoever yet does not cause significant overhead.
+- It is better to specify`eval_steps` as  `1 / n`  and `eval_strategy` to `"steps"`, where `n` is number evaluations. This will help collect enough samples even if we have fewer training steps or training epochs.
+- `load_best_model_at_end=True` has to pair with the following configurations ([answer](https://discuss.huggingface.co/t/save-only-best-model-in-trainer/8442/5)). It will save the best checkpoints according to the evaluations done throughout the training process:
+    - After setting `eval_steps` to a decimal number, `save_strategy` has to be set to `"steps"` since `save_steps` has to be multiple of `eval_steps`. As saving larger models will take long time, we need to set `save_steps` to a reasonable number. For example, if we would like to evaluate the model for 10 times (i.e., `eval_steps` is set to 0.1), we should save twice (i.e., `save_steps` is set to 0.5).
 
-- After setting `eval_steps` to a decimal number, `save_strategy` has to be set to `"steps"`, `save_steps` has to be multiple of `eval_steps`. As saving larger models will take long time, we need to set `save_steps` to a reasonable number. For example, if we would like to evaluate the model for 10 times (i.e., `eval_steps` is set to 0.1), we should save twice (i.e., `save_steps` is set to 0.5).
+    - `save_total_limit` governs the saving of the latest models; it is likely to save `k+1` checkpoints even if `save_total_limit=k` as the best model is not the latest `k` models saved.
 
-    Besides, to prevent the checkpoints to use too much space, we need to also set `save_total_limit` to a reasonable number. 
+
+| Index | Hyperparameter                   | Value                                      |
+| ----- | -------------------------------- | ------------------------------------------ |
+| 1     | `save_strategy`, `eval_strategy` | `steps` or `epoch`; they have to be same.  |
+| 2     | `eval_steps`                     | A reasonable value such as `0.1`.          |
+| 3     | `save_steps`                     | Must be the multiples of the `eval_steps`. |
 
 - It is recommended to use `wandb`. In order to do so, we need to set `report_to` and `run_name`. Note that if we need to use custom name on `wandb` portal, we should **not** rename the default output directory.
 
