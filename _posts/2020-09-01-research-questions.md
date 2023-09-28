@@ -13,9 +13,9 @@ Here I document a list of general research questions that warrants searching, re
 
 - Model Capacity
 
-    What is the broadly applicable measure of model capacity similar to [a hardware performance benchmark](https://www.maxon.net/en/cinebench) that helps practitioners pick up the suitable model to start building their applications? 
-
-    - A straightforward choice is the number of parameters a model has. However, one may question the correlation between the parameter count and this measure, i.e., the parameter count may need to be a valid proxy for the model capacity.
+    - What is the broadly applicable measure of model capacity similar to [a hardware performance benchmark](https://www.maxon.net/en/cinebench) that helps practitioners pick up the suitable model to start building their applications? 
+    - Note: Model capacity mostly determines the performance upper bound of a model. The actual model performance may also related to how the model is trained with what set of hyperparameters.
+        - Hypothesis: A straightforward choice is the number of parameters a model has. However, one may question the correlation between the parameter count and this measure, i.e., the parameter count may need to be a valid proxy for the model capacity.
 
 - Generalization
 
