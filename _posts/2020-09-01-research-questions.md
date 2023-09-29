@@ -33,14 +33,13 @@ Here I document a list of general research questions that warrants searching, re
         - Hypothesis: If the $K$ samples are all annotated by an oracle, then any *reasonably capable* model (needs more precise definition) can generalize well. 
         - Tentative Experiment: If we replace the words in the list with their hypernyms, will the system performance drop?
     
-    - Life Long Learning
+    - Life Long and Continual Learning
     
         Suppose we have a generalizable model at time $t$ if we want the model to serve the users indefinitely. What are the strategies that make the model generalize well across time?
     
 - Data Distribution
 
-    In machine learning theory, we often encounter concepts such as i.i.d. Understanding "distribution" for tabular data is straightforward, where the list of variables forms a joint distribution that predicts the label y. However, what could be considered a "distribution" for texts is less clear.
-    Note that this is possible for images, for example, modeling the gray-scale images as a Dirichlet multimodal distribution that predicts digits from 0 to 9.
+    In machine learning theory, we often encounter concepts such as i.i.d. Understanding "distribution" for tabular data is straightforward, where the list of variables forms a joint distribution that predicts the label y. However, what could be considered a "distribution" for texts is less clear. Note that this is possible for images, for example, modeling the gray-scale images as a Dirichlet multimodal distribution that predicts digits from 0 to 9.
 
 # Special Issues
 
