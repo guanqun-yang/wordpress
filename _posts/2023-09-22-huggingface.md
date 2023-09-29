@@ -248,3 +248,88 @@ According to [Jason Phang](https://github.com/zphang/minimal-llama), the ZeRO is
 | 5     | https://huggingface.co/blog/4bit-transformers-bitsandbytes   | Fine-Tuning LLMs like llama, gpt-neox, and t5. |
 | 6     | https://huggingface.co/blog/pytorch-ddp-accelerate-transformers | Official Tutorial                              |
 
+# Using simpletransformers
+
+## Minimal Working Example
+
+`simpletransformers` could more quickly and cleanly train and evaluate PLMs compared to `transformers`, where the  `simpletransformers` library is based upon; it also comes with full support from `wandb`. For example, fine-tuning `bert-base-uncased` on the `imdb` dataset:
+
+```python
+import os
+
+os.environ["TOKENIZERS_PARALLELISM"] = "false"
+
+import pandas as pd
+
+from datasets import load_dataset
+from sklearn.model_selection import train_test_split
+from simpletransformers.classification import (
+    ClassificationModel,
+    ClassificationArgs
+)
+
+model_args = ClassificationArgs()
+
+model_class = "roberta"
+model_name = "roberta-base"
+
+# see full list of configurations:
+# https://simpletransformers.ai/docs/usage/#configuring-a-simple-transformers-model
+# critical settings
+model_args.learning_rate = 1e-5
+model_args.num_train_epochs = 3
+model_args.train_batch_size = 32
+model_args.eval_batch_size = 32
+model_args.gradient_accumulation_steps = 1
+model_args.fp16 = False
+model_args.max_seq_length = 128
+model_args.n_gpu = 4
+model_args.use_multiprocessing = False
+model_args.use_multiprocessing_for_evaluation = False
+
+# saving settings
+model_args.no_save = False
+model_args.overwrite_output_dir = True
+model_args.output_dir = "outputs/"
+model_args.best_model_dir = "{}/best_model".format(model_args.output_dir)
+model_args.save_model_every_epoch = False
+model_args.save_best_model = True
+model_args.save_steps = 2000
+
+# evaluation settings
+model_args.evaluate_during_training = True
+model_args.evaluate_during_training_steps = 100
+
+# logging settings
+model_args.silent = False
+model_args.logging_steps = 50
+model_args.wandb_project = "simpletransformers"
+model_args.wandb_kwargs = {
+    "name": "Test"
+}
+
+ds = load_dataset("imdb")
+
+# data splits
+# there has to be "text" and "labels" columns in the input dataframe
+df = pd.DataFrame(ds["train"]).rename(columns={"label": "labels"})
+
+train_df, eval_df = train_test_split(df.sample(frac=0.1), test_size=0.2)
+test_df = pd.DataFrame(ds["test"]).sample(frac=0.1).rename(columns={"label": "labels"})
+
+# training
+model = ClassificationModel(
+    model_class,
+    model_name,
+    num_labels=2,
+    args=model_args,
+)
+model.train_model(
+    train_df=train_df,
+    eval_df=eval_df
+)
+
+# test
+result, model_outputs, wrong_predictions = model.eval_model(test_df)
+```
+
