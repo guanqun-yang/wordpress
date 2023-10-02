@@ -30,7 +30,7 @@ Distribution shifts happen when test conditions are "newer" or "smaller" compare
 
     The test distribution is a **subpopulation** of the training distributions. For example, degraded facial recognition accuracy on the underrepresented demographic groups ([3] and [4]).
 
-The dataset includes regular and medical image, graph, and text datasets; there are 3 out of 10 are text datasets, where the less familiar Py150 is a code completion dataset. Note that the authors fail to cleanly define why there are subpopulation shifts for Amazon Reviews and Py150 datasets as the authors acknowledge below:
+The dataset includes regular and medical image, graph, and text datasets; 3 out of 10 are text datasets, where the less familiar Py150 is a code completion dataset. Note that the authors fail to cleanly define why there are subpopulation shifts for Amazon Reviews and Py150 datasets as the authors acknowledge below:
 
 > However, it is not always possible to cleanly define a problem as one or the other; for example, a test domain might be present in the training set but at a very low frequency.
 
@@ -42,10 +42,52 @@ For Amazon Reviews dataset, one viable explanation on why there is subpopulation
 | Amazon Reviews | Yes; due to disjoint users in the train, OOD validation, and OOD test set; there are also ID validation and ID test set from same users as the training set. | Yes                                                          |                                                 |
 | Py150          | Yes; due to disjoint repositories in train, OOD validation, and OOD test set; there are also ID validation and ID test set from same repositories as the training set. | Yes                                                          |                                                 |
 
-Importantly, the authors note that performance drop is a necessary condition of distribution shifts: distribution shifts do not lead to performance drop on the test set. However, if we observe that degraded performance, we could consider either domain generalization or subpopulation shift as potential causes. Here are the examples:
+Importantly, the authors note that performance drop is a necessary condition of distribution shifts. That is
 
-- Time Shift in Amazon Review Dataset:
-- Time and User Shift in Yelp Dataset:
+- The presence of distribution shifts do not lead to performance drop on the test set. 
+
+- If we observe degraded test set performance, then there might be distribution shifts (either domain generalization or subpopulation shift). Here are two examples:
+
+    - Time Shift in Amazon Review Dataset: The model trained on 2000 - 2013 datasets perform **similarly well** (with 1.1% difference in F1) as the model trained on 2014 - 2018 datasets on the test set sampled from 2014 - 2018.
+
+    - Time and User Shift in Yelp Dataset: For the time shift, the setting is similar as Amazon Reviews; the authors observe a maximum of 3.1% difference. For the user shift, whether the data splits are disjoint in terms of users only influence the scores very little.
+
+
+# Experiments
+
+Here is a summary of the authors' experiments. Note that Yelp is not the part of the official dataset because it shows no evidence for distribution shift.
+
+| Index | Dataset        | Shift         | Existence |
+| ----- | -------------- | ------------- | --------- |
+| 1     | Amazon Reviews | Time          | No        |
+| 2     | Amazon Reviews | Category      | **Maybe** |
+| 3     | CivilComments  | Subpopulation | Yes       |
+| 4     | Yelp           | Time          | No        |
+| 5     | Yelp           | User          | No        |
+
+## Amazon Reviews
+
+The authors train a model on one category ("Single") and four categories ("Multiple", "Multiple" is a superset of "Single") and measure the test accuracy on other 23 disjoint categories.
+
+The authors find that (1) training with more categories modestly yet consistently improves the scores, (2) the OOD category (for example, "All Beauty") could have an even higher score than the ID categories, (3) the authors do **not** see strong evidence of domain shift as they could not rule out other confounding factors. Note that the authors here use the very vague term "intrinsic difficulty" to gloss over something they could not explain well.
+
+> While the accuracies on some unseen categories are lower than the train-to-train in-distribution accuracy, it is unclear whether the performance gaps stem from the distribution shift or differences in intrinsic difficulty across categories; in fact, the accuracy is higher on many unseen categories (e.g., All Beauty) than on the in-distribution categories, illustrating the importance of accounting for intrinsic difficulty. 
+>
+> To control for intrinsic difficulty, we ran a test-to-test comparison on each target category. We controlled for the number of training reviews to the extent possible; the standard model is trained on 1 million reviews in the official split, and each test-to-test model is trained on 1 million reviews or less, as limited by the number of reviews per category. We observed performance drops on some categories, for example on Clothing, Shoes, and Jewelry (83.0% in the test-to-test setting versus 75.2% in the official setting trained on the four different categories) and on Pet Supplies (78.8% to 76.8%). However, on the remaining categories, we observed more modest performance gaps, if at all. While we thus found no evidence for significance performance drops for many categories, these results do not rule out such drops either: one confounding factor is that some of the oracle models are trained on significantly smaller training sets and therefore underestimate the in-distribution performance.
+
+![image-20231002193306896](https://raw.githubusercontent.com/guanqun-yang/remote-images/master/2023/10/upgit_20231002_1696289586.png)
+
+The authors also control the size consistent for "Single" and "Multiple" settings. They show that training data with more domains (with increased diversity) is beneficial for improving OOD accuracies.
+
+## CivilComments
+
+Each sample in the dataset has a piece of text, 1 binary toxicity labels, and 8 target labels (each text could include zero, one, or more identities). The authors use 8 TPR and TNR values to measure the performance (totaling 16 numbers).
+
+The authors observe subpopulation shifts: despite 92.2% average accuracy, the worst number among 16 numbers is merely 57.4%. A comparison of 4 mitigation methods shows that (1) the group DRO has the best performance, (2) the reweighting baseline is **quite strong**, the improved versions of reweighting (i.e., CORAL and IRM) are likely less useful.
+
+In light of the effectiveness of the group DRO algorithm, the authors extend the number of groups to $2 ^ 9= 512$, the resulting performance does not improve.
+
+![image-20231002190304265](https://raw.githubusercontent.com/guanqun-yang/remote-images/master/2023/10/upgit_20231002_1696287784.png)
 
 # Additional Notes
 
