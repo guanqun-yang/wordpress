@@ -39,7 +39,13 @@ Here I document a list of general research questions that warrants searching, re
     
 - Data Distribution
 
-    In machine learning theory, we often encounter concepts such as i.i.d. Understanding "distribution" for tabular data is straightforward, where the list of variables forms a joint distribution that predicts the label y. However, what could be considered a "distribution" for texts is less clear. Note that this is possible for images, for example, modeling the gray-scale images as a Dirichlet multimodal distribution that predicts digits from 0 to 9.
+    In machine learning theory, we often encounter concepts such as "i.i.d." Understanding "distribution" for tabular data is straightforward, where the list of variables forms a joint distribution that predicts the label y. However, what could be considered a "distribution" for texts is less clear. Note that this is possible for images, for example, modeling the gray-scale images as a Dirichlet multimodal distribution that predicts digits from 0 to 9.
+    
+- Data Annotation
+
+    The labels in the NLP tasks have different levels of subjectivity. For example, the grammatical error correction is less subjective, sentiment classification is moderately subjective, and the topics like hate speech, suicidal ideation [1], and empathy [2] are either extremely subjective or requires expert knowledge.
+
+    The difficulty here it to mitigate the ambiguity during data annotation and make sure the information available in texts matches well with the label. Ideally, if we know the true underlying label of a text, we could fine-tune any reasonably capable model to generalize well.
 
 # Special Issues
 
@@ -47,3 +53,5 @@ Here I document a list of general research questions that warrants searching, re
 
 # References
 
+1. [ScAN: Suicide Attempt and Ideation Events Dataset](https://aclanthology.org/2022.naacl-main.75) (Rawat et al., NAACL 2022)
+2. [A Computational Approach to Understanding Empathy Expressed in Text-Based Mental Health Support](https://aclanthology.org/2020.emnlp-main.425) (Sharma et al., EMNLP 2020)
