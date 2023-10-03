@@ -30,6 +30,31 @@ Distribution shifts happen when test conditions are "newer" or "smaller" compare
 
     The test distribution is a **subpopulation** of the training distributions. For example, degraded facial recognition accuracy on the underrepresented demographic groups ([3] and [4]).
 
+# Evaluation
+
+The goal of OOD generalization is training a model on data sampled from training distribution $P^\text{train}$ that performs well on the test distribution $P^\text{test}$. Note that as we could not assume the data from two distributions are equally difficult to learn, the **most ideal** case is to at least train two models (or even more ideally three models) and take 2 (or 3) measurements:
+
+| Index | Goal                                                     | Training Data                                           | Testing Data                                             |
+| ----- | -------------------------------------------------------- | ------------------------------------------------------- | -------------------------------------------------------- |
+| 1     | Measuring OOD Generalization                             | $D ^ \text{train} \sim P^ \text{train}$                 | $D ^ \text{test} \sim P^ \text{test}$                    |
+| 2     | Ruling Out Confounding Factor of Distribution Difficulty | $D ^ \text{test} _ \text{heldout}  \sim P^ \text{test}$ | $D ^ \text{test} \sim P^ \text{test}$                    |
+| 3     | (Optional) Sanity Check                                  | $D ^ \text{train} \sim P^ \text{train}$                 | $D ^ \text{train} _ \text{heldout} \sim P^ \text{train}$ |
+
+However, the generally small test sets make the measurement 2 hard or even impossible: we could not find an additional held-out set $D ^ \text{test} _ \text{heldout} $ that matches the size of $D ^ \text{train}$ to train a model.
+
+The authors therefore define 4 relaxed settings:
+
+| Index | Setting                                                      | Training Data                                                | Testing Data                                                 |
+| ----- | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| 1     | Mixed-to-Test                                                | Mixture of $P^ \text{train}$ and $P^ \text{test}$            | $P^ \text{train}$                                            |
+| 2     | Train-to-Train (aka. setting 3 above)                        | $P^ \text{train}$                                            | $P^ \text{train}$                                            |
+| 3     | Average. This is a special case of 2; it is only suitable for subpopulation shift, such as Amazon Reviews and CivilComments. | Average Performance                                          | Worst-Group Performance                                      |
+| 4     | Random Split. This setting destroys the $P ^ \text{test}$.   | $\tilde{D} ^ \text{train} := \mathrm{Sample}(D ^ \text{train} \cup D ^ \text{test})$ | $(D ^ \text{train} \cup D ^ \text{test}) \backslash \tilde{D} ^ \text{train}$ |
+
+![image-20231003161354088](https://raw.githubusercontent.com/guanqun-yang/remote-images/master/2023/10/upgit_20231003_1696364034.png)
+
+# Dataset
+
 The dataset includes regular and medical image, graph, and text datasets; 3 out of 10 are text datasets, where the less familiar Py150 is a code completion dataset. Note that the authors fail to cleanly define why there are subpopulation shifts for Amazon Reviews and Py150 datasets as the authors acknowledge below:
 
 > However, it is not always possible to cleanly define a problem as one or the other; for example, a test domain might be present in the training set but at a very low frequency.
@@ -85,7 +110,7 @@ Each sample in the dataset has a piece of text, 1 binary toxicity labels, and 8 
 
 The authors observe subpopulation shifts: despite 92.2% average accuracy, the worst number among 16 numbers is merely 57.4%. A comparison of 4 mitigation methods shows that (1) the group DRO has the best performance, (2) the reweighting baseline is **quite strong**, the improved versions of reweighting (i.e., CORAL and IRM) are likely less useful.
 
-In light of the effectiveness of the group DRO algorithm, the authors extend the number of groups to $2 ^ 9= 512$, the resulting performance does not improve.
+In light of the effectiveness of the group DRO algorithm, the authors extend the number of groups to $2 ^ 9= 512$, the resulting performance does **not** improve.
 
 ![image-20231002190304265](https://raw.githubusercontent.com/guanqun-yang/remote-images/master/2023/10/upgit_20231002_1696287784.png)
 
