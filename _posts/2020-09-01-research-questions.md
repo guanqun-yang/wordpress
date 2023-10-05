@@ -62,13 +62,13 @@ Here I document a list of general research questions that warrants searching, re
 
     Formally, we have a list of specifications in the format of $(s_1, D _ 1, D _ 1 ^ \text{heldout}), (s _ 2, D _ 2, D _ 2 ^ \text{heldout}), \cdots$, the model $\mathcal{M}_0$ trained on $D _ \text{train}$ does well on $D _\text{train} ^\text{heldout}$ but poorly on $D _ 1 \cup D _  2 \cup D _ 3 \cdots$ as indicated by failure rate $\mathrm{FR}$. We additionally have a new labeled dataset $D _ \text{unused}$. The goal is to sample $D _ \text{unused}$ using $(s_1,D _ 1 ^ \text{heldout}), (s _ 2, D _ 2 ^ \text{heldout}), \cdots$.  After we train numerous models:
 
-    - $\mathcal{M} _ 1$: Training the model on $D _ \text{unused} \cup D _ \text{train}$. 
-    - $\mathcal{M} _ 2$: Training the model on  $\mathrm{Sample}(D _ \text{unused}) \cup D _ \text{train}$.
+    - $\mathcal{M} _ 1$: Training the model on $\mathrm{RandomSample}(D _ \text{unused}) \cup D _ \text{train}$.
+    - $\mathcal{M} _ 2$: Training the model on  $\mathrm{Sample}(D _ \text{unused}) \cup D _ \text{train}$. Here the sample is number of samples is same.
 
     We have the following two conditions hold in terms of the failure rates $\mathrm{FR}$:
 
-    - $D _ \text{train} ^ \text{heldout}$: $\mathcal{M} _ 0 \approx \mathcal{M} _ 1 \approx \mathcal{M} _ 2$
-    - $D _ 1 \cup D _  2 \cup D _ 3 \cdots$: $\mathcal{M} _ 2 \ll \mathcal{M} _ 0$, $\mathcal{M} _ 2 \ll \mathcal{M} _ 1$.
+    - $D _ \text{train} ^ \text{heldout}$: $\mathcal{M} _ 0 \approx \mathcal{M} _ 1 \approx \mathcal{M} _ 2$.
+    - $D _ 1 \cup D _  2 \cup D _ 3 \cdots$: $\mathcal{M} _ 2 \ll \mathcal{M} _ 0$, $\mathcal{M} _ 2 \ll \mathcal{M} _ 1$. That is, the specification-following data selection improves over random selection on the specification-based benchmarks.
 
     > - Assumption: The samples $x _ {ij}$ is fully specified by the specification $s _ i$.
     > - Note: If the annotations of a dataset strictly follows the annotation codebook, then the machine learning learns the specifications in the codebook. The process described above is a reverse process: we have a model that is already trained by others; we want to use the model in a new application but do not want to or can not afford to relabel the entire dataset, what is the minimal intervention we could apply to the dataset so that the model could quickly meets my specifications?
