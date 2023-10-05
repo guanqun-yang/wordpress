@@ -60,7 +60,7 @@ Here I document a list of general research questions that warrants searching, re
 
     > - Unverified Hypothesis: the feedback signal is highly (inversely) correlated with the failure rate on the benchmark.
 
-    Formally, we have a list of specifications in the format of $(s_1, D _ 1, D _ 1 ^ \text{heldout}), (s _ 2, D _ 2, D _ 2 ^ \text{heldout}), \cdots$, the model $\mathcal{M}_0$ trained on $D _ \text{train}$ does well on $D _\text{train} ^\text{heldout}$ but poorly on $D _ 1 \cup D _  2 \cup D _ 3 \cdots$ as indicated by failure rate $\mathrm{FR}$. We additionally have a new labeled dataset $D _ \text{unused}$. The goal is to sample $D _ \text{unused}$ using $(s_1,D _ 1 ^ \text{heldout}), (s _ 2, D _ 2 ^ \text{heldout}), \cdots$.  After we train numerous models:
+    Formally, we have a list of specifications in the format of $(s_1, D _ 1, D _ 1 ^ \text{heldout}), (s _ 2, D _ 2, D _ 2 ^ \text{heldout}), \cdots$, the model $\mathcal{M}_0$ trained on $D _ \text{train}$ does well on $D _ \text{train} ^\text{heldout}$ but poorly on $D _ 1 \cup D _  2 \cup D _ 3 \cdots$ as indicated by failure rate $\mathrm{FR}$. We additionally have a new labeled dataset $D _ \text{unused}$. The goal is to sample $D _ \text{unused}$ using $(s_1,D _ 1 ^ \text{heldout}), (s _ 2, D _ 2 ^ \text{heldout}), \cdots$.  After we train numerous models:
 
     - $\mathcal{M} _ 1$: Training the model on $\mathrm{RandomSample}(D _ \text{unused}) \cup D _ \text{train}$.
     - $\mathcal{M} _ 2$: Training the model on  $\mathrm{Sample}(D _ \text{unused}) \cup D _ \text{train}$. Here the sample is number of samples is same.
