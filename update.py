@@ -22,7 +22,7 @@ def read_md(file_path):
 
 
 base_paths = [
-    pathlib.Path("/home/yang/Dropbox/readings"),
+    pathlib.Path("/Users/yang/Dropbox/readings"),
 ]
 
 forbidden_list = [

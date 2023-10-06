@@ -19,11 +19,11 @@ Distribution shifts happen when test conditions are "newer" or "smaller" compare
 
 - Newer: Domain Generalization
 
-    The test distribution is related to but distinct (aka. **new** or unseen during trainig) to the training distributions. Note that the test conditions are not necessarily a superset of the training conditions; they are not "larger" compared to the "smaller" case described below. 
+    The test distribution is related to but distinct (aka. **new** or unseen during training) to the training distributions. Note that the test conditions are not necessarily a superset of the training conditions; they are not "larger" compared to the "smaller" case described below. 
 
     Here are two typical examples of domain generalization described in the paper:
 
-    - Training a model based on patient information from some hospitals and expect the model to generalize to many more hospitals; these hospitals may or may not be  a superset of the hospitals we collect training data from.
+    - Training a model based on patient information from some hospitals and expect the model to generalize to many more hospitals; these hospitals may or may not be a superset of the hospitals we collect training data from.
     - Training an animal recognition model on images taken from some existing cameras and expect the model to work on images taken on the newer cameras.
 
 - Smaller: Subpopulation Shift

@@ -2,3 +2,5 @@ diy_config.txt
 .DS_Store
 
 .idea/
+sync.sh
+update.py
