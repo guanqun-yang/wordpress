@@ -35,3 +35,7 @@ The retrieval model has been trained for 40 epochs for larger datasets and 100 e
     >   This approach obtains a score of 39.8 EM, which suggests that our strategy of training a strong retriever and reader in isolation can leverage effectively available supervision, while outperforming a comparable joint training approach with a simpler design.
 
 -   The inner product of unit vectors is indeed the cosine similarity.
+
+# Code
+
+HuggingFace provides [classes](https://huggingface.co/docs/transformers/v4.34.0/model_doc/dpr) for DPR. The Retrieval Augmented Generation (RAG) is one [example](https://github.com/huggingface/transformers/tree/main/examples/research_projects/rag) that fine-tunes using DPR to improve knowledge-intense text generation.
