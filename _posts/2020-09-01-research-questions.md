@@ -60,14 +60,16 @@ Here I document a list of general research questions that warrants searching, re
 
     > - Unverified Hypothesis: the feedback signal is highly (inversely) correlated with the failure rate on the benchmark.
 
-    Formally, we have a list of specifications in the format of $(s_1, D _ 1, D _ 1 ^ \text{heldout}), (s _ 2, D _ 2, D _ 2 ^ \text{heldout}), \cdots$, the model $\mathcal{M}_0$ trained on $D _ \text{train}$ does well on $D _ \text{train} ^\text{heldout}$ but poorly on $D _ 1 \cup D _  2 \cup D _ 3 \cdots$ as indicated by failure rate $\mathrm{FR}$. We additionally have a new labeled dataset $D _ \text{unused}$. The goal is to sample $D _ \text{unused}$ using $(s_1,D _ 1 ^ \text{heldout}), (s _ 2, D _ 2 ^ \text{heldout}), \cdots$.  After we train numerous models:
+    Formally, we have a list of specifications in the format of $(s_1, D _ 1, D _ 1 ^ \text{heldout}), (s _ 2, D _ 2, D _ 2 ^ \text{heldout}), \cdots$, the model $\mathcal{M}_0$ trained on $D _ \text{train}$ does well on $D _ \text{train} ^\text{heldout}$ but poorly on $D _ 1 \cup D _  2 \cup D _ 3 \cdots$ as indicated by failure rate $\mathrm{FR}$. We additionally have a new labeled dataset $D _ \text{unused}$. The goal is to sample $D _ \text{unused}$ using $(s_1,D _ 1 ^ \text{heldout}), (s _ 2, D _ 2 ^ \text{heldout}), \cdots$: $\mathrm{Sample}(D _ \text{unused})$; we also have a random sample with same size $\mathrm{RandomSample}(D _ \text{unused})$ as baseline.
 
-    > - Note: The $D _ i$ and $D _ i ^ \text{heldout}$ are completely different. For example, if the specification $s _ i$ is operationalized through templates, these two sets are disjoint in terms of templates. The only thing there exists low level of semantic underspecification [3] for $D _ i$ and $D _ i ^ \text{heldout}$ with respect to $s _ i$.
+    > - Note: The $D _ i$ and $D _ i ^ \text{heldout}$ are completely different. For example, if the specification $s _ i$ is operationalized through templates, these two sets are disjoint in terms of templates. What we are certain about  $D _ i$ and $D _ i ^ \text{heldout}$ is that they are ideally sufficient and necessary with respect to $s _ i$; practically, the semantic underspecification of them are low [3].
     
-    - $\mathcal{M} _ 1$: Training the model on $\mathrm{RandomSample}(D _ \text{unused}) \cup D _ \text{train}$.
-    - $\mathcal{M} _ 2$: Training the model on  $\mathrm{Sample}(D _ \text{unused}) \cup D _ \text{train}$. Here the sample is number of samples is same.
-
-    We have the following two conditions hold in terms of the failure rates $\mathrm{FR}$:
+    There are a lot of things we could do with $\mathrm{RandomSample}(D _ \text{unused})$ and $\mathrm{Sample}(D _ \text{unused})$. For example
+    
+    - Fine-tuning a model from scratch using $\mathrm{RandomSample}(D _ \text{unused}) \cup \mathcal{D} _ \text{train}$.
+    - Patching the model using constrained fine-tuning [4] and related approaches.
+    
+    Whichever method we choose, if we denote the intervention with $\mathrm{RandomSample}(D _ \text{unused})$ as $\mathcal{M} _ 1$ and $\mathrm{Sample}(D _ \text{unused})$ as $\mathcal{M} _ 2$. We expect the following conditions will hold:
     
     - $D _ \text{train} ^ \text{heldout}$: $\mathcal{M} _ 0 \approx \mathcal{M} _ 1 \approx \mathcal{M} _ 2$.
     - $D _ 1 \cup D _  2 \cup D _ 3 \cdots$: $\mathcal{M} _ 2 \ll \mathcal{M} _ 0$, $\mathcal{M} _ 2 \ll \mathcal{M} _ 1$. That is, the specification-following data selection improves over random selection on the specification-based benchmarks.
@@ -80,3 +82,4 @@ Here I document a list of general research questions that warrants searching, re
 1. [ScAN: Suicide Attempt and Ideation Events Dataset](https://aclanthology.org/2022.naacl-main.75) (Rawat et al., NAACL 2022)
 2. [A Computational Approach to Understanding Empathy Expressed in Text-Based Mental Health Support](https://aclanthology.org/2020.emnlp-main.425) (Sharma et al., EMNLP 2020)
 3. [Dealing with Semantic Underspecification in Multimodal NLP](https://aclanthology.org/2023.acl-long.675) (Pezzelle, ACL 2023)
+4. [[2012.00363] Modifying Memories in Transformer Models](https://arxiv.org/abs/2012.00363) (Zhu et al.)
