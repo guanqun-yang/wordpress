@@ -6,7 +6,7 @@ categories:
 - Reading
 ---
 
-> [[Semantic Scholar](https://www.semanticscholar.org/paper/Dense-Passage-Retrieval-for-Open-Domain-Question-Karpukhin-O%C4%9Fuz/79cd9f77e5258f62c0e15d11534aea6393ef73fe)] - [Code] - [Tweet] - [Video] - [Website] - [Slide]
+> [[Semantic Scholar](https://www.semanticscholar.org/paper/Dense-Passage-Retrieval-for-Open-Domain-Question-Karpukhin-O%C4%9Fuz/79cd9f77e5258f62c0e15d11534aea6393ef73fe)] - [Code] - [Tweet] - [[Video](https://slideslive.com/38939151/dense-passage-retrieval-for-opendomain-question-answering)] - [Website] - [Slide]
 >
 > Change Logs:
 >
@@ -26,7 +26,9 @@ The authors find that using the "in-batch negatives" is a simple and effective n
 
 ![image-20231006000405936](https://raw.githubusercontent.com/guanqun-yang/remote-images/master/2023/10/upgit_20231006_1696565045.png)
 
-The retrieval model has been trained for 40 epochs for larger datasets and 100 epochs for smaller ones with a learning rate `1e-5`
+The retrieval model has been trained for 40 epochs for larger datasets ("NQ", "TriviaQA", "SQuAD") and 100 epochs for smaller ones ("WQ", "TREC") with a learning rate `1e-5`. Note that the datasets the authors use to fine-tune the models are large. For example, [`natural_questions`](https://huggingface.co/datasets/natural_questions/viewer/default/train) is 143 GB.
+
+![image-20231009181325527](https://raw.githubusercontent.com/guanqun-yang/remote-images/master/2023/10/upgit_20231009_1696889605.png)
 
 # Additional Notes
 
@@ -38,4 +40,5 @@ The retrieval model has been trained for 40 epochs for larger datasets and 100 e
 
 # Code
 
-HuggingFace provides [classes](https://huggingface.co/docs/transformers/v4.34.0/model_doc/dpr) for DPR. The Retrieval Augmented Generation (RAG) is one [example](https://github.com/huggingface/transformers/tree/main/examples/research_projects/rag) that fine-tunes using DPR to improve knowledge-intense text generation.
+- HuggingFace provides [classes](https://huggingface.co/docs/transformers/v4.34.0/model_doc/dpr) for DPR. The Retrieval Augmented Generation (RAG) is one [example](https://github.com/huggingface/transformers/tree/main/examples/research_projects/rag) that fine-tunes using DPR to improve knowledge-intense text generation.
+- `simpletransformers` provides easy-to-use [interfaces](https://simpletransformers.ai/docs/retrieval-model/) to train DPR models; it even provides a routine to select hard negatives. The following is the complete code that fine-tunes 
