@@ -44,99 +44,99 @@ The retrieval model has been trained for 40 epochs for larger datasets ("NQ", "T
 
 - `simpletransformers` provides easy-to-use [interfaces](https://simpletransformers.ai/docs/retrieval-model/) to train DPR models; it even provides a routine to select hard negatives. The following is a minimal working example:
 
-    ```python
-    import os
-    import logging
-    
-    os.environ["WANDB_DISABLED"] = "false"
-    os.environ["TOKENIZERS_PARALLELISM"] = "false"
-    
-    import pandas as pd
-    from sklearn.model_selection import train_test_split
-    from simpletransformers.retrieval import (
-        RetrievalModel,
-        RetrievalArgs,
-    )
-    
-    from datasets import (
-        Dataset,
-        DatasetDict,
-    )
-    
-    logging.basicConfig(level=logging.INFO)
-    transformers_logger = logging.getLogger("transformers")
-    transformers_logger.setLevel(logging.WARNING)
-    
-    # trec_train.pkl and trec_dev.pkl are prepared from the original repository
-    # see: https://github.com/facebookresearch/DPR/blob/main/README.md
-    df = pd.read_pickle("../datasets/trec_train.pkl")
-    train_df, eval_df = train_test_split(df, test_size=0.2)
-    test_df = pd.read_pickle("../datasets/trec_dev.pkl")
-    
-    columns = ["query_text", "gold_passage", "title"]
-    
-    train_data = train_df[columns]
-    eval_data = eval_df[columns]
-    test_data = test_df[columns]
-    
-    # Configure the model
-    model_args = RetrievalArgs()
-    
-    model_args.num_train_epochs = 40
-    model_args.include_title = False
-    
-    # see full list of configurations:
-    # https://simpletransformers.ai/docs/usage/#configuring-a-simple-transformers-model
-    # critical settings
-    model_args.learning_rate = 1e-5
-    model_args.num_train_epochs = 40
-    model_args.train_batch_size = 32
-    model_args.eval_batch_size = 32
-    model_args.gradient_accumulation_steps = 1
-    model_args.fp16 = False
-    model_args.max_seq_length = 128
-    model_args.n_gpu = 1
-    model_args.use_multiprocessing = False
-    model_args.use_multiprocessing_for_evaluation = False
-    
-    # saving settings
-    model_args.no_save = False
-    model_args.overwrite_output_dir = True
-    model_args.output_dir = "outputs/"
-    model_args.best_model_dir = "{}/best_model".format(model_args.output_dir)
-    model_args.save_model_every_epoch = False
-    model_args.save_best_model = True
-    model_args.save_steps = 2000
-    
-    # evaluation settings
-    model_args.evaluate_during_training = True
-    model_args.evaluate_during_training_steps = 100
-    
-    # logging settings
-    model_args.silent = False
-    model_args.logging_steps = 50
-    model_args.wandb_project = "HateGLUE"
-    model_args.wandb_kwargs = {
-        "name": "DPR"
-    }
-    
-    model_type = "dpr"
-    context_encoder_name = "facebook/dpr-ctx_encoder-single-nq-base"
-    question_encoder_name = "facebook/dpr-question_encoder-single-nq-base"
-    
-    model = RetrievalModel(
-        model_type=model_type,
-        context_encoder_name=context_encoder_name,
-        query_encoder_name=question_encoder_name,
-        use_cuda=True,
-        cuda_device=0,
-        args=model_args
-    )
-    
-    # Train the model
-    model.train_model(train_data, eval_data=eval_data)
-    result = model.eval_model(eval_data)
-    ```
+```python
+import os
+import logging
+
+os.environ["WANDB_DISABLED"] = "false"
+os.environ["TOKENIZERS_PARALLELISM"] = "false"
+
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from simpletransformers.retrieval import (
+RetrievalModel,
+RetrievalArgs,
+)
+
+from datasets import (
+Dataset,
+DatasetDict,
+)
+
+logging.basicConfig(level=logging.INFO)
+transformers_logger = logging.getLogger("transformers")
+transformers_logger.setLevel(logging.WARNING)
+
+# trec_train.pkl and trec_dev.pkl are prepared from the original repository
+# see: https://github.com/facebookresearch/DPR/blob/main/README.md
+df = pd.read_pickle("../datasets/trec_train.pkl")
+train_df, eval_df = train_test_split(df, test_size=0.2)
+test_df = pd.read_pickle("../datasets/trec_dev.pkl")
+
+columns = ["query_text", "gold_passage", "title"]
+
+train_data = train_df[columns]
+eval_data = eval_df[columns]
+test_data = test_df[columns]
+
+# Configure the model
+model_args = RetrievalArgs()
+
+model_args.num_train_epochs = 40
+model_args.include_title = False
+
+# see full list of configurations:
+# https://simpletransformers.ai/docs/usage/#configuring-a-simple-transformers-model
+# critical settings
+model_args.learning_rate = 1e-5
+model_args.num_train_epochs = 40
+model_args.train_batch_size = 32
+model_args.eval_batch_size = 32
+model_args.gradient_accumulation_steps = 1
+model_args.fp16 = False
+model_args.max_seq_length = 128
+model_args.n_gpu = 1
+model_args.use_multiprocessing = False
+model_args.use_multiprocessing_for_evaluation = False
+
+# saving settings
+model_args.no_save = False
+model_args.overwrite_output_dir = True
+model_args.output_dir = "outputs/"
+model_args.best_model_dir = "{}/best_model".format(model_args.output_dir)
+model_args.save_model_every_epoch = False
+model_args.save_best_model = True
+model_args.save_steps = 2000
+
+# evaluation settings
+model_args.evaluate_during_training = True
+model_args.evaluate_during_training_steps = 100
+
+# logging settings
+model_args.silent = False
+model_args.logging_steps = 50
+model_args.wandb_project = "HateGLUE"
+model_args.wandb_kwargs = {
+"name": "DPR"
+}
+
+model_type = "dpr"
+context_encoder_name = "facebook/dpr-ctx_encoder-single-nq-base"
+question_encoder_name = "facebook/dpr-question_encoder-single-nq-base"
+
+model = RetrievalModel(
+model_type=model_type,
+context_encoder_name=context_encoder_name,
+query_encoder_name=question_encoder_name,
+use_cuda=True,
+cuda_device=0,
+args=model_args
+)
+
+# Train the model
+model.train_model(train_data, eval_data=eval_data)
+result = model.eval_model(eval_data)
+```
 
 
 # Code
