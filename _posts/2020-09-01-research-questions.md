@@ -47,6 +47,10 @@ Here I document a list of general research questions that warrants searching, re
     The labels in the NLP tasks have different levels of subjectivity. For example, the grammatical error correction is less subjective, sentiment classification is moderately subjective, and the topics like hate speech, suicidal ideation [1], and empathy [2] are either extremely subjective or requires expert knowledge.
 
     The difficulty here it to mitigate the ambiguity during data annotation and make sure the information available in texts matches well with the label. Ideally, if we know the true underlying label of a text, we could fine-tune any reasonably capable model to generalize well.
+    
+- Data Selection for Classification Tasks
+
+    As of 2023-10-11, I have not seen a single work on the data selection for classification tasks; there are plenty of works on optimizing data mixture for language model pretraining. One likely reason why this happens is that the quality of classification datasets depends on **both** texts and labels; investigating the label quality is hard.
 
 # Special Issues
 
