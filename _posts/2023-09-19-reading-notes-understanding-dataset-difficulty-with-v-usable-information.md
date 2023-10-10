@@ -6,7 +6,7 @@ categories:
 - Reading
 ---
 
-> [[Semantic Scholar](https://www.semanticscholar.org/paper/Understanding-Dataset-Difficulty-with-V-Usable-Ethayarajh-Choi/39d05ffbc06fdca54ea6a90cd6d7fca202809aaa)] - [[Code](https://github.com/kawine/dataset_difficulty)] - [[Tweet](https://twitter.com/ethayarajh/status/1449203922057400329)] - [[Video](https://www.youtube.com/watch?v=9TIlwtkcUsE)] - [Website] - [Slide]
+> [[Semantic Scholar](https://www.semanticscholar.org/paper/Understanding-Dataset-Difficulty-with-V-Usable-Ethayarajh-Choi/39d05ffbc06fdca54ea6a90cd6d7fca202809aaa)] - [[Code](https://github.com/kawine/dataset_difficulty)] - [[Tweet](https://twitter.com/ethayarajh/status/1449203922057400329)] - [[Video](https://icml.cc/virtual/2022/oral/16634)] - [Website] - [Slide]
 >
 > Change Logs:
 >
@@ -14,7 +14,7 @@ categories:
 
 # Overview
 
-The main contribution of the paper is a **model-dependent** metric to evaluate the difficulty of the aggregate and sample-wise difficulty of a dataset. This metric is appealing because it gives an estimate of each sample's difficulty; this is not possible by using accuracy or F1 score.
+The main contribution of the paper is a metric to evaluate the difficulty of the aggregate and sample-wise difficulty of a dataset for a model family $\mathcal{V}$: a lower score indicates a more difficult dataset. This metric is appealing because it gives an estimate of each sample's difficulty; this is not possible by using accuracy or F1 score.
 
 # Method
 
@@ -40,6 +40,10 @@ There are several applications when we use the proposed metric to rank the sampl
 - Identifying the annotation errors (Section 3).
 - Using the metric to select challenging samples for data selection, including training data selection, data augmentation, and TCP (Section 4).
 - Guiding the creation of new specifications as it is possible to compute the token-wise metric (Section 4.3).
+
+# Additional Notes
+
+- It is quite surprising that the CoLA dataset is more difficult than SNLI and MNLI according to the authors' measure. 
 
 # Reference
 
