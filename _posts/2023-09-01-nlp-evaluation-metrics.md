@@ -6,6 +6,8 @@ categories:
 - Basics
 ---
 
+[toc]
+
 # Overview
 
 This set of evaluation metrics I discuss in this post is organized based on the typical tasks in NLP (see [1]); they are:
@@ -15,6 +17,24 @@ This set of evaluation metrics I discuss in this post is organized based on the 
 - Generation: This category includes all tasks whose outputs are a sequence of tokens. For example, question answering, machine translation, text summarization and text simplification, and paraphrasing.
 - Retrieval
 - Regression
+
+There is also a section dedicated to basic statistics, such as correlations, confidence intervals, and p-values.
+
+# Basic Statistics
+
+## Correlation
+
+- Choice of Correlation Measures
+
+    We should choose Spearman correlation unless Pearson correlation is absolutely necessary ([answer](https://stats.stackexchange.com/a/268625/191779)):
+
+    - Pearson correlation is a parametric test for symmetric linear association; it has more stringent requirements.
+
+    - Spearman correlation is a non-parametric test for monotinicity. It has lower requirement for data: data not normally distributed, data with outliers, ordinal or categorical data.
+
+- Number of Observation
+    - The number of observations influence the confidence interval; smaller number of observations will make confidence interval wide. However, the small number of observations itself is not a problem; one real-life example is determining a new drug is effective on a small group of human subjects, where there may be only 5 or 6 people involved in the study.
+    - Bootstrapping will not "turn a sow's ear into a silk purse": it only reduces confidence intervals (or significance level); it does not change correlation values ([answer](https://stats.stackexchange.com/a/268625/191779)).
 
 # Sequence Classification
 
@@ -108,4 +128,6 @@ To have a better comparison between $MCC$ and $F1$, consider a dataset with 100 
 1. [[2107.13586] Pre-train, Prompt, and Predict: A Systematic Survey of Prompting Methods in Natural Language Processing](https://arxiv.org/abs/2107.13586): This survey gives clear categories of NLP tasks: `GEN` , `CLS`, and `TAG`.
 2. [Confusion matrix - Wikipedia](https://en.wikipedia.org/wiki/Confusion_matrix): A comprehensive overview of a list of related metrics.
 3. [The advantages of the Matthews correlation coefficient (MCC) over F1 score and accuracy in binary classification evaluation | BMC Genomics | Full Text](https://bmcgenomics.biomedcentral.com/articles/10.1186/s12864-019-6413-7) (Chicco and Jurman).
+4. [Calculate Pearson Correlation Confidence Interval in Python | Zhiya Zuo](https://zhiyzuo.github.io/Pearson-Correlation-CI-in-Python/): The author writes a function that outputs Pearson correlation, p-value, and confidence intervals.
+5. [sample size - Pearson correlation minimum number of pairs - Cross Validated](https://stats.stackexchange.com/questions/268436/pearson-correlation-minimum-number-of-pairs)
 
