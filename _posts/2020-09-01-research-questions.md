@@ -81,9 +81,22 @@ Here I document a list of general research questions that warrants searching, re
     > - Assumption: The samples $x _ {ij}$ is fully specified by the specification $s _ i$.
     > - Note: If the annotations of a dataset strictly follows the annotation codebook, then the machine learning learns the specifications in the codebook. The process described above is a reverse process: we have a model that is already trained by others; we want to use the model in a new application but do not want to or can not afford to relabel the entire dataset, what is the minimal intervention we could apply to the dataset so that the model could quickly meets my specifications?
 
+- Detecting Inconsistent Labels with Specifications
+
 # References
 
 1. [ScAN: Suicide Attempt and Ideation Events Dataset](https://aclanthology.org/2022.naacl-main.75) (Rawat et al., NAACL 2022)
+
 2. [A Computational Approach to Understanding Empathy Expressed in Text-Based Mental Health Support](https://aclanthology.org/2020.emnlp-main.425) (Sharma et al., EMNLP 2020)
+
 3. [Dealing with Semantic Underspecification in Multimodal NLP](https://aclanthology.org/2023.acl-long.675) (Pezzelle, ACL 2023)
+
 4. [[2012.00363] Modifying Memories in Transformer Models](https://arxiv.org/abs/2012.00363) (Zhu et al.)
+
+5. `clearnlab`
+
+    1. [[1911.00068] Confident Learning: Estimating Uncertainty in Dataset Labels](https://arxiv.org/abs/1911.00068) is the theoretical foundation of the `cleanlab`; this paper has a [blog](https://l7.curtisnorthcutt.com/confident-learning).
+
+    2. [[2103.14749] Pervasive Label Errors in Test Sets Destabilize Machine Learning Benchmarks](https://arxiv.org/abs/2103.14749) is an application of the principle in the first paper to machine learning benchmarks; this paper has a [blog](https://l7.curtisnorthcutt.com/label-errors).
+
+        
