@@ -14,7 +14,13 @@ categories:
 
 # Overview
 
-The main contribution of the paper is a metric to evaluate the difficulty of the aggregate and sample-wise difficulty of a dataset for a model family $\mathcal{V}$: a lower score indicates a more difficult dataset. This metric is appealing because it gives an estimate of each sample's difficulty; this is not possible by using accuracy or F1 score.
+The main contribution of the paper is a metric to evaluate the difficulty of the aggregate and sample-wise difficulty of a dataset for a model family $\mathcal{V}$: a lower score indicates a more difficult dataset. This metric is appealing because it is able to do five things while previous approaches could only do 1 to 3 of them. Specifically,
+
+-   Comparing Datasets: [DIME](https://openreview.net/pdf?id=kvqPFy0hbF) (accepted as a workshop paper at NeurIPS 2020), IRT [4].
+-   Comparing Models: Dynascore [3]
+-   Comparing Instances: Data Shapley [5]
+-   Comparing Dataset Slices
+-   Comparing Attributes: The paper [6] estimates the attribute importance using MDL.
 
 # Method
 
@@ -45,7 +51,15 @@ There are several applications when we use the proposed metric to rank the sampl
 
 - It is quite surprising that the CoLA dataset is more difficult than SNLI and MNLI according to the authors' measure. 
 
+# Code
+
+
+
 # Reference
 
 1. [Dataset Cartography: Mapping and Diagnosing Datasets with Training Dynamics](https://aclanthology.org/2020.emnlp-main.746) (Swayamdipta et al., EMNLP 2020): The method in the main paper and this paper both requires training a model.
 2. [[2002.10689] A Theory of Usable Information Under Computational Constraints](https://arxiv.org/abs/2002.10689) (Xu et al., ICLR 2020).
+3. [[2106.06052] Dynaboard: An Evaluation-As-A-Service Platform for Holistic Next-Generation Benchmarking](https://arxiv.org/abs/2106.06052)
+4. [Evaluation Examples are not Equally Informative: How should that change NLP Leaderboards?](https://aclanthology.org/2021.acl-long.346) (Rodriguez et al., ACL-IJCNLP 2021)
+5. [[1904.02868] Data Shapley: Equitable Valuation of Data for Machine Learning](https://arxiv.org/abs/1904.02868) (ICML 2019): Data shapley could give a pointwise estimate of a sample's contribution to the decision boundary.
+6. [[2103.03872] Rissanen Data Analysis: Examining Dataset Characteristics via Description Length](https://arxiv.org/abs/2103.03872) (ICML 2021).
