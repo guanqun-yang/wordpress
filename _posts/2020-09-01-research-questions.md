@@ -70,7 +70,7 @@ Here I document a list of general research questions that warrants searching, re
     
     There are a lot of things we could do with $\mathrm{RandomSample}(D _ \text{unused})$ and $\mathrm{Sample}(D _ \text{unused})$. For example
     
-    - Fine-tuning a model from scratch using $\mathrm{RandomSample}(D _ \text{unused}) \cup \mathcal{D} _ \text{train}$.
+    - Fine-tuning a model from scratch using $\mathrm{RandomSample}(D _ \text{unused}) \cup D _ \text{train}$.
     - Patching the model using constrained fine-tuning [4] and related approaches.
     
     Whichever method we choose, if we denote the intervention with $\mathrm{RandomSample}(D _ \text{unused})$ as $\mathcal{M} _ 1$ and $\mathrm{Sample}(D _ \text{unused})$ as $\mathcal{M} _ 2$. We expect the following conditions will hold:
@@ -83,6 +83,10 @@ Here I document a list of general research questions that warrants searching, re
 
 - Detecting Inconsistent Labels with Specifications
 
+    Following the previous problem setup, we have a list of specifications in the format of $(s_1, D _ 1, D _ 1 ^ \text{heldout}), (s _ 2, D _ 2, D _ 2 ^ \text{heldout}), \cdots$; each specification has an unambiguous label. Rather than augmenting the $D _ \text{train}$ with additional data by either (1) $D _ 1 ^ \text{heldout} \cup D _ 2 ^ \text{heldout} \cup \cdots$ itself or (2) a model trained on it, now we aim to directly correct labels in $D _ \text{train}$ which are inconsistent with specifications.
+
+    We have a lot of options here
+
 # References
 
 1. [ScAN: Suicide Attempt and Ideation Events Dataset](https://aclanthology.org/2022.naacl-main.75) (Rawat et al., NAACL 2022)
@@ -93,7 +97,7 @@ Here I document a list of general research questions that warrants searching, re
 
 4. [[2012.00363] Modifying Memories in Transformer Models](https://arxiv.org/abs/2012.00363) (Zhu et al.)
 
-5. `clearnlab`
+5. `cleanlab`
 
     1. [[1911.00068] Confident Learning: Estimating Uncertainty in Dataset Labels](https://arxiv.org/abs/1911.00068) is the theoretical foundation of the `cleanlab`; this paper has a [blog](https://l7.curtisnorthcutt.com/confident-learning).
 
