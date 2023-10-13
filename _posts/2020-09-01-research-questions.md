@@ -76,16 +76,27 @@ Here I document a list of general research questions that warrants searching, re
     Whichever method we choose, if we denote the intervention with $\mathrm{RandomSample}(D _ \text{unused})$ as $\mathcal{M} _ 1$ and $\mathrm{Sample}(D _ \text{unused})$ as $\mathcal{M} _ 2$. We expect the following conditions will hold:
     
     - $D _ \text{train} ^ \text{heldout}$: $\mathcal{M} _ 0 \approx \mathcal{M} _ 1 \approx \mathcal{M} _ 2$.
-    - $D _ 1 \cup D _  2 \cup D _ 3 \cdots$: $\mathcal{M} _ 2 \ll \mathcal{M} _ 0$, $\mathcal{M} _ 2 \ll \mathcal{M} _ 1$. That is, the specification-following data selection improves over random selection on the specification-based benchmarks.
+    - $D _ 1 \cup D _  2 \cup D _ 3 \cdots$: $\mathcal{M} _ 2 \ll \mathcal{M} _ 0$, $\mathcal{M} _ 2 \ll \mathcal{M} _ 1$. That is, the specification-following data selection improves over the random selection on the specification-based benchmarks.
     
     > - Assumption: The samples $x _ {ij}$ is fully specified by the specification $s _ i$.
-    > - Note: If the annotations of a dataset strictly follows the annotation codebook, then the machine learning learns the specifications in the codebook. The process described above is a reverse process: we have a model that is already trained by others; we want to use the model in a new application but do not want to or can not afford to relabel the entire dataset, what is the minimal intervention we could apply to the dataset so that the model could quickly meets my specifications?
+    > - Note: If the annotations of a dataset strictly follow the annotation codebook, then the machine learning learns the specifications in the codebook. The process described above is a reverse process: we have a model that is already trained by others; we want to use the model in a new application but do not want to or can not afford to relabel the entire dataset, what is the minimal intervention we could apply to the dataset so that the model could quickly meet my specifications?
 
 - Detecting Inconsistent Labels with Specifications
 
-    Following the previous problem setup, we have a list of specifications in the format of $(s_1, D _ 1, D _ 1 ^ \text{heldout}), (s _ 2, D _ 2, D _ 2 ^ \text{heldout}), \cdots$; each specification has an unambiguous label. Rather than augmenting the $D _ \text{train}$ with additional data by either (1) $D _ 1 ^ \text{heldout} \cup D _ 2 ^ \text{heldout} \cup \cdots$ itself or (2) a model trained on it, now we aim to directly correct labels in $D _ \text{train}$ which are inconsistent with specifications.
+    Following the previous problem setup, we have a list of specifications in the format of $(s_1, D _ 1, D _ 1 ^ \text{heldout}), (s _ 2, D _ 2, D _ 2 ^ \text{heldout}), \cdots$; each specification has an unambiguous label. Rather than augmenting the $D _ \text{train}$ with additional data by selecting using either (1) $D _ 1 ^ \text{heldout} \cup D _ 2 ^ \text{heldout} \cup \cdots$ itself or (2) a model trained on it, we aim to correct labels directly in $D _ \text{train}$ which are inconsistent with specifications.
 
-    We have a lot of options here
+    Specifically, we could do the following for train, validation, and test sets:
+    
+    >   -   Note: It is important to note that the data splitting should happen before we correct labels; otherwise the scores between trials will not be comparable. An alternative is to use $D _ 1 ^ \text{heldout} \cup D _ 2 ^ \text{heldout} \cup \cdots$ as the validation set so that all scores are comparable.
+    
+    -   Step 1: Grouping the specifications by the binary labels (for example, 0 and 1).
+    -   Step 2: Using the queries corresponding to each label to rank samples $D _ \text{<split>}$; each sample in $D _  \text{<split>}$ will receive an integer ranking ranging from 0 to $\vert D _ \text{<split>}\vert$. For example, for a set of positive specifications $S^+$, his will lead to a matrix of shape $(\vert D _ \text{<split>}\vert, \vert S^+ \vert)$.
+    -   Step 3: Merging the $\vert S^+\vert$ (or $\vert S^-\vert$) ranking list into one list using some rank aggregation methods.
+    -   Step 4: Removing all samples of label 0 (or 1). The top-$k$ samples are the ones that should be corrected.
+    
+    The main issue with this pipeline is that the number of corrected samples is strictly no more than $k$; retraining with only $\frac{k}{\vert D _ \text{train}\vert}$ of labels changed may not have direct impact on the modified model. 
+    
+    >   -   Note: This process is different from `cleanlab` as the latter does not consider specifications (i.e., the guaranteed uncorrupted labels). Their setting is useful in many ways as their system only require noisy labels and predicted probabilities of each sample.
 
 # References
 
