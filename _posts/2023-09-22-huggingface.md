@@ -160,10 +160,10 @@ import numpy as np
 
 from datasets import Dataset
 from transformers import (
-Trainer,
-logging,
-TrainingArguments,
-AutoModelForSequenceClassification,
+    Trainer,
+    logging,
+    TrainingArguments,
+    AutoModelForSequenceClassification,
 )
 
 from utils.common import print_gpu_utilization
@@ -173,10 +173,10 @@ logging.set_verbosity_error()
 
 dataset_size, seq_len = 512, 512
 train_dataset = Dataset.from_dict(
-{
-"input_ids": np.random.randint(100, 30000, (dataset_size, seq_len)),
-"labels": np.random.randint(0, 1, dataset_size),
-}
+    {
+        "input_ids": np.random.randint(100, 30000, (dataset_size, seq_len)),
+        "labels": np.random.randint(0, 1, dataset_size),
+    }
 )
 train_dataset.set_format("pt")
 print_gpu_utilization()
@@ -184,25 +184,25 @@ print_gpu_utilization()
 ##################################################
 
 default_args = {
-"output_dir": "tmp",
-"evaluation_strategy": "steps",
-"num_train_epochs": 1,
-"log_level": "error",
-"report_to": "none"
+    "output_dir": "tmp",
+    "evaluation_strategy": "steps",
+    "num_train_epochs": 1,
+    "log_level": "error",
+    "report_to": "none"
 }
 
 training_args = TrainingArguments(
 per_device_train_batch_size=4,
-**default_args
+    **default_args
 )
 
 model = AutoModelForSequenceClassification.from_pretrained("bert-large-uncased").to("cuda")
 print_gpu_utilization()
 
 trainer = Trainer(
-model=model,
-args=training_args,
-train_dataset=train_dataset
+    model=model,
+    args=training_args,
+    train_dataset=train_dataset
 )
 result = trainer.train()
 ```
@@ -252,7 +252,12 @@ According to [Jason Phang](https://github.com/zphang/minimal-llama), the ZeRO is
 
 ## Minimal Working Example
 
-`simpletransformers` could more quickly and cleanly train and evaluate PLMs compared to `transformers`, where the  `simpletransformers` library is based upon; it also comes with full support from `wandb`. For example, fine-tuning `bert-base-uncased` on the `imdb` dataset:
+`simpletransformers` could more quickly and cleanly train and evaluate PLMs compared to `transformers`, where the  `simpletransformers` library is based upon; it also comes with full support from `wandb`. Note that
+
+- The number of steps is computed based on one GPU even though `model_args.n_gpu` is set to a different value. Therefore, we should **not** further divide `n_total_steps` by `model_args.n_gpu`.
+- By default, there will be evaluations at the end of each epoch. Therefore, setting `n_eval=10` will lead to `model_args.num_epochs + n_eval` evaluations; in the example below, there will be 13 evaluations.
+
+The following example fine-tunes `bert-base-uncased` on the `imdb` dataset:
 
 ```python
 import os
@@ -273,6 +278,7 @@ model_args = ClassificationArgs()
 model_class = "roberta"
 model_name = "roberta-base"
 
+##################################################
 # see full list of configurations:
 # https://simpletransformers.ai/docs/usage/#configuring-a-simple-transformers-model
 # critical settings
@@ -291,22 +297,31 @@ model_args.use_multiprocessing_for_evaluation = False
 model_args.no_save = False
 model_args.overwrite_output_dir = True
 model_args.output_dir = "outputs/"
+
+# the following mandates that only the best checkpoint will be saved; there will be only 1 checkpoint
 model_args.best_model_dir = "{}/best_model".format(model_args.output_dir)
 model_args.save_model_every_epoch = False
 model_args.save_best_model = True
-model_args.save_steps = 2000
+model_args.save_eval_checkpoints = False
+model_args.save_steps = -1
+
+# validation criterion
+model_args.use_early_stopping = False
+model_args.early_stopping_metric = "auroc"
+model_args.early_stopping_metric_minimize = False
 
 # evaluation settings
 model_args.evaluate_during_training = True
-model_args.evaluate_during_training_steps = 100
 
 # logging settings
 model_args.silent = False
-model_args.logging_steps = 50
 model_args.wandb_project = "simpletransformers"
 model_args.wandb_kwargs = {
-    "name": "Test"
+    "name": "sanity-check-imdb"
 }
+
+##################################################
+# loading dataset
 
 ds = load_dataset("imdb")
 
@@ -317,6 +332,18 @@ df = pd.DataFrame(ds["train"]).rename(columns={"label": "labels"})
 train_df, eval_df = train_test_split(df.sample(frac=0.1), test_size=0.2)
 test_df = pd.DataFrame(ds["test"]).sample(frac=0.1).rename(columns={"label": "labels"})
 
+##################################################
+# adaptive steps settings
+# we will evaluate 10 times and log 100 times no matter how small the dataset
+
+n_eval, n_log = 10, 100
+n_total_steps = round(len(train_df) / model_args.train_batch_size) * model_args.num_train_epochs
+
+model_args.evaluate_during_training_steps = max(1, round(n_total_steps / n_eval))
+model_args.logging_steps = max(1, round(n_total_steps / n_log))
+model_args.save_steps = -1
+
+##################################################
 # training
 model = ClassificationModel(
     model_class,
@@ -324,6 +351,7 @@ model = ClassificationModel(
     num_labels=2,
     args=model_args,
 )
+
 model.train_model(
     train_df=train_df,
     eval_df=eval_df
@@ -333,3 +361,75 @@ model.train_model(
 result, model_outputs, wrong_predictions = model.eval_model(test_df)
 ```
 
+## Validation and Early Stopping
+
+- Validation
+
+    Choosing which model checkpoint to save (aka. validation) depends on `early_stopping_metric` and `early_stopping_metric_minimize` even though early stopping itself is disabled.
+
+- Early Stopping
+
+    If we need to use early stopping, we need to also be aware of the other hyperparameters.
+
+| Name                             | Default       | Note                                                         |
+| -------------------------------- | ------------- | ------------------------------------------------------------ |
+| `use_early_stopping`             | `False`       |                                                              |
+| `early_stopping_metric`          | `"eval_loss"` | `eval_during_training` has to be `True`; it will use metrics computed during evaluation. |
+| `early_stopping_metric_minimize` | `True`        |                                                              |
+| `early_stopping_consider_epochs` | `False`       |                                                              |
+| `early_stopping_patience`        | `3`           | Terminate training after `early_stopping_patience` evaluations without improvement specified by`early_stopping_delta`. |
+| `early_stopping_delta`           | `0`           |                                                              |
+
+```python
+class ClassificationModel:
+    
+    def train_model(
+        self,
+        train_df,
+        multi_label=False,
+        output_dir=None,
+        show_running_loss=True,
+        args=None,
+        eval_df=None,
+        verbose=True,
+        **kwargs,
+    ):
+        // ...
+        global_step, training_details = self.train(
+            train_dataloader,
+            output_dir,
+            multi_label=multi_label,
+            show_running_loss=show_running_loss,
+            eval_df=eval_df,
+            verbose=verbose,
+            **kwargs,
+        )
+        // ...
+    
+    
+    def train(
+        self,
+        train_dataloader,
+        output_dir,
+        multi_label=False,
+        show_running_loss=True,
+        eval_df=None,
+        test_df=None,
+        verbose=True,
+        **kwargs,
+    ):
+    	//...
+    	best_eval_metric = None
+        
+        // ...
+        if not best_eval_metric:
+            best_eval_metric = results[args.early_stopping_metric]
+            self.save_model(
+                args.best_model_dir,
+                optimizer,
+                scheduler,
+                model=model,
+                results=results,
+            )
+    	// ...
+```
