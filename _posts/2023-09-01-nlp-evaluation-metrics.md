@@ -123,6 +123,36 @@ To have a better comparison between $MCC$ and $F1$, consider a dataset with 100 
 
 ![](https://raw.githubusercontent.com/guanqun-yang/remote-images/master/2023/09/upgit_20230921_1695311325.png)
 
+# Ranking
+
+Typical ranking metrics include Mean Reciprocal Rank, Mean Average Precision, Precision, and Normalized Discounted Cumulative Gain (NDCG).NDCG is more comprehensive than other metrics as it considers the location of relevant items.
+
+| Metric   | Formula                                       | Note                                                         |
+| -------- | --------------------------------------------- | ------------------------------------------------------------ |
+| MRR      | $\frac{1}{N} \sum _ {i=1}^N \frac{1}{r _ i}$  | $r$ is the first relevant item for each query.               |
+| MAP@$k$  | $\frac{1}{N} \sum _ {i=1}^N \mathrm{AP}@k(i)$ | $\mathrm{AP}@k(i) = \frac{1}{\text{\# Relevant Items in Top-}k} \sum _ {i=1} ^ k \mathrm{P}@k(i) \cdot 1(i\ \text{is relevant})$. |
+| P@$k$    | $\frac{1}{N} \sum _ {i=1}^N \mathrm{P}@k(i)$  | $\mathrm{P}@k(i)$ is the ratio of relevant items in the total $k$ items for query $i$. |
+| NDCG@$k$ | $\frac{\mathrm{DCG}@k}{\mathrm{IDCG}$k}$      | $\mathrm{DCG}@k=\sum _ {i=1} ^ k \frac{\mathrm{rel} _ i}{\log _ 2 (i+1)}$, $\mathrm{IDCG}@k$ is the $\mathrm{DCG}@k$ for the ranking list of ideal order. |
+
+Suppose there are two queries `q1` and `q2`, the returned documents have the following relevance list (`1` as relevant and `0` as irrelevant):
+
+```
+q1 = [1, 0, 1, 0, 1]
+q2 = [0, 0, 1, 1, 0]
+```
+
+Then we have the following results:
+
+|                 | 1    | 2    | 3    | 4    | 5    | AP@5                                                        | DCG@5                                         | IDCG@5                                        |
+| --------------- | ---- | ---- | ---- | ---- | ---- | ----------------------------------------------------------- | --------------------------------------------- | --------------------------------------------- |
+| P@$k$ for $q_1$ | 1    | 1/2  | 2/3  | 1/2  | 3/5  | $\frac{1}{3}\times (1 + \frac{2}{3} + \frac{3}{5}) = 0.756$ | $1 + \frac{1}{\log _ 2 4}+\frac{1}{\log_2 6}$ | $1+\frac{1}{\log _ 2 3}+\frac{1}{\log _ 2 4}$ |
+| P@$k$ for $q_2$ | 0    | 0    | 1/3  | 1/2  | 2/5  | $\frac{1}{2}\times (\frac{1}{3} + \frac{1}{2})=0.417$       | $\frac{1}{\log _ 2 4}+\frac{1}{\log_2 5}$     | $1+\frac{1}{\log _ 2 3}$                      |
+
+Then, we have
+
+-   P@5: $\frac{1}{2} \times (\frac{3}{5} + \frac{2}{5}) = 0.5$.
+-   MAP@5: $\frac{1}{2} \times (0.756 + 0.417)=0.587$
+
 # Reference
 
 1. [[2107.13586] Pre-train, Prompt, and Predict: A Systematic Survey of Prompting Methods in Natural Language Processing](https://arxiv.org/abs/2107.13586): This survey gives clear categories of NLP tasks: `GEN` , `CLS`, and `TAG`.

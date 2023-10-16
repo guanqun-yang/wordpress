@@ -10,7 +10,7 @@ categories:
 >
 > Change Logs:
 >
-> - 2023-09-19: First draft..
+> - 2023-09-19: First draft.
 
 # Reference
 
