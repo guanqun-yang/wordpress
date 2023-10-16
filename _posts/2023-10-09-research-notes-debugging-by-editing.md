@@ -25,6 +25,8 @@ Suppose we have an input $x$ and its original output is $y := \mathcal{M}(x)$, i
 
 # MEMIT
 
+The architecture studied in this paper (and ROME) is limited to GPT models.
+
 # Experiments
 
 ## Datasets
@@ -46,14 +48,19 @@ The canonical tasks of model editing includes fact-checking on FEVER and QA with
 # Additional Notes
 
 -   The RDF triplet may be the most unambiguous way to express instances of a specification; it is a classical way to represent knowledge and could be bidirectionally converted from and to a SQL database ([Wikipedia](https://en.wikipedia.org/wiki/Semantic_triple)).
+-   The overarching research field is called "mechanistic interpretibility."
+-   Knowledge editing is thought to be difficult because now knowledge is stored distributionally rather than symbols. However, the paper [2] finds that the localization is quite concentrated in MLPs; the authors focus on MLPs because they believe the attention is too complicated to study.
+
+> - MLPs are storing information while attention is gathering information: the information "Seattle" is in one specific location of GPT-2 before the "the space needle is located at" is asked.
 
 
 # Reference
 
 [Kevin Meng](https://mengk.me/) and [David Bau](https://baulab.info/) have published a series of works ([1] and [2]) on knowledge editing for transformers. [3] through [6] are the predecessors to the proposed work; they could at most scale to 75 edits.
 
-1.   [[2210.07229] Mass-Editing Memory in a Transformer](https://arxiv.org/abs/2210.07229) (MEMIT system).
-2.   [[2202.05262] Locating and Editing Factual Associations in GPT](https://arxiv.org/abs/2202.05262) (ROME system).
+1. [[2210.07229] Mass-Editing Memory in a Transformer](https://arxiv.org/abs/2210.07229) (MEMIT system).
+
+2. [[2202.05262] Locating and Editing Factual Associations in GPT](https://arxiv.org/abs/2202.05262) (ROME system).
 
 3. [[2012.00363] Modifying Memories in Transformer Models](https://arxiv.org/abs/2012.00363): This paper is the first to study the problem of fact editing transformers. The authors propose to fine-tune the models' first and last transformer block on the modified facts $\mathcal{D} _ M$ while constraining the parameter within a small space.
     $$
@@ -77,6 +84,9 @@ The canonical tasks of model editing includes fact-checking on FEVER and QA with
 
 8. [Transformer Feed-Forward Layers Are Key-Value Memories](https://aclanthology.org/2021.emnlp-main.446) (Geva et al., EMNLP 2021): This paper helps the main paper constrain the editing target to the MLP layers.
 
+9. [[2308.07269] EasyEdit: An Easy-to-use Knowledge Editing Framework for Large Language Models](https://arxiv.org/abs/2308.07269) (Wang et al.)
+
 The following are other useful references:
 
 - [semantic web - Translating a complex Sentence into set of SPO triple (RDF) (maybe with reification) - Stack Overflow](https://stackoverflow.com/a/57732900/7784797): The user notes that it is difficult to convert the natural language into a standard structure in a definitive way. Some of the approximations include dependency parsing, constituency parsing, knowledge graph, and First-Order Logic (FOL).
+- [ROME: Locating and Editing Factual Associations in GPT (Paper Explained & Author Interview) - YouTube](https://www.youtube.com/watch?v=_NMQyOu2HTo)
