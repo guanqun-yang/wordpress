@@ -19,9 +19,15 @@ Suppose we have an input $x$ and its original output is $y := \mathcal{M}(x)$, i
 - Local: The output of anything semantically different from $x$ should not change.
 - General (or Consistent): The output of anything semantically equivalent to $x$ should also change.
 
+The community seems to focus on editing encoder-decoder models or decoder-only models ([10] and [11]) due to their ability to generate texts. However, the encoder-only models are less of interest even though MEND and TransformerPatcher both study it.
+
 # KnowledgeEditor
 
 # MEND
+
+# TransformerPatcher
+
+# KnowledgeNeuron
 
 # MEMIT
 
@@ -78,13 +84,21 @@ The canonical tasks of model editing includes fact-checking on FEVER and QA with
 
     Furthermore, the method [4] also requires expensive retraining.
 
-6. [[2110.11309] Fast Model Editing at Scale](https://arxiv.org/abs/2110.11309) (Mitchell et al.) (MEND system): This paper improves the De Cao et al. in editing models with a scale of 10B parameter. On smaller models, the ENN model is **better** than KnowledgeEditor.
+6. [[2110.11309] Fast Model Editing at Scale](https://arxiv.org/abs/2110.11309) (Mitchell et al.) (MEND system): This paper improves the De Cao et al. in editing models with a scale of 10B parameter. On smaller models, the ENN model is **better** than KnowledgeEditor. The [code base](https://github.com/eric-mitchell/mend) of this work also implements ENN and KnowledgeEditor for comparison.
 
 7. [[2206.06520] Memory-Based Model Editing at Scale](https://arxiv.org/abs/2206.06520) (Mitchell et al.) (SEARC system): The authors do not release code for SEARC.
 
 8. [Transformer Feed-Forward Layers Are Key-Value Memories](https://aclanthology.org/2021.emnlp-main.446) (Geva et al., EMNLP 2021): This paper helps the main paper constrain the editing target to the MLP layers.
 
-9. [[2308.07269] EasyEdit: An Easy-to-use Knowledge Editing Framework for Large Language Models](https://arxiv.org/abs/2308.07269) (Wang et al.)
+9. [Knowledge Neurons in Pretrained Transformers](https://aclanthology.org/2022.acl-long.581) (Dai et al., ACL 2022) (KnowledgeNeuron system)
+
+10. [[2305.12740] Can We Edit Factual Knowledge by In-Context Learning?](https://arxiv.org/abs/2305.12740) (Zhang et al.)
+
+11. [[2301.09785] Transformer-Patcher: One Mistake worth One Neuron](https://arxiv.org/abs/2301.09785) (Huang et al., ICLR 2023): This paper proposes to add one neuron in the last FFN layer and activates this neuron when the exact same error is seen again; this error will be corrected; their experiments include both an encoder-only model (BERT) and an encoder-decoder model (BART).
+
+12. [[2308.07269] EasyEdit: An Easy-to-use Knowledge Editing Framework for Large Language Models](https://arxiv.org/abs/2308.07269) (Wang et al.)
+
+13. [[2305.13172] Editing Large Language Models: Problems, Methods, and Opportunities](https://arxiv.org/abs/2305.13172) (Yao et al., EMNLP 2023): This paper, together with the above paper introducing `easyedit`  library, provides comprehensive survey and Python library for knowledge editing. We could stick to these papers and only read original papers when necessary.
 
 The following are other useful references:
 
