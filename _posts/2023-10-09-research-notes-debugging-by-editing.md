@@ -19,7 +19,35 @@ Suppose we have an input $x$ and its original output is $y := \mathcal{M}(x)$, i
 - Local: The output of anything semantically different from $x$ should not change.
 - General (or Consistent): The output of anything semantically equivalent to $x$ should also change.
 
-The community seems to focus on editing encoder-decoder models or decoder-only models ([10] and [11]) due to their ability to generate texts. However, the encoder-only models are less of interest even though MEND and TransformerPatcher both study it.
+The community seems to focus on editing encoder-decoder models or decoder-only models ([12] and [13]) due to their ability to generate texts. However, the encoder-only models are less of interest even though MEND and TransformerPatcher both study it. For example, the paper [13] mentions the following:
+
+> Previous studies typically used smaller language models (<1B) and demonstrated the effectiveness of current editing methods on smaller models like BERT (Devlin et al., 2019). However, whether these methods work for larger models is still unexplored. Hence, considering theHowever, whether these methods work for larger models is still unexplored. Hence, considering the editing task and future developments, we focus on generation-based models and choose larger ones: T5-XL (3B) and GPT-J (6B), representing both encoder-decoder and decoder-only structures.
+
+The editing methods could be compared on whether the model parameters have been modified. There are several scenarios:
+
+1. Model Parameters are Unchanged
+
+2. Model Parameters are Unchanged, but there are Additional Parameters
+
+3. Model Parameters are Changed: This could be done using either (1) locating-and-editing, or (2) meta-learning with a separate hypernetwork.
+
+| Method                                                       | Category | Note |
+| ------------------------------------------------------------ | -------- | ---- |
+| [ENN](https://arxiv.org/abs/2004.00345)                      | 3        |      |
+| [KnowledgeEditor](https://arxiv.org/abs/2104.08164)          | 3        |      |
+| [MEND](https://arxiv.org/abs/2110.11309)                     | 3        |      |
+| [SEARC](https://arxiv.org/abs/2110.11309)                    | 1        |      |
+| [ROME](https://arxiv.org/abs/2202.05262)                     | 3        |      |
+| [MEMIT](https://arxiv.org/abs/2210.07229)                    | 3        |      |
+| [TransformerPatcher](https://arxiv.org/abs/2301.09785)       | 2        |      |
+| [KnowledgeNeuron](https://aclanthology.org/2022.acl-long.581.pdf) | 3        |      |
+| [MQuAKE](https://arxiv.org/abs/2305.14795)                   | 1        |      |
+| [IKE](https://arxiv.org/abs/2305.12740)                      | 1        |      |
+| [MemPrompt](https://aclanthology.org/2022.emnlp-main.183.pdf) | 1        |      |
+
+# ROME
+
+# KnowledgeNeuron
 
 # KnowledgeEditor
 
@@ -27,11 +55,7 @@ The community seems to focus on editing encoder-decoder models or decoder-only m
 
 # TransformerPatcher
 
-# KnowledgeNeuron
-
 # MEMIT
-
-The architecture studied in this paper (and ROME) is limited to GPT models.
 
 # Experiments
 
@@ -59,6 +83,8 @@ The canonical tasks of model editing includes fact-checking on FEVER and QA with
 
 > - MLPs are storing information while attention is gathering information: the information "Seattle" is in one specific location of GPT-2 before the "the space needle is located at" is asked.
 
+- Model editing is different from adversarial attack since the former tries to change the model while the latter tries to change the input data. However, model editing could have dual use beyond model patching: engineering an LM that always generates non-factual content. 
+- One limitation of the model editing is that we could only update singleton facts; we could not update the higher level content, for example, specifications and political leanings.
 
 # Reference
 
@@ -99,6 +125,12 @@ The canonical tasks of model editing includes fact-checking on FEVER and QA with
 12. [[2308.07269] EasyEdit: An Easy-to-use Knowledge Editing Framework for Large Language Models](https://arxiv.org/abs/2308.07269) (Wang et al.)
 
 13. [[2305.13172] Editing Large Language Models: Problems, Methods, and Opportunities](https://arxiv.org/abs/2305.13172) (Yao et al., EMNLP 2023): This paper, together with the above paper introducing `easyedit`  library, provides comprehensive survey and Python library for knowledge editing. We could stick to these papers and only read original papers when necessary.
+
+14. [From Pretraining Data to Language Models to Downstream Tasks: Tracking the Trails of Political Biases Leading to Unfair NLP Models](https://aclanthology.org/2023.acl-long.656) (Feng et al., ACL 2023)
+
+15. [[2305.14795] MQuAKE: Assessing Knowledge Editing in Language Models via Multi-Hop Questions](https://arxiv.org/abs/2305.14795) (Zhong et al.)
+
+16. [Memory-assisted prompt editing to improve GPT-3 after deployment](https://aclanthology.org/2022.emnlp-main.183) (Madaan et al., EMNLP 2022)
 
 The following are other useful references:
 
