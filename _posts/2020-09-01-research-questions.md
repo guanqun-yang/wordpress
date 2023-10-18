@@ -98,6 +98,14 @@ Here I document a list of general research questions that warrants searching, re
     
     >   -   Note: This process is different from `cleanlab` as the latter does not consider specifications (i.e., the guaranteed uncorrupted labels). Their setting is useful in many ways as their system only require noisy labels and predicted probabilities of each sample.
 
+- Reverse Engineering Queries Given Documents
+
+    For a DPR model trained on large corpus (for example, `facebook/dpr-ctx_encoder-single-nq-base` and `facebook/dpr-question_encoder-single-nq-base`), if we have a list of documents $D$ that are aligned with our goal (or true underlying query) $q$, is it possible to search for its approximated version $\hat{q}$ that returns $D$ as relevant documents with high probability?
+
+    A somehow related problem called Doc2Query has been studied before; the difference is that these previous works use Doc2Query as a data augmentation (it is called document expansion in the IR community) approach.
+
+    With the `vec2text`, it may be possible to search for the best query in the embedding space using approaches like Projected Gradient Descent (PGD).
+
 # References
 
 1. [ScAN: Suicide Attempt and Ideation Events Dataset](https://aclanthology.org/2022.naacl-main.75) (Rawat et al., NAACL 2022)
@@ -111,7 +119,12 @@ Here I document a list of general research questions that warrants searching, re
 5. `cleanlab`
 
     1. [[1911.00068] Confident Learning: Estimating Uncertainty in Dataset Labels](https://arxiv.org/abs/1911.00068) is the theoretical foundation of the `cleanlab`; this paper has a [blog](https://l7.curtisnorthcutt.com/confident-learning).
-
     2. [[2103.14749] Pervasive Label Errors in Test Sets Destabilize Machine Learning Benchmarks](https://arxiv.org/abs/2103.14749) is an application of the principle in the first paper to machine learning benchmarks; this paper has a [blog](https://l7.curtisnorthcutt.com/label-errors).
 
-        
+6. Doc2Query
+
+    1. [[1904.08375] Document Expansion by Query Prediction](https://arxiv.org/abs/1904.08375) (Nogueira et al.)
+    2. [From doc2query to docTTTTTquery](https://cs.uwaterloo.ca/~jimmylin/publications/Nogueira_Lin_2019_docTTTTTquery-v2.pdf) (Nogueira and Lin) and its associated [GitHub](https://github.com/castorini/docTTTTTquery).
+    3. [[2310.06816] Text Embeddings Reveal (Almost) As Much As Text](https://arxiv.org/abs/2310.06816) (Morris et al., EMNLP 2023)
+
+     
