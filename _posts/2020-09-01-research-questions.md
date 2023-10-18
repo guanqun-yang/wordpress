@@ -125,6 +125,7 @@ Here I document a list of general research questions that warrants searching, re
 
     1. [[1904.08375] Document Expansion by Query Prediction](https://arxiv.org/abs/1904.08375) (Nogueira et al.)
     2. [From doc2query to docTTTTTquery](https://cs.uwaterloo.ca/~jimmylin/publications/Nogueira_Lin_2019_docTTTTTquery-v2.pdf) (Nogueira and Lin) and its associated [GitHub](https://github.com/castorini/docTTTTTquery).
-    3. [[2310.06816] Text Embeddings Reveal (Almost) As Much As Text](https://arxiv.org/abs/2310.06816) (Morris et al., EMNLP 2023)
-
+    3. [[2310.06816] Text Embeddings Reveal (Almost) As Much As Text](https://arxiv.org/abs/2310.06816) (Morris et al., EMNLP 2024)
+    4. [Decoding a Neural Retriever’s Latent Space for Query Suggestion](https://aclanthology.org/2022.emnlp-main.601) (Adolphs et al., EMNLP 2022)
+    
      
