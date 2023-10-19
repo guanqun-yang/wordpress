@@ -63,11 +63,20 @@ The authors find that their query suggestion models (`qsT5` and `qsT5-plain`) im
 
 # Vec2Text
 
-
-
-
-
-
+Recall the chain rule:
+$$
+p(a, b, c) = p(a\vert b, c) \cdot p(b\vert c) \cdot p(c)
+$$
+The proposed approach is inverting an embedding $\mathbf{e}$ from an arbitrary embedding function $\phi(\cdot)$ (for example, OpenAI embedding API) back to text $x^{(t+1)}$ iteratively from an initial guess $x^{(0)}$:
+$$
+p\left(x^{(0)}\vert \mathbf{e}\right) = p\left(x^{(0)}\vert \mathbf{e}, \emptyset, \phi(\emptyset)\right) \rightarrow \cdots \rightarrow
+p\left(x^{(t+1)} \vert \mathbf{e}\right) := \sum _ {x ^ {(t)}} p\left(x ^ {(t)}\vert \mathbf{e}\right) \cdot \boxed{p\left(x^{(t+1)} \vert \mathbf{e}, x^{(t)}, \phi(x ^ {(t)})\right)}
+$$
+The boxed term is operationalized as a T5-base model. To make sure an arbitrary embedding fits into the size of T5-base, the authors further use a MLP to project arbitrary embeddings of size $d$ to the right size $s$.
+$$
+\mathrm{EmbToSeq}(\mathbf{e})=\mathbf{W} _ 2 \sigma(\mathbf{W} _ 1 \mathbf{e})
+$$
+The authors propose to feed the concatentation of 4 vectors - $\mathrm{EmbToSeq}(\mathbf{e})$, $\mathrm{EmbToSeq}(\mathbf{\hat{e}})$, $\mathrm{EmbToSeq}(\mathbf{e} - \hat{\mathbf{e}})$, and embeddings of $x ^ {(t)}$ using T5-base - to the model and fine-tune the T5-base with regular LM objective.
 
 # Additional Notes
 
