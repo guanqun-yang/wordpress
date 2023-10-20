@@ -84,10 +84,18 @@ However, despite being more high-level (for example, four desired properties), t
 
 ## Topic Convex Hull
 
+Recall the definition of a convex hull according to he [paper](https://dl.acm.org/doi/pdf/10.1145/235815.235821) proposing the QuickHull algorithm:
+
+> The convex hull of a set of points is the smallest convex set that contains the points.
+
 This is a novel concept proposed in this paper. Specifically
 
 - Step 1: Embedding a few sentences known to belong to a specific topic.
+
 - Step 2: Forming a convex hull using these embeddings. This could be done using `scipy.spatial.ConvexHull()`; the underlying algorithm is gift wrapping algorithm in computational geometry ([Wikipedia](https://en.wikipedia.org/wiki/Gift_wrapping_algorithm)).
+
+    To form a convex hull, we need to have a matrix $(n, d)$ and $n > d$. For example, if we want to find a convex hull of BERT embeddings, we need to have at least have 769 samples. This could be prohibitively slow as the runtime of the algorithm is exponential in terms of dimensions $O(n ^ {\lfloor d / 2\rfloor})$ ([doc](http://www.qhull.org/html/index.htm#TOC)).
+
 - Step 3: Sampling uniformly with a Dirichlet distribution from the convex hull.
 
 # Vec2Text by Morris et al.
