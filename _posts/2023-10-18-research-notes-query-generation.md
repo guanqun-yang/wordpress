@@ -65,7 +65,7 @@ The authors find that their query suggestion models (`qsT5` and `qsT5-plain`) im
 
 ## Overview
 
-This paper provides a more high-level motivation to invert embeddings to texts: making semantic decisions in the continuous space via reinforcement learning to control the output of LLMs; the main paper does not cite this paper but does acknowledge related work in Section 8.
+This paper provides a more high-level motivation to invert embeddings to texts: making semantic decisions in the continuous space (for example, reinforcement learning) to control the output of LLMs; the Morris et al. do not cite this paper but does acknowledge related work in Section 8.
 
 > Past research has explored natural language processing learning models that map vectors to sentences (Bowman et al., 2016). These include some retrieval models that are trained with a shallow decoder to reconstruct the text or bag-of-words from the encoder-outputted embedding (Xiao et al., 2022; Shen et al., 2023; Wang et al., 2023). Unlike these, we invert embeddings from a frozen, pre-trained encoder.
 
