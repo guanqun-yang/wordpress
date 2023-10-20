@@ -63,20 +63,63 @@ The authors find that their query suggestion models (`qsT5` and `qsT5-plain`) im
 
 # Vec2Text
 
+## Method
+
 Recall the chain rule:
 $$
 p(a, b, c) = p(a\vert b, c) \cdot p(b\vert c) \cdot p(c)
 $$
-The proposed approach is inverting an embedding $\mathbf{e}$ from an arbitrary embedding function $\phi(\cdot)$ (for example, OpenAI embedding API) back to text $x^{(t+1)}$ iteratively from an initial guess $x^{(0)}$:
+The proposed approach is inverting an embedding $\mathbf{e}$ from an arbitrary embedding function $\phi(\cdot)$ (for example, OpenAI embedding API) back to text $x^{(t+1)}$ iteratively from an initial guess $x^{(0)}$. This correction could take multiple steps; the total number of steps should not be large (up to 40).
 $$
 p\left(x^{(0)}\vert \mathbf{e}\right) = p\left(x^{(0)}\vert \mathbf{e}, \emptyset, \phi(\emptyset)\right) \rightarrow \cdots \rightarrow
-p\left(x^{(t+1)} \vert \mathbf{e}\right) := \sum _ {x ^ {(t)}} p\left(x ^ {(t)}\vert \mathbf{e}\right) \cdot \boxed{p\left(x^{(t+1)} \vert \mathbf{e}, x^{(t)}, \phi(x ^ {(t)})\right)}
+p\left(x^{(t+1)} \vert \mathbf{e}\right) = \sum _ {x ^ {(t)}} p\left(x ^ {(t)}\vert \mathbf{e}\right) \cdot \boxed{p\left(x^{(t+1)} \vert \mathbf{e}, x^{(t)}, \phi(x ^ {(t)})\right)}
 $$
-The boxed term is operationalized as a T5-base model. To make sure an arbitrary embedding fits into the size of T5-base, the authors further use a MLP to project arbitrary embeddings of size $d$ to the right size $s$.
+The boxed term is operationalized as a T5-base model. To make sure an arbitrary embedding fits into the dimension of T5-base, the authors further use a MLP to project arbitrary embeddings of size $d$ to the right size $s$.
 $$
 \mathrm{EmbToSeq}(\mathbf{e})=\mathbf{W} _ 2 \sigma(\mathbf{W} _ 1 \mathbf{e})
 $$
-The authors propose to feed the concatentation of 4 vectors - $\mathrm{EmbToSeq}(\mathbf{e})$, $\mathrm{EmbToSeq}(\mathbf{\hat{e}})$, $\mathrm{EmbToSeq}(\mathbf{e} - \hat{\mathbf{e}})$, and embeddings of $x ^ {(t)}$ using T5-base - to the model and fine-tune the T5-base with regular LM objective.
+The authors propose to feed the concatentation of 4 vectors - $\mathrm{EmbToSeq}(\mathbf{e})$, $\mathrm{EmbToSeq}(\mathbf{\hat{e}})$, $\mathrm{EmbToSeq}(\mathbf{e} - \hat{\mathbf{e}})$, and embeddings of $x ^ {(t)}$ using T5-base  (the total size input size is $3s + n$) to the model and fine-tune the T5-base with regular LM objective.
+
+In the experiments, the authors invert the same model as the GTR model as Adolphs et al. and OpenAI text embedding API; the fine-tuning of each T5-base on each dataset took 2 days on 4 A6000 GPUs.
+
+> - Difference from Adolphs et al.
+>
+>     Even though the idea to invert the GTR model and how this inverter is trained is quite similar, Adolphs et al. does not consider the multi-step correction. Further, they do not provide the code.
+
+## Code
+
+The authors not only open-source the code to fine-tune the model; they also provide the code to create the library `vec2text`. 
+
+### Minimal Working Example
+
+The provided library is very easy-to-use. The following is a minimal working example:
+
+```python
+import vec2text
+from langchain.embeddings import OpenAIEmbeddings
+
+embedding_model = OpenAIEmbeddings(
+    openai_api_key=os.getenv("OPENAI_API_KEY")
+)
+
+query = "What is your favoriate opera?"
+positives = [
+    "I love Lucia di Lammermoor because Luica's powerful presence is really inspiring.",
+    "Le Nozze di Figaro is my favorite because of the fun plot and timeless Mozart music.",
+]
+negatives = [
+    "I love pepperoni pizza",
+    "Cancun is my favoriate holiday destination."
+]
+
+query_embedding = embedding_model.embed_query(query)
+positive_embeddings = embedding_model.embed_documents(positives)
+negative_embeddings = embedding_model.embed_documents(negatives)
+```
+
+### Anatomy
+
+
 
 # Additional Notes
 
@@ -89,6 +132,8 @@ The authors propose to feed the concatentation of 4 vectors - $\mathrm{EmbToSeq}
 - Gradients provide more information than embeddings, as is noted by [4].
 
     > However, such techniques do not apply to textual inversion: the gradient of the model is relatively high-resolution; we consider the more difficult problem of recovering the full input text given only a single dense embedding vector.
+
+- In the embedding space, two embeddings could collide even though they have no token overlap [7].
 
 # Reference
 
@@ -105,3 +150,5 @@ The authors propose to feed the concatentation of 4 vectors - $\mathrm{EmbToSeq}
 5. [Large Dual Encoders Are Generalizable Retrievers](https://aclanthology.org/2022.emnlp-main.669) (Ni et al., EMNLP 2022): This paper proposes the Generalization T5 dense Retrievers (GTR) model that many papers build their solutions upon.
 
 6. [PAQ: 65 Million Probably-Asked Questions and What You Can Do With Them](https://aclanthology.org/2021.tacl-1.65) (Lewis et al., TACL 2021)
+
+7. [Adversarial Semantic Collisions](https://aclanthology.org/2020.emnlp-main.344) (Song et al., EMNLP 2020)
