@@ -21,7 +21,9 @@ Suppose we have an input $x$ and its original output is $y := \mathcal{M}(x)$, i
 
 The community seems to focus on editing encoder-decoder models or decoder-only models ([12] and [13]) due to their ability to generate texts. However, the encoder-only models are less of interest even though MEND and TransformerPatcher both study it. For example, the paper [13] mentions the following:
 
-> Previous studies typically used smaller language models (<1B) and demonstrated the effectiveness of current editing methods on smaller models like BERT (Devlin et al., 2019). However, whether these methods work for larger models is still unexplored. Hence, considering theHowever, whether these methods work for larger models is still unexplored. Hence, considering the editing task and future developments, we focus on generation-based models and choose larger ones: T5-XL (3B) and GPT-J (6B), representing both encoder-decoder and decoder-only structures.
+
+> Previous studies typically used smaller language models (<1B) and demonstrated the effectiveness of current editing methods on smaller models like BERT (Devlin et al., 2019). However, whether these methods work for larger models is still unexplored. Hence, considering theHowever, whether these methods work for larger models is still unexplored. Hence, considering the editing task and future developments, we focus on generation based models and choose larger ones: T5-XL (3B) and GPT-J (6B), representing both encoder-decoder and decoder-only structures.
+
 
 The editing methods could be compared on whether the model parameters have been modified. There are several scenarios:
 

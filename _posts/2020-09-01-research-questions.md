@@ -90,7 +90,7 @@ Here I document a list of general research questions that warrants searching, re
     >   -   Note: It is important to note that the data splitting should happen before we correct labels; otherwise the scores between trials will not be comparable. An alternative is to use $D _ 1 ^ \text{heldout} \cup D _ 2 ^ \text{heldout} \cup \cdots$ as the validation set so that all scores are comparable.
     
     -   Step 1: Grouping the specifications by the binary labels (for example, 0 and 1).
-    -   Step 2: Using the queries corresponding to each label to rank samples $D _ \text{<split>}$; each sample in $D _  \text{<split>}$ will receive an integer ranking ranging from 0 to $\vert D _ \text{<split>}\vert$. For example, for a set of positive specifications $S^+$, his will lead to a matrix of shape $(\vert D _ \text{<split>}\vert, \vert S^+ \vert)$.
+    -   Step 2: Using the queries corresponding to each label to rank samples $D _ s$; each sample in $D _  s$ will receive an integer ranking ranging from 0 to $\vert D _ s \vert$. For example, for a set of positive specifications $S^+$, his will lead to a matrix of shape $(\vert D _ s\vert, \vert S^+ \vert)$.
     -   Step 3: Merging the $\vert S^+\vert$ (or $\vert S^-\vert$) ranking list into one list using some rank aggregation methods.
     -   Step 4: Removing all samples of label 0 (or 1). The top-$k$ samples are the ones that should be corrected.
     
