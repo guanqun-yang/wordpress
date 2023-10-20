@@ -95,6 +95,9 @@ The authors not only open-source the code to fine-tune the model; they also prov
 The provided library is very easy-to-use. The following is a minimal working example:
 
 ```python
+import os
+
+import torch
 import vec2text
 from langchain.embeddings import OpenAIEmbeddings
 
@@ -115,6 +118,12 @@ negatives = [
 query_embedding = embedding_model.embed_query(query)
 positive_embeddings = embedding_model.embed_documents(positives)
 negative_embeddings = embedding_model.embed_documents(negatives)
+
+corrector = vec2text.load_corrector("text-embedding-ada-002")
+inverted_positives = vec2text.invert_embeddings(
+    embeddings=torch.tensor(positive_embeddings).cuda(),
+    corrector=corrector
+)
 ```
 
 ### Anatomy
