@@ -61,7 +61,36 @@ The authors find that their query suggestion models (`qsT5` and `qsT5-plain`) im
 
 ![image-20231019134801317](https://raw.githubusercontent.com/guanqun-yang/remote-images/master/2023/10/upgit_20231019_1697737681.png)
 
-# Vec2Text
+# Vec2Text by Cideron et al.
+
+## Overview
+
+This paper provides a more high-level motivation to invert embeddings to texts: making semantic decisions in the continuous space via reinforcement learning to control the output of LLMs; the main paper does not cite this paper but does acknowledge related work in Section 8.
+
+> Past research has explored natural language processing learning models that map vectors to sentences (Bowman et al., 2016). These include some retrieval models that are trained with a shallow decoder to reconstruct the text or bag-of-words from the encoder-outputted embedding (Xiao et al., 2022; Shen et al., 2023; Wang et al., 2023). Unlike these, we invert embeddings from a frozen, pre-trained encoder.
+
+The paper reveals the reason why several works focus on inverting the GTR model: the GTR is based on T5 model and it does not have a decoder; it is natural to learn a decoder (as `vec2text` by Morris et al. and Adolphs et al. have done) that invert embeddings back to texts. Note that the `vec2text` referred in the text is different from the `vec2text` developed by Morris et al. despite the same name.
+
+> T5 was previously used to learn sentence representation in Ni et al. (2021) where they focus on having a well structure sentence embedding by introducing a contrastive loss to pull together similar sentences and push them away from the negatives. However, Ni et al. (2021) don’t learn a decoder (i.e. a vec2text model) which makes it impossible for them to generate sentences from the embedding space.
+
+## Method
+
+This paper uses very similar to the architecture used by Morris et al. and Adolphs et al., it consists of two components
+
+- A Round-Trip Translation (RTT) scheme to prepare the data: the English corpus is first translated to German and back-translated to English; the back-translated English sentences serve as input while the original sentences serve as outputs.
+- A T5-base model (same as Adolphs et al. and Morris et al.) with a bottleneck involving (1) mean pooling, and (2) linear projection; this design is similar to Morris et al.'s $\mathrm{EmbToSeq}(\mathbf{e})$.
+
+However, despite being more high-level (for example, four desired properties), the method in this work is not iterative, which may make this work effective as Morris et al.
+
+## Topic Convex Hull
+
+This is a novel concept proposed in this paper. Specifically
+
+- Step 1: Embedding a few sentences known to belong to a specific topic.
+- Step 2: Forming a convex hull using these embeddings. This could be done using `scipy.spatial.ConvexHull()`; the underlying algorithm is gift wrapping algorithm in computational geometry ([Wikipedia](https://en.wikipedia.org/wiki/Gift_wrapping_algorithm)).
+- Step 3: Sampling uniformly with a Dirichlet distribution from the convex hull.
+
+# Vec2Text by Morris et al.
 
 ## Method
 
@@ -84,7 +113,7 @@ In the experiments, the authors invert the same model as the GTR model as Adolph
 
 > - Difference from Adolphs et al.
 >
->     Even though the idea to invert the GTR model and how this inverter is trained is quite similar, Adolphs et al. does not consider the multi-step correction. Further, they do not provide the code.
+>     Even though the idea to invert the GTR model and how this inverter is trained is quite similar, Adolphs et al. does not consider the multi-step correction, this seems to be the key to make the inversion work ([Tweet](https://x.com/jxmnop/status/1712562911493968220?s=20)). Further, they do not provide the code.
 
 ## Code
 
@@ -144,6 +173,10 @@ inverted_positives = vec2text.invert_embeddings(
 
 - In the embedding space, two embeddings could collide even though they have no token overlap [7].
 
+- RTT is an useful way to add perturbations to the inputs; another way worth trying is denoising [9], which turns out to be less effective than RTT. Further, the choice of language in RTT is important. For example, the paper [8] chooses German as the pivot due to more word reorderings.
+
+    > As explained by Shen et al. (2020), the intuition behind using denoising with auto-encoders is that the noise constraints the auto-encoder to put similar sentences (in terms of the denoising objective) next to each other in the latent space. However, the problem with denoising is that it maps together sentences that are close in edit distance but may have completely different meanings.
+
 # Reference
 
 1. [[2109.00527] Boosting Search Engines with Interactive Agents](https://arxiv.org/abs/2109.00527) (Adolphs et al., TMLR 2022): This is **a feasibility study** of an emsemble of BM25 plus an interpretable reranking scheme to work on par DPR on the `natural_questions` dataset; this is consistent with DPR in its evaluation. The main advantage is intepretability rather than performance.
@@ -161,3 +194,7 @@ inverted_positives = vec2text.invert_embeddings(
 6. [PAQ: 65 Million Probably-Asked Questions and What You Can Do With Them](https://aclanthology.org/2021.tacl-1.65) (Lewis et al., TACL 2021)
 
 7. [Adversarial Semantic Collisions](https://aclanthology.org/2020.emnlp-main.344) (Song et al., EMNLP 2020)
+
+8. [[2209.06792] vec2text with Round-Trip Translations](https://arxiv.org/abs/2209.06792) (Cideron et al. from Google Brain)
+
+9. [[1905.12777] Educating Text Autoencoders: Latent Representation Guidance via Denoising](https://arxiv.org/abs/1905.12777) (Shen et al., ICML 2020)
