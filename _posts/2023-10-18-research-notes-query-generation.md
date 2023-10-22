@@ -94,9 +94,9 @@ This is a novel concept proposed in this paper. Specifically
 
 - Step 2: Forming a convex hull using these embeddings. This could be done using `scipy.spatial.ConvexHull()`; the underlying algorithm is gift wrapping algorithm in computational geometry ([Wikipedia](https://en.wikipedia.org/wiki/Gift_wrapping_algorithm)).
 
-    To form a convex hull, we need to have a matrix $(n, d)$ and $n > d$. For example, if we want to find a convex hull of BERT embeddings, we need to have at least have 769 samples. This could be prohibitively slow as the runtime of the algorithm is exponential in terms of dimensions $O(n ^ {\lfloor d / 2\rfloor})$ ([doc](http://www.qhull.org/html/index.htm#TOC)).
+    To form a convex hull, we need to have a matrix $(n, d)$ and $n > d$. For example, if we want to find a convex hull of BERT embeddings, we need to have at least have 769 samples. This could be prohibitively slow as the runtime of the algorithm is exponential in terms of dimensions $O(n ^ {\lfloor d / 2\rfloor})$ ([doc](http://www.qhull.org/html/index.htm#TOC)); empirically, the [answer](https://stackoverflow.com/a/59086818/7784797) further notes that the routine works for data up to 9 dimensions.
 
-- Step 3: Sampling uniformly with a Dirichlet distribution from the convex hull.
+- Step 3: Sampling uniformly with a Dirichlet distribution from the convex hull. This [answer](https://stackoverflow.com/a/59086818/7784797) provides a Python function to do it; this answer explicitly mentions the Dirichlet distribution; this paper is likely use the same function.
 
 # Vec2Text by Morris et al.
 
