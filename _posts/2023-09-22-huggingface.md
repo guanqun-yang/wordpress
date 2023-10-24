@@ -433,3 +433,19 @@ class ClassificationModel:
             )
     	// ...
 ```
+
+# Using Sentence-Transformers
+
+## Overview
+
+Besides an easy interface to generate embeddings, the `sentence_transformers` library also supports fine-tuning the provided embedding models. The following data formats all have their corresponding loss functions without a need to convert data to a specific format (for example, triplets) (see [blog](https://huggingface.co/blog/how-to-train-sentence-transformers)):
+
+Note that these loss functions come from the `sentence_transformers` library rather than `torch` or `transformers`.
+
+| Index | Description                                                  | Data                                                         | Loss                                                         | Note     |
+| ----- | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ | -------- |
+| 1     | A pair of sentences and a label                              | `(premise, hypothesis, label)`                               | `ContrastiveLoss`;<br />`SoftmaxLoss`;<br />`CosineSimilarityLoss` |          |
+| 2     | Individual sentence and corresponding label                  | `(text, label)`                                              | `BatchHardTripletLoss` and variants                          |          |
+| 3     | A pair of **similar** sentences                              | `(query, response)`, `(src_lang, tgt_lang)`, `(full_text, summary)`, `(text1, text2)` (e.g., QQP), `(text, entailed_text)`  (e.g., NLI) | `MultipleNegativeRankingLoss`;<br />`MegaBatchMarginLoss`    | Frequent |
+| 4     | A triplet of sentences of an positive, a positive, and a negative | `(anchor, positive, negative)`                               | `TripletLoss`                                                | Rare     |
+
