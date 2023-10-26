@@ -125,7 +125,114 @@ In the experiments, the authors invert the same model as the GTR model as Adolph
 
 ## Code
 
-The authors not only open-source the code to fine-tune the model; they also provide the code to create the library `vec2text`. 
+The authors not only open-source the code to fine-tune the model; they also provide the code to create the library `vec2text`.  The following are the most important code snippet of this work (`vec2text/vex2text/trainers/corrector`).
+
+-   `model`: The inverter model that maps embeddings back to text.
+
+```python
+def invert_embeddings(
+    embeddings: torch.Tensor,
+    corrector: vec2text.trainers.Corrector,
+    num_steps: int = None,
+    sequence_beam_width: int = 0,
+) -> List[str]:
+    corrector.inversion_trainer.model.eval()
+    corrector.model.eval()
+
+    gen_kwargs = copy.copy(corrector.gen_kwargs)
+    gen_kwargs["min_length"] = 1
+    gen_kwargs["max_length"] = 128
+
+    if num_steps is None:
+        assert (
+            sequence_beam_width == 0
+        ), "can't set a nonzero beam width without multiple steps"
+
+        regenerated = corrector.inversion_trainer.generate(
+            inputs={
+                "frozen_embeddings": embeddings,
+            },
+            generation_kwargs=gen_kwargs,
+        )
+    else:
+        corrector.return_best_hypothesis = sequence_beam_width > 0
+        regenerated = corrector.generate(
+            inputs={
+                "frozen_embeddings": embeddings,
+            },
+            generation_kwargs=gen_kwargs,
+            num_recursive_steps=num_steps,
+            sequence_beam_width=sequence_beam_width,
+        )
+
+    output_strings = corrector.tokenizer.batch_decode(
+        regenerated, skip_special_tokens=True
+    )
+    return output_strings
+
+
+class Corrector(BaseTrainer):
+    def __init__(
+        self,
+        model: CorrectorEncoderModel,
+        inversion_trainer: InversionTrainer,
+        args: Optional[TrainingArguments],
+        **kwargs,
+    ):
+    // ...
+    
+    def generate(
+        self,
+        inputs: Dict,
+        generation_kwargs: Dict,
+        num_recursive_steps: int = None,
+        sequence_beam_width: int = None,
+    ) -> torch.Tensor:
+        //...
+        while num_recursive_steps >= 1:
+            gen_text_ids, hypothesis_embedding, best_scores = self._generate_with_beam(
+                inputs=inputs,
+                generation_kwargs=generation_kwargs,
+                num_recursive_steps=num_recursive_steps,
+                num_recursive_steps_so_far=num_recursive_steps_so_far,
+                sequence_beam_width=sequence_beam_width,
+            )
+            inputs["hypothesis_input_ids"] = gen_text_ids
+            inputs["hypothesis_attention_mask"] = (
+                gen_text_ids != self.model.encoder_decoder.config.pad_token_id
+            ).int()
+            inputs["hypothesis_embedding"] = hypothesis_embedding
+            # step counters
+            num_recursive_steps -= 1
+            num_recursive_steps_so_far += 1
+            
+            // ...
+    
+    def _generate_with_beam(
+        self,
+        inputs: Dict,
+        generation_kwargs: Dict,
+        num_recursive_steps: int,
+        num_recursive_steps_so_far: int,
+        sequence_beam_width: int,
+    ) -> Tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
+        // ...
+ 		if (num_recursive_steps_so_far == 0) and (
+            self.initial_hypothesis_str is not None
+        ):
+ 			//...
+        else:
+            outputs = self.model.generate(
+                inputs=inputs,
+                generation_kwargs=generation_kwargs,
+                return_dict_in_generate=True,
+            )
+            gen_text_ids = outputs.sequences
+        // ...
+    
+```
+
+
 
 ### Minimal Working Example
 
