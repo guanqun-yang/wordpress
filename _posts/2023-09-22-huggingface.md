@@ -458,7 +458,10 @@ Here is a minimal working example of fine-tuning representation using `sst2` dat
 
 Note that:
 
--   The `sentence_transformers` does not have a native support for `wandb` as `simpletransformers`. We could only monitor one score through the `log_with_wandb()` with an exactly same signature.
+-   The `sentence_transformers` does not have a native support for `wandb` as `simpletransformers`. We could only monitor one score through the `log_with_wandb()` with an exactly same signature. The `score` it monitors depends on which specific evaluator is used (see the complete list of evaluators [here](https://www.sbert.net/docs/package_reference/evaluation.html)).
+
+    When working with `TripletEvaluator` as in the example below. The returned metric a ratio of the number of triplets among all triplets that satisfy $d(a, p) < d(a, n)$.
+
 -   We could easily replace the model with models available on the HuggingFace hub.
 
 ```python
@@ -622,5 +625,35 @@ test_evaluator = TripletEvaluator.from_input_examples(
     name="test"
 )
 model.evaluate(test_evaluator)
+```
+
+As our goal is not evaluating triplets but the quality of clustering, we could define our own evaluator.
+
+```python
+from sklearn.cluster import KMeans
+from sklearn.metrics import v_measure_score
+
+from sentence_transformers.evaluation import (
+    SentenceEvaluator,
+)
+
+class ClusteringEvaluator(SentenceEvaluator):
+    def __init__(self, texts, labels, batch_size=32, show_progress_bar=False):
+        self.texts = texts
+        self.labels = labels
+        self.batch_size = batch_size
+        self.show_progress_bar = show_progress_bar
+
+    def __call__(self, model, output_path: str = None, epoch: int = -1, steps: int = -1):
+        embeddings = model.encode(
+            self.texts, batch_size=self.batch_size, show_progress_bar=self.show_progress_bar, convert_to_numpy=True
+        )
+        y_pred = KMeans(n_clusters=len(set(self.labels)), n_init="auto").fit_predict(embeddings)
+        score = v_measure_score(
+            labels_true=self.labels,
+            labels_pred=y_pred
+        )
+
+        return score
 ```
 
