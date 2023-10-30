@@ -657,3 +657,15 @@ class ClusteringEvaluator(SentenceEvaluator):
         return score
 ```
 
+## Customization
+
+### Saving Checkpoints
+
+Similar to `simpletransformers`, `sentence_transformer` could save best checkpoints according to the evaluation metric. Model saving are controlled by `_eval_during_training()` and `_save_checkpoint()` functions. 
+
+-   If `save_best_model=True`, the best model will be saved at the root directory of the `output_path`. Saving best checkpoint is **enabled by default**.
+
+-   If we want to save additional checkpoints, these additional checkpoints will be saved at `checkpoint_path`; the total number of saved checkpoints is governed by `checkpoint_save_steps` and `checkpoint_save_total_limit`. Different checkpoints will be stored in the folder named `<step>`.
+
+    Saving additional checkpoints is **disabled** **by default**.
+
