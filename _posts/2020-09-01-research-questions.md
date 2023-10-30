@@ -105,6 +105,12 @@ Here I document a list of general research questions that warrants searching, re
     A somehow related problem called Doc2Query has been studied before; the difference is that these previous works use Doc2Query as a data augmentation (it is called document expansion in the IR community) approach.
 
     With the `vec2text`, it may be possible to search for the best query in the embedding space using approaches like Projected Gradient Descent (PGD).
+    
+- Geometry of Embeddings and its Implication for Text Generation
+
+    This is based on the hypothesis that there exists certain relation between the geometry of embedding space and semantic meaning of each point in that space. For example, sampling a convex set leads to sentences that have similar high-level specifications.
+
+    Many recent works show that text embeddings may be anisotropic: directions of word vectors are not evenly distributed across space but rater concentrated in a narrow cone; this peculiarity may not be related to performance [7].
 
 # References
 
@@ -127,5 +133,7 @@ Here I document a list of general research questions that warrants searching, re
     2. [From doc2query to docTTTTTquery](https://cs.uwaterloo.ca/~jimmylin/publications/Nogueira_Lin_2019_docTTTTTquery-v2.pdf) (Nogueira and Lin) and its associated [GitHub](https://github.com/castorini/docTTTTTquery).
     3. [[2310.06816] Text Embeddings Reveal (Almost) As Much As Text](https://arxiv.org/abs/2310.06816) (Morris et al., EMNLP 2024)
     4. [Decoding a Neural Retriever’s Latent Space for Query Suggestion](https://aclanthology.org/2022.emnlp-main.601) (Adolphs et al., EMNLP 2022)
-    
+
+7. [Is Anisotropy Truly Harmful? A Case Study on Text Clustering](https://aclanthology.org/2023.acl-short.103) (Ait-Saada & Nadif, ACL 2023)
+
      
