@@ -438,14 +438,189 @@ class ClassificationModel:
 
 ## Overview
 
-Besides an easy interface to generate embeddings, the `sentence_transformers` library also supports fine-tuning the provided embedding models. The following data formats all have their corresponding loss functions without a need to convert data to a specific format (for example, triplets) (see [blog](https://huggingface.co/blog/how-to-train-sentence-transformers)):
+-   `sentence_transformer` is built with `torch` despite a resemblance to the `keras` API.
+-   The famous METB benchmark is also largely built on top of the `sentence_transformer` library.
 
-Note that these loss functions come from the `sentence_transformers` library rather than `torch` or `transformers`.
+## Fine-Tuning Embeddings
 
-| Index | Description                                                  | Data                                                         | Loss                                                         | Note     |
-| ----- | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ | -------- |
-| 1     | A pair of sentences and a label                              | `(premise, hypothesis, label)`                               | `ContrastiveLoss`;<br />`SoftmaxLoss`;<br />`CosineSimilarityLoss` |          |
-| 2     | Individual sentence and corresponding label                  | `(text, label)`                                              | `BatchHardTripletLoss` and variants                          |          |
-| 3     | A pair of **similar** sentences                              | `(query, response)`, `(src_lang, tgt_lang)`, `(full_text, summary)`, `(text1, text2)` (e.g., QQP), `(text, entailed_text)`  (e.g., NLI) | `MultipleNegativeRankingLoss`;<br />`MegaBatchMarginLoss`    | Frequent |
-| 4     | A triplet of sentences of an positive, a positive, and a negative | `(anchor, positive, negative)`                               | `TripletLoss`                                                | Rare     |
+Besides an easy interface to generate embeddings, the `sentence_transformers` library also supports fine-tuning the provided embedding models. The following data formats all have their corresponding loss functions without a need to convert data to a specific format (for example, triplets) (see [blog](https://huggingface.co/blog/how-to-train-sentence-transformers)). 
+
+Note that these loss functions come from the `sentence_transformers` library rather than `torch` or `transformers`. These loss functions have been discussed in a [blog post](https://omoindrot.github.io/triplet-loss) that is not affiliated with the developers of `sentence_transformers`.
+
+| Index | Description                                                  | Data                                                         | Loss                                                         | Note                                                         |
+| ----- | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| 1     | A pair of sentences and a label                              | `(premise, hypothesis, label)`                               | `ContrastiveLoss`;<br />`SoftmaxLoss`;<br />`CosineSimilarityLoss` |                                                              |
+| 2     | Individual sentence and corresponding label                  | `(text, label)`                                              | `BatchHardTripletLoss` and variants                          | "batch hard" performs  best in the [blog post](https://omoindrot.github.io/triplet-loss). |
+| 3     | A pair of **similar** sentences                              | `(query, response)`, `(src_lang, tgt_lang)`, `(full_text, summary)`, `(text1, text2)` (e.g., QQP), `(text, entailed_text)`  (e.g., NLI) | `MultipleNegativeRankingLoss`;<br />`MegaBatchMarginLoss`    | Frequent                                                     |
+| 4     | A triplet of sentences of an positive, a positive, and a negative | `(anchor, positive, negative)`                               | `TripletLoss`                                                | Rare as it requires offline mining                           |
+
+Here is a minimal working example of fine-tuning representation using `sst2` dataset; we could optionally evaluate the fine-tuned model on the MTEB benchmark as it is also built with `sentence_transformer` library.
+
+Note that:
+
+-   The `sentence_transformers` does not have a native support for `wandb` as `simpletransformers`. We could only monitor one score through the `log_with_wandb()` with an exactly same signature.
+-   We could easily replace the model with models available on the HuggingFace hub.
+
+```python
+import os
+import wandb
+import random
+import logging
+
+import pandas as pd
+
+from datetime import datetime
+from collections import defaultdict
+from sentence_transformers import (
+    SentenceTransformer,
+    InputExample,
+    SentencesDataset
+)
+from sentence_transformers.evaluation import (
+    TripletEvaluator,
+)
+
+from sentence_transformers import LoggingHandler
+from sentence_transformers.losses import (
+    BatchHardTripletLoss,
+)
+
+from datasets import load_dataset
+from torch.utils.data import DataLoader
+
+
+logging.basicConfig(
+    format="%(asctime)s - %(message)s",
+    datefmt="%Y-%m-%d %H:%M:%S",
+    level=logging.INFO,
+    handlers=[LoggingHandler()],
+)
+
+def triplets_from_labeled_dataset(
+    records,
+    text_column="sentence",
+    label_column="label"
+):
+    # Create triplets for a [(label, sentence), (label, sentence)...] dataset
+    # by using each example as an anchor and selecting randomly a
+    # positive instance with the same label and a negative instance with a different label
+
+    input_examples = [
+        InputExample(guid=str(guid), texts=[record[text_column]], label=record[label_column])
+        for guid, record in enumerate(records)
+    ]
+
+    triplets = []
+    label2sentence = defaultdict(list)
+    for inp_example in input_examples:
+        label2sentence[inp_example.label].append(inp_example)
+
+    for inp_example in input_examples:
+        anchor = inp_example
+
+        if len(label2sentence[inp_example.label]) < 2: #We need at least 2 examples per label to create a triplet
+            continue
+
+        positive = None
+        while positive is None or positive.guid == anchor.guid:
+            positive = random.choice(label2sentence[inp_example.label])
+
+        negative = None
+        while negative is None or negative.label == anchor.label:
+            negative = random.choice(input_examples)
+
+        triplets.append(InputExample(texts=[anchor.texts[0], positive.texts[0], negative.texts[0]]))
+
+    return triplets
+
+##################################################
+
+model_name = 't5-base'
+num_epochs = 10
+
+##################################################
+
+current_time = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+wandb.init(
+    project="sentence_transformers",
+    name=f"{model_name}-{current_time}"
+)
+
+##################################################
+# model
+
+output_path = (
+    "output/"
+    + model_name
+    + "-"
+    + current_time
+)
+
+model = SentenceTransformer(model_name)
+
+##################################################
+
+def get_dataloader(df, split, text_column, label_column, batch_size=8):
+    records = df.to_dict("records")
+    examples = [
+        InputExample(texts=[record[text_column]], label=record[label_column])
+        for record in records
+    ]
+    dataset = SentencesDataset(
+        examples=examples,
+        model=model,
+    )
+    dataloader = DataLoader(dataset, shuffle=True, batch_size=batch_size)
+
+    return dataloader
+
+##################################################
+# data
+
+ds = load_dataset("sst2")
+
+train_df = pd.DataFrame(ds["train"])
+val_df = pd.DataFrame(ds["validation"])
+test_df = pd.DataFrame(ds["test"])
+
+train_dataloader = get_dataloader(train_df, "train", text_column="sentence", label_column="label")
+
+##################################################
+
+train_loss = BatchHardTripletLoss(model=model)
+val_evaluator = TripletEvaluator.from_input_examples(
+    triplets_from_labeled_dataset(val_df[["sentence", "label"]].to_dict("records")),
+    name="eval"
+)
+val_evaluator(model)
+
+##################################################
+
+def log_with_wandb(score, epoch, steps):
+    # https://docs.wandb.ai/ref/python/log
+    wandb.log(
+        data={"score": score},
+        step=steps,
+    )
+
+warmup_steps = int(len(train_dataloader) * num_epochs * 0.1)  # 10% of train data
+
+model.fit(
+    [(train_dataloader, train_loss)],
+    show_progress_bar=True,
+    epochs=num_epochs,
+    evaluator=val_evaluator,
+    evaluation_steps=50,
+    warmup_steps=warmup_steps,
+    output_path=output_path,
+    callback=log_with_wandb
+)
+##################################################
+
+test_evaluator = TripletEvaluator.from_input_examples(
+    triplets_from_labeled_dataset(test_df[["sentence", "label"]].to_dict("records")),
+    name="test"
+)
+model.evaluate(test_evaluator)
+```
 
