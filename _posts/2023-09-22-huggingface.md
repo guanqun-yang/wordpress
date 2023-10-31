@@ -669,3 +669,47 @@ Similar to `simpletransformers`, `sentence_transformer` could save best checkpoi
 
     Saving additional checkpoints is **disabled** **by default**.
 
+### Loss Functions
+
+According to the [doc](https://www.sbert.net/docs/package_reference/losses.html), we should choose which loss to use based on the available format of data we have. There are 14 loss functions supported by `sentence_transformer`.
+
+| Index | Loss Function                    | Data Format                       | Publication | Note                                                         |
+| ----- | -------------------------------- | --------------------------------- | ----------- | ------------------------------------------------------------ |
+| 1     | `BatchAllTripletLoss`            | `(text, label)`                   | 1           | Using all positive and negative within the $PK$ batch; leading to $PK\cdot (PK-K) \cdot (K-1)$ pairs. |
+| 2     | `BatchSemiHardTripletLoss`       | `(text, label)`                   | 1           |                                                              |
+| 3     | `BatchHardTripletLoss`           | `(text, label)`                   | 1           | Finding the hardest positive and negative within the $PK$ batch, leading to $PK$ pairs. |
+| 4     | `BatchHardSoftMarginTripletLoss` | `(text, label)`                   | 1           | Replacing the hinge function with a softplus function.       |
+| 5     | `ConstrativeLoss`                | `(text1, text2, label)`           | 4           |                                                              |
+| 6     | `OnlineContrastiveLoss`          | `(text1, text2, label)`           | 4           |                                                              |
+| 7     | `SoftmaxLoss`                    | `(text1, text2, label)`           | 2           |                                                              |
+| 8     | `CosineSimilarityLoss`           | `(text1, text2, similarity)`      |             |                                                              |
+| 9     | `DenoisingAutoEncoderLoss`       | `(corrupted text, original text)` | 5           |                                                              |
+| 10    | `MultipleNegativeRankingLoss`    | `(anchor, positive)`              | 8           |                                                              |
+| 11    | `MegaBatchMarginLoss`            | `(anchor, positive)`              | 7           | Requires a large batch size (like 500).                      |
+| 12    | `TripletLoss`                    | `(anchor, positive, negative)`    |             | Requires Offline Hard Mining (OHM) described in 1.           |
+| 13    | `MSELoss`                        | `(src embedding, tgt embedding)`  | 3           | Aligning embeddings of multiple languages.                   |
+| 14    | `MarginMSELoss`                  | `(a, p, n, d(a, p), d(a, n))`     | 6           | Very stringent requirement for input data.                   |
+
+1.   [[1703.07737] In Defense of the Triplet Loss for Person Re-Identification](https://arxiv.org/abs/1703.07737): This paper overturns the prevailing belief that the a more intuitive triplet loss is worse than the surrogate classification loss by proposing new loss functions; it also critically points out the limitations of the `TripletLoss`:
+
+     >   A major caveat of the triplet loss, though, is that as the dataset gets larger, the possible number of triplets grows cubically, rendering a long enough training impractical. To make matters worse, $f _ \theta$ relatively quickly learns to correctly map most trivial triplets, rendering a large fraction of all triplets uninformative.
+
+     The goal of metric learning is to preserve the "semantic distance" in the metric space: two semantically similar sentences should be close in the metric space and two dissimilar ones should be remote to each other in the embedding space.
+
+     Overall, the "batch-hard" version, possibly with a soft margin, performs best among all loss functions.
+
+     ![image-20231031131017209](https://raw.githubusercontent.com/guanqun-yang/remote-images/master/2023/10/upgit_20231031_1698772217.png)
+
+2.   [[1908.10084] Sentence-BERT: Sentence Embeddings using Siamese BERT-Networks](https://arxiv.org/abs/1908.10084)
+
+3.   [[2004.09813] Making Monolingual Sentence Embeddings Multilingual using Knowledge Distillation](https://arxiv.org/abs/2004.09813)
+
+4.   [Dimensionality Reduction by Learning an Invariant Mapping](https://ieeexplore.ieee.org/document/1640964) (CVPR 2006, Yann LeCun)
+
+5.   [[2104.06979] TSDAE: Using Transformer-based Sequential Denoising Auto-Encoder for Unsupervised Sentence Embedding Learning](https://arxiv.org/abs/2104.06979)
+
+6.   [[2010.02666] Improving Efficient Neural Ranking Models with Cross-Architecture Knowledge Distillation](https://arxiv.org/abs/2010.02666)
+
+7.   [ParaNMT-50M: Pushing the Limits of Paraphrastic Sentence Embeddings with Millions of Machine Translations](https://aclanthology.org/P18-1042) (Wieting & Gimpel, ACL 2018)
+
+8.   [[1705.00652] Efficient Natural Language Response Suggestion for Smart Reply](https://arxiv.org/abs/1705.00652): Section 4.4 defines the multiple negative loss.
