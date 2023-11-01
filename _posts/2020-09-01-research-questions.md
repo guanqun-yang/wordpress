@@ -111,6 +111,16 @@ Here I document a list of general research questions that warrants searching, re
     This is based on the hypothesis that there exists certain relation between the geometry of embedding space and semantic meaning of each point in that space. For example, sampling a convex set leads to sentences that have similar high-level specifications.
 
     Many recent works show that text embeddings may be anisotropic: directions of word vectors are not evenly distributed across space but rater concentrated in a narrow cone; this peculiarity may not be related to performance [7].
+    
+- Retrieval Augmented LM
+
+    RALM could be useful in numerous ways.
+
+    -   Copyright: This is the idea of [SiloLM](https://arxiv.org/abs/2308.04430), where the LM itself is fine-tuned with CC0 data. The copyright data is stored in a non-parametric database; these data could be incorporated into the inference process using RALM. However, with this design, the authors of the copyrighted texts could easily request a removal.
+    -   Traceability: The retrieved samples serve as evidence to support the decisions made by the LM.
+    -   QA: When we would like to do QA on a large tabular database (for example, asking "what is the percentage of patients who have allergy" to a large EHR database), the RALM is the most natural way to incorporate the necessary information in the database into the inference process of an LLM. Previously we need to build a pipeline that first generates queries written in formal language (for example, ElasticSearch queries) and then use these generated queries to answer the question.
+
+    These benefits are offered by the complementary nature of non-parametric databases' high data fidelity and LMs' inference ability. Specifically, the knowledge is stored distributionally in the LM; it is not straightforward to retrieve the exact know compared to using a non-parametric database. At the same time, the inference ability available to exploit in LMs are not available in other smaller models.
 
 # References
 
