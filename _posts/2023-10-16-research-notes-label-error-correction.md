@@ -6,9 +6,21 @@ categories:
 - Research
 ---
 
-# Method
+[toc]
 
-- This paper discards identified mislabeled samples by default.
+# Overview
+
+-   The standard procedure after detecting label errors is discarding samples with label errors rather than correcting them.
+
+
+
+# cleanlab
+
+
+
+# Chong et al., EMNLP 2022
+
+
 
 # Additional Notes
 
