@@ -27,6 +27,15 @@ Besides ease of updating knowledge, the retrieval-based approaches also have fol
 -   Traceability, Verifiability, Interpretability, and Controllability: They mean the same thing for RALMs.
 -   Privacy and Copyright: The LMs are only responsible for making inference. The more relevant documents are stored in the databases. 
 
+There are some use cases where the RALMs are most suitable:
+
+-   Long-tail: For example, "Where is the Toronto zoo located?"
+-   Knowledge Update: For example, "what is the population of Toronto metropolitan area in 2000?"
+-   Verifiability, Factuality, and Hallucination
+-   Parameter-Efficiency: RALMs could improve performance of smaller LMs and make them competitive with larger ones.
+-   Parameter Update: We do not have to update the model itself when we could update the database.
+-   OOD Generalization
+
 # Architecture
 
 Three elements of RALMs:
@@ -45,7 +54,7 @@ Three elements of RALMs:
 
 -   Retrieval-in-context LM
 
-    -   REPLUG
+    -   REPLUG: The prompt is used to retrieved a set of documents; these documents are then prepended to the prompt and form an ensemble to predict the new tokens. 
 
     -   Ram et al.: We do not have to use the entire prompt as query. It may be better to use more recent tokens (due to higher relevance to the tokens to generate) as long as they are not too short.
 
@@ -88,20 +97,58 @@ Three elements of RALMs:
 
 We could update (1) the LM itself and (2) retrieval model. However, training either of them is difficult as (1) LM is typically large and therefore expensive to make parameter updates (2) index has to be updated every time we update the the encoder and this is proportional to the number of documents in the database.
 
-There are 4 strategies for training the RALMs.
+There are 4 strategies for training the RALMs. *Independent* and *sequential* training render no or weak dependence between the LM and RM but the system performance is not as strong as the *joint* training (i.e., training the LM and RM jointly); the downside of the joint training is the requirement for a special training protocl.
 
 ## Independent Training
 
-Training LM and retrieval model independently. 
+Training LM and retrieval model independently.  Each component could be improved separately; the improvement in each component will translate to the final improvement.
 
 -   LM
+
 -   Retrieval Model: It could be BM25 or DPR. BM25 does not need explicit training and the training of DPR is pretty straightforward. Note that the loss used to promote the correct pairs from the in-batch negatives is a type of contrastive learning.
+
+    Besides DPR, another model is the contriver model (Izacard et al.), which is able to train in an unsupervised fashion. 
+
+Here are some examples of using this scheme:
+
+-   kNN-LM: The retrieval model is fixed and only the LM is trained.
+-   Ram et al.
 
 ## Sequential Training
 
+Sequential training means training one component first and then training the second component; the training of the second component depends the first component. As there are two components, we could either start from training the LM or the retrieval model.
+
+-   RM $\rightarrow$ LM: For example, RETRO.
+-   LM $\rightarrow$ RM: For example, REPLUG. Besides the ensemble prediction scheme, the authors further propose a method to fine-tune the retrieval model (dubbed as "LSR" by the authors) based on the feedback of the LM.
+
 ## Joint Training with Asynchronous Index Update
 
+Asynchronous index update means that we allow the index to "stale:" we do not reindex every document every time we update the encoder; rather, we only reindex the documents every $T$ steps.
+
 ## Joint Training with In-Batch Approximation
+
+# Applications
+
+Questions
+
+-   Where should we use RALMs.
+-   Where should we plug in the RM + database.
+-   Should we update the LM or RM.
+-   What database should be used? Wikipedia, training data, or code documtation.
+
+
+
+-   WebGPT and GopherCIte uses the Google search results as data store. 
+
+|            | Task                | Method                                | Database              |
+| ---------- | ------------------- | ------------------------------------- | --------------------- |
+| DocPrompt  | Code Generation     | Prompting (Input)<br />Fine-Tuning LM | Code Documentation    |
+| KNN-Prompt | Classification      | Prompting (Output)                    | Wikipedia + CC        |
+| REPLUG     | Knowledge-Intensive | Prompting (Input)                     | Wikipedia + CC        |
+| ATLAS      | Knowledge-Intensive | Fine-Tuning LM and RM                 | Wikipedia + CC        |
+| GopherCite | QA                  | Fine-Tuning  + RL on LM               | Google Search Results |
+
+
 
 # Additional Notes
 
