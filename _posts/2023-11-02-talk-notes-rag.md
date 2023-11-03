@@ -163,3 +163,9 @@ youtube-dl -o video.mp4 --referer "https://zoom.us/" --add-header "Cookie: COOKI
 # Reference
 
 1.   [Building Scalable, Explainable, and Adaptive NLP Models with Retrieval | SAIL Blog](https://ai.stanford.edu/blog/retrieval-based-NLP/)
+2.   [Atlas: Few-shot Learning with Retrieval Augmented Language Models](https://arxiv.org/abs/2208.03299) (Izacard et al., 2022; also in Section 4)
+3.   [Teaching language models to support answers with verified quotes](https://arxiv.org/abs/2203.11147) (Menick et al., 2022)
+4.   [REPLUG: Retrieval-Augmented Black-Box Language Models](https://arxiv.org/pdf/2301.12652.pdf) (Shi et al., 2023; also in Section 3)
+5.   [kNN-Prompt: Nearest Neighbor Zero-Shot Inference](https://arxiv.org/abs/2205.13792) (Shi et al., 2022)
+6.   [Attributed Question Answering: Evaluation and Modeling for Attributed Large Language Models](https://arxiv.org/abs/2212.08037) (Bohnet et al., 2023)
+7.   [DocPrompting: Generating Code by Retrieving the Docs](https://arxiv.org/abs/2207.05987) (Zhou et al., 2022)
