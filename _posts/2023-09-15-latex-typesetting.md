@@ -22,8 +22,6 @@ The computer science conferences have high tolerance for style variability, whic
 
 # Graphics
 
-
-
 # Reference
 
 1. [packages - Suggest a "nice" font family for my basic LaTeX template (text and math) - TeX - LaTeX Stack Exchange](https://tex.stackexchange.com/questions/59702/suggest-a-nice-font-family-for-my-basic-latex-template-text-and-math)
