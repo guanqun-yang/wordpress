@@ -9,7 +9,10 @@ categories:
 >   [[Zoom Recording](https://us06web.zoom.us/rec/play/6fqU9YDLoFtWqpk8w8I7oFrszHKW6JkbPVGgHsdPBxa69ecgCxbmfP33asLU3DJ74q5BXqDGR2ycOTFk.93teqylfi_uiViNK?canPlayFromShare=true&from=share_recording_detail&continueMode=true&componentName=rec-play&originRequestUrl=https%3A%2F%2Fus06web.zoom.us%2Frec%2Fshare%2FNrYheXPtE5zOlbogmdBg653RIu7RBO1uAsYH2CZt_hacD1jOHksRahGlERHc_Ybs.KGX1cRVtJBQtJf0o)] - [[Website and Slides](https://acl2023-retrieval-lm.github.io/)] - [[Proposal](https://aclanthology.org/2023.acl-tutorials.6.pdf)] - [[Q&A](https://app.sli.do/event/ok8R2jMMvNjp9uMkxi63Qi/live/questions)] - [[Backup Recording](https://youtu.be/7_0R5JMIogM)]
 >
 >   - This tutorial is given by Akari Asai, Sewon Min, Zexuan Zhong, and Danqi Chen
->   - Timestamp: 1:14:44
+
+
+
+[toc]
 
 # Overview
 
@@ -61,32 +64,44 @@ Three elements of RALMs:
 
         >   Comment: The motivation of this design is dubious. Furthermore, the interaction between the input and the retrieved results is limited.
 
--   Other Extensions
+-   Extensions to kNN-LM
     -   Adaptive Retrieval. Whether the retrieval is enabled depends on the confidence of the outputs. For example, 
         -   FLARE and He et al. More specifically, the $\lambda$ in kNN-LM could be a function of confidence.
         -   Alon et al.
 
+-   Entities as Experts
+    -   Entities could be represented as dense vectors and incorporated into the intermediate layers of a model.
+    -   Extension: Mention Memory
 
+| Paper                                     | What                        | When                     | How          | Note                                                         |
+| ----------------------------------------- | --------------------------- | ------------------------ | ------------ | ------------------------------------------------------------ |
+| REALM                                     | Chunks                      | Once                     | Input        | Used in real-world applications such as `you.com`, Bing Chat, and `perplexity.ai`. |
+| Retrieve-In-Context LM                    | Chunks                      | Every $n$ Tokens         | Input        | Used in real-world applications such as `you.com`, Bing Chat, and `perplexity.ai`. |
+| RETRO                                     | Chunks                      | Every $n$ Tokens         | Intermediate |                                                              |
+| kNN-LM                                    | Tokens                      | Every Token              | Output       |                                                              |
+| FLARE                                     | Chunks                      | Adaptive                 | Input        |                                                              |
+| Adaptive kNN-LM (He et al., Alon et al.)  | Tokens                      | Adaptive                 | Output       |                                                              |
+| Entities of Experts; Mention Memory       | Entities or Entity Mentions | Every Entity Mention     | Intermediate |                                                              |
+| Wu et al., Bertsch et al., Rubin & Berant | Chunks from Input           | Once or Every $n$ Tokens | Intermediate | All methods above retrieve from external text. We can also retrieve from the book-length input. |
 
+# Training
 
+We could update (1) the LM itself and (2) retrieval model. However, training either of them is difficult as (1) LM is typically large and therefore expensive to make parameter updates (2) index has to be updated every time we update the the encoder and this is proportional to the number of documents in the database.
 
-| Paper                                    | What   | When             | How          | Note |
-| ---------------------------------------- | ------ | ---------------- | ------------ | ---- |
-| REALM                                    | Chunks | Once             | Input        |      |
-| Retrieve-In-Context LM                   | Chunks | Every $n$ Tokens | Input        |      |
-| RETRO                                    | Chunks | Every $n$ Tokens | Intermediate |      |
-| kNN-LM                                   | Tokens | Every Token      | Output       |      |
-| FLARE                                    | Chunks | Adaptive         | Input        |      |
-| Adaptive kNN-LM (He et al., Alon et al.) | Tokens | Adaptive         | Output       |      |
-|                                          |        |                  |              |      |
-|                                          |        |                  |              |      |
-|                                          |        |                  |              |      |
+There are 4 strategies for training the RALMs.
 
+## Independent Training
 
+Training LM and retrieval model independently. 
 
+-   LM
+-   Retrieval Model: It could be BM25 or DPR. BM25 does not need explicit training and the training of DPR is pretty straightforward. Note that the loss used to promote the correct pairs from the in-batch negatives is a type of contrastive learning.
 
+## Sequential Training
 
+## Joint Training with Asynchronous Index Update
 
+## Joint Training with In-Batch Approximation
 
 # Additional Notes
 
