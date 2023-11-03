@@ -20,9 +20,9 @@ The motivation of RALM is the pessimism about the editing-based approaches for u
 
 -   The backup video is downloaded based on the instruction documented [here](https://michaelabrahamsen.com/posts/how-to-download-zoom-recordings/). Basically, we just need to replace the `<cookie content>` and `<request url>` with the content we obtain after `F5` $\rightarrow$ `F12` in the browser.
 
-    ```bash
-    youtube-dl -o video.mp4 --referer "https://zoom.us/" --add-header "Cookie: COOKIE_CONTENT" 'REQUEST_URL'
-    ```
+```bash
+youtube-dl -o video.mp4 --referer "https://zoom.us/" --add-header "Cookie: COOKIE_CONTENT" 'REQUEST_URL'
+```
 
 
 
