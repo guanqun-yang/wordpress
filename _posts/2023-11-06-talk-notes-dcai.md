@@ -12,7 +12,7 @@ categories:
 
 # Overview
 
-The following notes are the data-centric AI IAP course notes from MIT; [Independent Activities Period (IAP)](https://elo.mit.edu/iap/) is a special four-week semester of MIT.
+The following notes are the data-centric AI IAP course notes from MIT; [Independent Activities Period (IAP)](https://elo.mit.edu/iap/) is a special four-week semester of MIT. The standard time for each lecture is 1 hour.
 
 # Lecture 1 - Data-Centric AI vs. Model-Centric AI
 
@@ -101,7 +101,7 @@ The focus of the lecture is the correctable errors; it is defined in previous se
 
 -   Assumption: Class-Conditional Label Noise
     $$
-    p(\hat{y} \vert y ^ *; \mathbf{x} ) = p(\hat{y} \vert y ^ *)
+    p(\hat{y} \vert y ^ {*}; \mathbf{x} ) = p(\hat{y} \vert y ^ {*})
     $$
 
     -   Interpretation: Given the true label, there is a constant flipping rate for the samples under that true label to other labels.
@@ -110,21 +110,60 @@ The focus of the lecture is the correctable errors; it is defined in previous se
 
 -   Confident Learning
 
-    -   For each of the class $j$, we could define a model's self-confidence:
+    -   For each of the class $j$, we could define a model's self-confidence. If the self-confidence score of class $j$ is low, but some of the samples have very high confidence, then we could say that there is something wrong with that label.
 
     $$
     t _ j = \frac{1}{ \vert \mathbf{X} _ {\tilde{y} = j}\vert } \sum _ {x \in \mathbf{X} _ {\tilde{y} = j}} \hat{p} ( \tilde{y} = j; \mathbf{x}, \theta)
     $$
-
+    
+    - For samples labeled with $i$, if its predicted probability for class $j$ larger then $t _ j$, then this sample is likely mislabeled and we could assign it to the set. We could obtain this matrix in a cross-validation style. For example, if we have 3 folds, we use 2/3 of the data to train the model $\hat{p}$ and use the remaining 1/3 to compute this matrix.
+        $$
+        \hat{ \mathbf{X} } _ {\tilde{y} = i, y ^ {*} = j} = \{ \mathbf{x} \in \mathbf{X} _ {\tilde{y} = i}: \hat{p} (\tilde{y} = j; \mathbf{x}, \theta) \geq t_j\}
+        $$
     
 
+    -   Example
 
+        Suppose we know the $t _ j$ for "dog", "fox", and "cow" are 0.7, 0.7, and 0.9. We have following predictions and labels. We could obtain a matrix that looks like one below. The off-diagonal entries correspond to labeling errors.
 
+        |                        | $y ^ {*} = \text{dog}$ | $y ^ {*} = \text{fox}$ | $y ^ {*} = \text{cow}$ |
+        | ---------------------- | ---------------------- | ---------------------- | ---------------------- |
+        | $\hat{y} = \text{dog}$ | 1                      | 1                      | 0                      |
+        | $\hat{y} = \text{fox}$ | 1                      | 3                      | 0                      |
+        | $\hat{y} = \text{cow}$ | 0                      | 0                      | 1                      |
 
+        Note the following:
 
+        -   The last sample does not contain any animal and it is **not** counted. This shows that this scheme is robust to outliers.
+        -   It is possible $t _ j$ is very small but this will happen when there are many classes. In this case, the predicted probability for each class will also small.
 
+        ![image-20231106204002280](https://raw.githubusercontent.com/guanqun-yang/remote-images/master/2023/11/upgit_20231106_1699321202.png)
 
+-   Applications
 
+    -   Confident Learning + Ranking by Loss
+
+        If we see there are in total $k$ off-diagonal samples, then we could pick the top-$k$ samples based on loss values. 
+
+    -   Confident Learning + Ranking by Normalized Margin
+
+        We could also rank by normalized margin for a specific class $i$; normalized margin is defined as following
+        $$
+        p(\tilde{y} = i) - \max _ {j\neq i} p(\tilde{y} =j; \mathbf{x} \in \mathbf{X} _ i)
+        $$
+
+    -   Self-Confidence
+
+        When $p(\tilde{y}=i)$ is close to 1, then as far as the model could think, the sample is not likely to be a label error.
+
+## Theory of Confident Learning
+
+-   The model-centric approaches (i.e., model reweighting methods) will still propagate the errors back to the weights. However, the data-centric approaches (i.e., pruning methods) does not have this problem.
+-   We could prove that even if the model is miscalibrated (i.e., overly confident in some classes), the confident learning method is still robust.
+
+## Implications on Testing
+
+-   When focusing on the subset of data whose labels could be corrected, more capable models (for example, ResNet-50 vs. ResNet-18) perform worse as they fit the random noise in the training set.
 
 # Reference
 
