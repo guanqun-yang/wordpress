@@ -165,9 +165,18 @@ The focus of the lecture is the correctable errors; it is defined in previous se
 
 -   When focusing on the subset of data whose labels could be corrected, more capable models (for example, ResNet-50 vs. ResNet-18) perform worse as they fit the random noise in the training set.
 
+# Lecture 8 - Encoding Human Priors
+
+Human priors could be encoded (i.e., finding a function to represent) into the ML pipeline in two ways. During training time, it could be done using data augmentation. During test time, this is done through prompt engineering with an LLM.
+
+-   Data Augmentation
+    -   Images: Flip, Rotation, Mobius transformation, Mixup. Mixup could be thought of as the linear interpolation of two images.
+    -   Texts: Back-translation.
+
 # Reference
 
 1.   [Why it’s time for 'data-centric artificial intelligence' | MIT Sloan](https://mitsloan.mit.edu/ideas-made-to-matter/why-its-time-data-centric-artificial-intelligence)
 2.   [Bad Data Costs the U.S. $3 Trillion Per Year](https://hbr.org/2016/09/bad-data-costs-the-u-s-3-trillion-per-year) (Harvard Business Review)
 3.   [Bad Data: The $3 Trillion-Per-Year Problem That's Actually Solvable | Entrepreneur](https://www.entrepreneur.com/science-technology/bad-data-the-3-trillion-per-year-problem-thats-actually/393161)
+4.   [[1710.09412] mixup: Beyond Empirical Risk Minimization](https://arxiv.org/abs/1710.09412) (Zhang et al., ICLR 2017)
 
