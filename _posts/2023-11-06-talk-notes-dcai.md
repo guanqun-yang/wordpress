@@ -67,7 +67,7 @@ The following notes are the data-centric AI IAP course notes from MIT; [Independ
 | $y ^ *$                                    | True underlying label                                        |      |
 | $\mathbf{X} _ {\tilde{y} =i, y ^ {*} = j}$ | A set of examples whose true label is $j$ but they are mislabeled as $i$. |      |
 | $\mathbf{C} _ {\tilde{y} =i, y ^ {*} = j}$ | The size of the dataset above.                               |      |
-| $p(\tilde{y} =i, y ^ {*} = j)$             | The joint probability of label $i$ and label $j$; it could be estimated by normalizing $\mathbf{C}$. |      |
+| $p(\tilde{y} =i, y ^ {*} = j)$             | The joint probability of label $i$ and label $j$; it could be estimated by normalizing $\mathbf{C}$; it is indeed dividing each entry by the sum of all entries in the matrix $\mathbf{X}$. |      |
 | $p(\tilde{y} =i\vert y ^ {*} = j)$         | The transition probability that the label $j$ flips to label $i$; it could also be called flipping rate. |      |
 
 ## Categories of Label Errors
@@ -93,7 +93,11 @@ There are two sources of uncertainty:
 
 ## Confident Learning
 
-The focus of the lecture is the correctable errors and the matrix $\mathbf{X}$ is **non-symmetric**.
+The focus of the lecture is the correctable errors; it is defined in previous sections; the matrix $\mathbf{X}$ is **non-symmetric**. Furthermore, the lecture will focus on samples with one label and one annotation.
+
+-   Motivation of Using Confident Learning
+    -   Ranking samples by loss does not work. We could not find a loss threshold and claim the samples above this threshold are label errors.
+    -   Deep learning does not solve the label noise problem (despite many papers and many claims) because these problems try to solve the datasets polluted by uniform noise.
 
 -   Assumption: Class-Conditional Label Noise
     $$
@@ -104,13 +108,17 @@ The focus of the lecture is the correctable errors and the matrix $\mathbf{X}$ i
     -   Rationale: A pig image often confused with a boar image but not other items such as "missiles" and "keyboards." This tendency has nothing to do with what exactly a pig look like in an image but the similarities of the classes.
     -   Motivation: This assumption is made because the LHS couples the aleatoric uncertainy and epistemic uncertainty and this assumption decouples these two uncertainties.
 
+-   Confident Learning
+
+    -   For each of the class $j$, we could define a model's self-confidence:
+
+    $$
+    t _ j = \frac{1}{ \vert \mathbf{X} _ {\tilde{y} = j}\vert } \sum _ {x \in \mathbf{X} _ {\tilde{y} = j}} \hat{p} ( \tilde{y} = j; \mathbf{x}, \theta)
+    $$
+
     
 
--   The reason why we need confident learning is that we could not find a loss threshold and claim the samples above this threshold are label errors.
 
--   
-
-    
 
 
 
