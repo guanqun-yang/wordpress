@@ -173,6 +173,19 @@ Human priors could be encoded (i.e., finding a function to represent) into the M
     -   Images: Flip, Rotation, Mobius transformation, Mixup. Mixup could be thought of as the linear interpolation of two images.
     -   Texts: Back-translation.
 
+# cleanlab Library
+
+-   Understanding Cross-Validation in `cleanlab`
+
+    The cross-validation in `cleanlab` means the probabilities have to be the test scores. Specifically, if we have 3 folds, then what we will keep are the test prediction probabilities of each 1/3 fold using the model trained on the remaining 2/3 folds.
+
+    This logic could be found in  `estimate_confident_joint_and_cv_pred_proba()` in `cleanlab/count.py`;  it is the most important functions for `cleanlab`. It is used in `find_label_issues` function in `CleanLearning` class; this class also inherits from `sklearn.base.BaseEstimator`. The code could be found [here](https://github.com/cleanlab/cleanlab/blob/master/cleanlab/classification.py).
+
+-   `keras` is Necessary to Port `cleanlab` and `transformer`
+    -   `cleanlab` requires an API that similar to `sklearn`. 
+    -   As of 2023-11-08, neither `transformer` or `sklearn` team provides a solution to port each other (except a less relevant library called [`skops`](https://github.com/skops-dev/skops) that is about sharing `sklearn` models to HuggingFace hub; also see [news](https://blog.scikit-learn.org/updates/community/joining-forces-hugging-face/)). We therefore need to rely the `keras`-based code from `cleanlab` official [tutorial](https://github.com/cleanlab/examples/blob/master/huggingface_keras_imdb/huggingface_keras_imdb.ipynb) that fine-tunes a TF-based `bert-base-uncased` to find label errors in `imdb` dataset.
+    -   The complete script is available [here](https://gist.github.com/guanqun-yang/0af12bcf0ea175e7255481738a83baba).
+
 # Reference
 
 1.   [Why it’s time for 'data-centric artificial intelligence' | MIT Sloan](https://mitsloan.mit.edu/ideas-made-to-matter/why-its-time-data-centric-artificial-intelligence)
