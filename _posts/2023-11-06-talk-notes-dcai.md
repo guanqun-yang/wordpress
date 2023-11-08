@@ -174,6 +174,7 @@ Human priors could be encoded (i.e., finding a function to represent) into the M
     -   Texts: Back-translation.
 
 # cleanlab Library
+### Anatomy
 
 -   Understanding Cross-Validation in `cleanlab`
 
@@ -186,6 +187,47 @@ Human priors could be encoded (i.e., finding a function to represent) into the M
     -   As of 2023-11-08, neither `transformer` or `sklearn` team provides a solution to port each other (except a less relevant library called [`skops`](https://github.com/skops-dev/skops) that is about sharing `sklearn` models to HuggingFace hub; also see [news](https://blog.scikit-learn.org/updates/community/joining-forces-hugging-face/)). We therefore need to rely the `keras`-based code from `cleanlab` official [tutorial](https://github.com/cleanlab/examples/blob/master/huggingface_keras_imdb/huggingface_keras_imdb.ipynb) that fine-tunes a TF-based `bert-base-uncased` to find label errors in `imdb` dataset.
     -   The complete script is available [here](https://gist.github.com/guanqun-yang/0af12bcf0ea175e7255481738a83baba).
 
+
+## Example
+
+In the official demo that tries to find label errors in the `imdb` dataset, the authors use a simple MLP as the base model. The following (confusing at the first look) code indeed tokenize the texts into fixed length vectors (i.e., `sequence_length`).
+
+```python
+import re
+import string
+
+import tensorflow as tf
+import tensorflow_datasets as tfds
+from tensorflow.keras.layers import TextVectorization
+
+raw_train_ds = tfds.load(name="imdb_reviews", split="train", batch_size=-1, as_supervised=True)
+raw_test_ds = tfds.load(name="imdb_reviews", split="test", batch_size=-1, as_supervised=True)
+
+raw_train_texts, train_labels = tfds.as_numpy(raw_train_ds)
+raw_test_texts, test_labels = tfds.as_numpy(raw_test_ds)
+
+max_features = 10000
+sequence_length = 250
+
+def preprocess_text(input_data):
+    lowercase = tf.strings.lower(input_data)
+    stripped_html = tf.strings.regex_replace(lowercase, "<br />", " ")
+    return tf.strings.regex_replace(stripped_html, f"[{re.escape(string.punctuation)}]", "")
+
+vectorize_layer = TextVectorization(
+    standardize=preprocess_text,
+    max_tokens=max_features,
+    output_mode="int",
+    output_sequence_length=sequence_length,
+)
+
+vectorize_layer.reset_state()
+vectorize_layer.adapt(raw_train_texts)
+
+# (N, sequence_length)
+train_texts = vectorize_layer(raw_train_texts).numpy()
+test_texts = vectorize_layer(raw_test_texts).numpy()
+```
 # Reference
 
 1.   [Why it’s time for 'data-centric artificial intelligence' | MIT Sloan](https://mitsloan.mit.edu/ideas-made-to-matter/why-its-time-data-centric-artificial-intelligence)
