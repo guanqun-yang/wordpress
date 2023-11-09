@@ -14,6 +14,8 @@ categories:
 
 The following notes are the data-centric AI IAP course notes from MIT; [Independent Activities Period (IAP)](https://elo.mit.edu/iap/) is a special four-week semester of MIT. The standard time for each lecture is 1 hour.
 
+
+
 # Lecture 1 - Data-Centric AI vs. Model-Centric AI
 
 -   It is not hard to design fancy models and apply various tricks on the well curated data. However, these models and tricks do not work for real-world data if we do not explicitly consider the real-world complexities and take them into account. Therefore, it is important to focus on data rather than model.
@@ -228,6 +230,17 @@ vectorize_layer.adapt(raw_train_texts)
 train_texts = vectorize_layer(raw_train_texts).numpy()
 test_texts = vectorize_layer(raw_test_texts).numpy()
 ```
+# Additional Notes
+
+-   "You are what you eat" is particularly relevant to the process of training machine learning models. 
+-   The data collection, labeling, and cleaning process could be called "data engine" or "data flywheel" in tech firms ([blog](https://medium.com/mlearning-ai/data-engine-design-9b29a20ff9f0)).
+
+-   The benefits of data-centric AI is that it disentangle the effects of data and modeling. Previously, we blindly trust the labels and efforts (including using larger models, changing loss functions, doing HPO) to improve the performance may only end up fitting the noise. If we make the data clean, we could identify what are the truly useful techniques and what are not.
+
+-   `cleanlab` could not only flag the label issues but also automatically fix the top label issues. ([blog](https://cleanlab.ai/blog/model-deployment/)).
+
+    >   Here we use Cleanlab Studio’s *Clean Top K* feature, which allows us to automatically correct the top most severe issues detected in our dataset with an automatically suggested label (inferred to be more suitable for each example than its original label in the dataset).
+
 # Reference
 
 1.   [Why it’s time for 'data-centric artificial intelligence' | MIT Sloan](https://mitsloan.mit.edu/ideas-made-to-matter/why-its-time-data-centric-artificial-intelligence)

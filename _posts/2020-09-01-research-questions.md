@@ -144,8 +144,6 @@ Given multiple datasets $D_1, D_2, \cdots$ with the same input and output space 
 
     >   Note: The dataset label normalization process may be questionable.
 
-    
-
 # References
 
 1. [ScAN: Suicide Attempt and Ideation Events Dataset](https://aclanthology.org/2022.naacl-main.75) (Rawat et al., NAACL 2022)
