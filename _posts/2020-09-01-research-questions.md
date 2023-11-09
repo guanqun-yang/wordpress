@@ -64,6 +64,8 @@ The difference of testing machine learning models versus testing traditional sof
 
 Suppose the model could already achieve high accuracy on the standard test set (it is indeed the train-to-train setting if we follow the WILDS paper), which means the model architecture, training objective, and hyperparameters are not responsible for the lower performance on the artificially created challenging set, the most straightforward way to improve the model performance is data augmentation. The naive way is to **blindly** collect more data that are **wishfully relevant** as an augmentation so we **expect** the performance could improve.
 
+### Guided Data Augmentation
+
 However, this blindness hampers the efficiency of improving the models: the only feedback signal is the single scalar (i.e., failure rate) **after** we have trained and evaluated the model; we should have a feedback signal **before** we train the model. 
 
 > - Unverified Hypothesis: the feedback signal is highly (inversely) correlated with the failure rate on the benchmark.
@@ -85,7 +87,7 @@ Whichever method we choose, if we denote the intervention with $\mathrm{RandomSa
 > - Assumption: The samples $x _ {ij}$ is fully specified by the specification $s _ i$.
 > - Note: If the annotations of a dataset strictly follow the annotation codebook, then the machine learning learns the specifications in the codebook. The process described above is a reverse process: we have a model that is already trained by others; we want to use the model in a new application but do not want to or can not afford to relabel the entire dataset, what is the minimal intervention we could apply to the dataset so that the model could quickly meet my specifications?
 
-## Detecting Inconsistent Labels with Specifications
+### Detecting Inconsistent Labels with Specifications
 
 Following the previous problem setup, we have a list of specifications in the format of $(s_1, D _ 1, D _ 1 ^ \text{heldout}), (s _ 2, D _ 2, D _ 2 ^ \text{heldout}), \cdots$; each specification has an unambiguous label. Rather than augmenting the $D _ \text{train}$ with additional data by selecting using either (1) $D _ 1 ^ \text{heldout} \cup D _ 2 ^ \text{heldout} \cup \cdots$ itself or (2) a model trained on it, we aim to correct labels directly in $D _ \text{train}$ which are inconsistent with specifications.
 
@@ -131,6 +133,18 @@ These benefits are offered by the complementary nature of non-parametric databas
 -   Dataset Statistics
 
 ![image-20231107125236836](https://raw.githubusercontent.com/guanqun-yang/remote-images/master/2023/11/upgit_20231107_1699379556.png)
+
+## Label Inconsistency of Different Datasets
+
+Given multiple datasets $D_1, D_2, \cdots$ with the same input and output space $\mathcal{X} \times \mathcal{Y}$ (for example, binary hate speech classification), is there a systemic approach that finds inconsistent labeling criteria. Specifically, if two similar sentences that belong to two datasets receive different labels, how do we explain the discrepancy in their underlying labeling criterion? This is done preferably in the format of FOL or natural language.
+
+-   If we treat GPT-4 as an oracle and use it to annotate the samples from $D _ 1, D _ 2, \cdots$, we could obtain an accuracy vector of size $\vert \mathcal{Y} \vert$ to characterize the label quality of each dataset. Note that for comparison purposes, the datasets to be annotated should be made same size and remains the original label distribution.
+
+    Previously it has been shown that using [a simple zero-shot prompt](https://gist.github.com/guanqun-yang/039371195db2c1732402d76ec97d5efa) shows an **binary** label inconsistency rate from 9% to up to 36%; the datasets under study are 15 hate speech datasets (uniform random sample of 200 samples per dataset) whose labels have been normalized to binary labels per each dataset's description.
+
+    >   Note: The dataset label normalization process may be questionable.
+
+    
 
 # References
 
