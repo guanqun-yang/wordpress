@@ -62,6 +62,97 @@ However, if we save checkpoints during training, then the code of saving checkpo
 
 # Inference
 
+## langchain, Pipeline, and Model Classes
+
+The classes and methods provided in`model.generate()` ,`pipeline` (or `TextGenerationPipeline`) and `langchain` are increasingly more high-level: the `TextGenerationPipeline` internally calls `model.generate()` and `langchain.llms.huggingface_pipeline.HuggingFacePipeline` internally uses `TextGenerationPipeline`.
+
+Therefore, it is sufficient to understand how `model.generate()` works and how the more abstract classes wrap the other classes. See the following example. Note that 
+
+-   A better way to specify arguments is **not** through a dictionary but through a predefined class such as `transformers.GenerationConfig` and then `model.config = config`. This could make the most use of the code reference feature available in PyCharm.
+-   We should stick to `transformers.pipeline` rather than `TextGenerationPipeline` as the former has the unified API across different tasks.
+-   Overall, the best way to make an inference on an LLM is using `pipeline` if we do not use `langchain` or `langchain` if we do. We should generally avoid using `model.generate()`.
+
+```python
+import os
+
+os.environ["CUDA_VISIBLE_DEVICES"] = str(0)
+os.environ["TOKENIZERS_PARALLELISM"] = "false"
+
+import torch
+from transformers import (
+    pipeline,
+    AutoTokenizer,
+    AutoModelForCausalLM,
+)
+from langchain.llms.huggingface_pipeline import (
+    HuggingFacePipeline,
+)
+
+##################################################
+
+model = AutoModelForCausalLM.from_pretrained("gpt2")
+tokenizer = AutoTokenizer.from_pretrained("gpt2")
+
+prompt = "Great changes have taken place in the past 30 years"
+
+##################################################
+# method 1
+# BAD: requires manually moving model and data to the device
+
+config = {
+    "do_sample": True,
+    "top_p": 1,
+    "num_return_sequences": 5,
+    "temperature": 1,
+    "max_new_tokens": 16,
+}
+
+device = torch.device("cuda:0")
+model = model.to(device)
+tokenizer.pad_token = tokenizer.eos_token
+
+raw_response1 = model.generate(
+    **tokenizer(prompt, return_tensors="pt").to(device),
+    **config,
+).squeeze()
+
+texts1 = tokenizer.batch_decode(raw_response1)
+
+##################################################
+# method2
+# GOOD
+
+config = {
+    "do_sample": True,
+    "top_p": 1,
+    "num_return_sequences": 5,
+    "temperature": 1,
+    "max_new_tokens": 16,
+    "device": "cuda:0"
+}
+
+pipeline = pipeline(
+    "text-generation",
+    model=model,
+    tokenizer=tokenizer,
+    **config
+)
+
+response2 = pipeline(prompt)
+texts2 = [response["generated_text"] for response in response2]
+
+##################################################
+# method 3
+# GOOD: However, it could NOT generate multiple sequences at the same time
+
+llm = HuggingFacePipeline(pipeline=pipeline)
+texts3 = list()
+for _ in range(5):
+    texts3.append(llm(prompt))
+```
+
+## Inference on Multiple Devices
+
 It does not seem to easily make inferences on multiple devices. However, we could use optimized attention implemented `torch>=2.0.0` and `optimum` to reduce the time and space requirement.
 
 # Instruction Tuning
