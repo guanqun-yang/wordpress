@@ -69,8 +69,16 @@ The classes and methods provided in`model.generate()` ,`pipeline` (or `TextGener
 Therefore, it is sufficient to understand how `model.generate()` works and how the more abstract classes wrap the other classes. See the following example. Note that 
 
 -   A better way to specify arguments is **not** through a dictionary but through a predefined class such as `transformers.GenerationConfig` and then `model.config = config`. This could make the most use of the code reference feature available in PyCharm.
+
 -   We should stick to `transformers.pipeline` rather than `TextGenerationPipeline` as the former has the unified API across different tasks.
--   Overall, the best way to make an inference on an LLM is using `pipeline` if we do not use `langchain` or `langchain` if we do. We should generally avoid using `model.generate()`.
+
+-   Here is the decision flow of which API to use:
+
+    | Index | API                     | Case                                                         |
+    | ----- | ----------------------- | ------------------------------------------------------------ |
+    | 1     | `model.generate()`      | When we need [special control](https://huggingface.co/docs/transformers/internal/generation_utils) over the outputs. For example, adding human bias to the distribution similar to `logit_bias` for OpenAI APIs ([example](https://github.com/huggingface/transformers/issues/22168#issue-1624460056)) or `transformers.NoBadWordsLogitProcessor`. |
+    | 2     | `transformers.pipeline` | Preferred as the first choice.                               |
+    | 3     | `langchain`             | When working with `langchain`                                |
 
 ```python
 import os
@@ -149,6 +157,45 @@ llm = HuggingFacePipeline(pipeline=pipeline)
 texts3 = list()
 for _ in range(5):
     texts3.append(llm(prompt))
+```
+
+## Controlled Generation
+
+### Enforcing or Forbidding Specific Tokens
+
+This is done using disjunctive constraints (enforcing) or `NoBadWordsLogitsProcessor` (forbidding) internally in `model.generate()`. This could be easily implemented using the snippet below.
+
+Note that when enforcing generation, setting `num_beams` to an integer greater than 1 is **critical** as enforcing presence of some tokens is implemented using beam search.
+
+```python
+from transformers import AutoTokenizer, AutoModelForCausalLM
+
+def get_tokens_as_list(model_name, word_list):
+    tokenizer_with_prefix_space = AutoTokenizer.from_pretrained(model_name, add_prefix_space=True)
+    tokens_list = []
+    for word in word_list:
+        tokenized_word = tokenizer_with_prefix_space([word], add_special_tokens=False).input_ids[0]
+        tokens_list.append(tokenized_word)
+    return tokens_list
+
+
+model = AutoModelForCausalLM.from_pretrained("gpt2")
+tokenizer = AutoTokenizer.from_pretrained("gpt2")
+tokenizer.pad_token_ids = tokenizer.eos_token_id
+
+prompt = "Great changes have taken place in the past 30 years"
+
+inputs = tokenizer(prompt, return_tensors="pt")
+output_ids = model.generate(inputs["input_ids"], max_new_tokens=5)
+print(tokenizer.batch_decode(output_ids, skip_special_tokens=True)[0])
+
+words_ids = get_tokens_as_list(model_name="gpt2", word_list=["Donald", "Trump"])
+
+output_ids = model.generate(inputs["input_ids"], max_new_tokens=5, bad_words_ids=words_ids)
+print(tokenizer.batch_decode(output_ids, skip_special_tokens=True)[0])
+
+output_ids = model.generate(inputs["input_ids"], max_new_tokens=5, force_words_ids=words_ids, num_beams=10)
+print(tokenizer.batch_decode(output_ids, skip_special_tokens=True)[0])
 ```
 
 ## Inference on Multiple Devices

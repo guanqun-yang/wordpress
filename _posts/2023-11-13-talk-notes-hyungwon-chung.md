@@ -11,6 +11,10 @@ categories:
 >
 >   -   The presenter Hyungwon Chung is a research engineer at OpenAI; he was with Google. He was doing mechanical engineering during Ph.D. that is completely irrelevant (aka. pressure-retarded osmosis) from machine learning.
 
+[toc]
+
+# Supervised Fine-Tuning (SFT)
+
 -   Instruction tuning is the technique that will **almost universally** beneficial to decoder only model and encoder-decoder model to improve their performances: the answer to "should I try instruction tuning" is almost always "yes." 
 
     Importantly, this is true even if we use encoder-only model as instruction-tuning provides a better initialization for "single-task" fine-tuning (see [2]). For example, we could use instruction-tuned BERT rather than regular BERT for various tasks.
@@ -19,14 +23,39 @@ categories:
 
 -   There are two flavors of instruction tuning
 
-    -   Using Mixture of Academic Datasets: Flan and T0. 
-    -   Using User Traffic: For example, InstructGPT and ChatGPT.
+    -   Using Mixture of Academic Datasets: Flan and T0. The limitation of these models is that they could not generate longer texts due to the limitation of the academic datasets.
+    -   Using User Traffic: For example, InstructGPT and ChatGPT. The user traffics are unavaialble in the academic datasets (for example, "explain the moon landing to a six year old.") as there is no way to evaluate them.
 
 -   Task Diversity and Model Size are Important
 
     -   The T0 by the presenter collects 1836 tasks; it is still the largest collections as of November 2023. The authors show the linear scaling law of model size and normalized performance on the held-out tasks. Further, when the number of tasks increase, the line is lifted upwards with a **double digit gain**. Further, it is important to have combine the non-CoT and CoT data together.
 
     -   However, the performance quickly plateaus even when there are more tasks. This is likely due to limited diversity of academic datastes.
+
+-   Inherent Limitation of Instruction Tuning
+
+    For a given input, the target is the **single** *correct* answer (it could be called behavior cloning in RL); this requires formalizing correct behavior of a given input. However, this is hard or even impossible for inputs that look like the following:
+
+    >   -   Write a letter to a 5-year-old boy from Santa Clause explaining that Santa is not real. Convey gently so as not to break his heart.
+    >   -   Implement Logistic regression with gradient descent in Python.
+
+    The issue is that (1) the correct answer may not be unique, and (2) it is hard or even impossible to provide the correct answer. However, the tension is that **none** of the existing functions could directly address these issues. The solution is using rewards in RL to address the problem.
+
+# RLHF
+
+The lecture is based on the InstructGPT paper, which provides the **foundational** idea and **popularize** RLHF. There are many variants and extensions of this papers; they are easy to understand if we understand this foundational paper.
+
+-   The goal of RLHF is encoding human preferences and (more generally) values.
+-   It is difficult to evaluate open-ended generation directly, but it is easier to compare two completions.
+
+## Reward Model (RM)
+
+
+
+# Additional Notes
+
+-   There is no reliable metrics to measure long generated texts; this is a problem not solved even for OpenAI.
+-   The inputs are typically longer than outputs.
 
 # Reference
 
