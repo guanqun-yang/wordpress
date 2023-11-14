@@ -50,12 +50,21 @@ The lecture is based on the InstructGPT paper, which provides the **foundational
 
 ## Reward Model (RM)
 
+The reward model $r(x, y;\phi)$ is the SFT model that replaces the last layer with a layer that outputs a scalar; it could also be done differently like taking the probability of `[CLS]` token, etc. As long as the model outputs a scalar, how exactly we model this process is less relevant.
+
+Let $p _ {ij}$ be the probability that the completion $y _ i$ is better than $y _ j$, then based on the old Bradley-Terry model:
+$$
+\log \frac{p _ {ij}}{ 1 - p _ {ij}} = r(x, y _ i ; \phi) - r(x, y _ j; \phi)
+$$
 
 
 # Additional Notes
 
 -   There is no reliable metrics to measure long generated texts; this is a problem not solved even for OpenAI.
--   The inputs are typically longer than outputs.
+-   The inputs are typically longer than outputs. This is one of the reasons why the models trained on the open-source datasets perform poor.
+-   The easier tasks (for example, simple arithmetic like `3 + 2 =`) is already solved pretty well by the pretrained models. The goal of the SFT and RLHF is to address the diverse and abstract prompts.
+-   The RM is called preference model by Anthropic.
+
 
 # Reference
 
