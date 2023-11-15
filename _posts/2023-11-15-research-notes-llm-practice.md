@@ -75,17 +75,28 @@ We first need to make sure the `openai` is most updated using `pip install -U op
 from openai import OpenAI
 client = OpenAI()
 
-client.files.create(
+message =  client.files.create(
   file=open("mydata.jsonl", "rb"),
   purpose="fine-tune"
 )
+# message:
+# FileObject(
+# 	id='file-Y0Q82yniynZAN7TeZaEXcbYg', 
+# 	bytes=234106, 
+#		created_at=1700031010, 
+#   filename='fine_tuning_data.jsonl', 
+#   object='file', 
+#   purpose='fine-tune', 
+#   status='processed', 
+#   status_details=None
+# )
 ```
 
 ### Step 3: Fine-Tuning
 
 Now OpenAI supports fine-tuning models using an UI (i.e., `https://platform.openai.com/finetune`). We could also submit a fine-tuning job using Python code below. Note that
 
--    `<filename>` is returned in Step 2.
+-    `filename` is returned in Step 2.
 -   `model` could be `gpt-3.5-turbo` or older models.
 
 We could optionally tune the hyperparameters of fine-tuning.
@@ -95,7 +106,7 @@ from openai import OpenAI
 client = OpenAI()
 
 client.fine_tuning.jobs.create(
-  training_file="<filename>", 
+  training_file="filename", 
   model="gpt-3.5-turbo",
   # optional, see details below
   hyperparameters={ 
@@ -104,7 +115,7 @@ client.fine_tuning.jobs.create(
 )
 ```
 
-We could monitor the status of fine-tuning and retrieve the recent fine-tuning jobs:
+We could monitor the status of fine-tuning on the OpenAI website. If using code is preferred, we could use one of the commands below.
 
 ```python
 from openai import OpenAI
@@ -114,7 +125,7 @@ client = OpenAI()
 client.fine_tuning.jobs.retrieve("ftjob-abc123")
 
 # Return the training metrics based on the command above, such as loss, accuracy
-content = client.files.retrieve_content("<result-file>")
+content = client.files.retrieve_content("result-file")
 
 # List up to 10 events from a fine-tuning job
 client.fine_tuning.jobs.list_events(fine_tuning_job_id="ftjob-abc123", limit=10)
