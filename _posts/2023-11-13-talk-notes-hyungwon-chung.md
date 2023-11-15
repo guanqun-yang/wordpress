@@ -50,13 +50,22 @@ The lecture is based on the InstructGPT paper, which provides the **foundational
 
 ## Reward Model (RM)
 
-The reward model $r(x, y;\phi)$ is the SFT model that replaces the last layer with a layer that outputs a scalar; it could also be done differently like taking the probability of `[CLS]` token, etc. As long as the model outputs a scalar, how exactly we model this process is less relevant.
+The reward model $r(x, y;\phi)$ is the SFT model that replaces the last layer with a layer that outputs a scalar; it could also be done differently like taking the probability of `[CLS]` token, etc. As long as the model outputs a scalar, how exactly we model this process is less relevant. 
 
-Let $p _ {ij}$ be the probability that the completion $y _ i$ is better than $y _ j$, then based on the old Bradley-Terry model:
+Let $p _ {ij}$ be the probability that the completion $y _ i$ is better than $y _ j$ (here the order matters), then based on the old Bradley-Terry model; the function $r(\cdot)$ models the strength of the sample. Note that it is likely both $y _ i$ and $y _ j$ are bad, then the goal is to choose the one that is relatively better.
 $$
-\log \frac{p _ {ij}}{ 1 - p _ {ij}} = r(x, y _ i ; \phi) - r(x, y _ j; \phi)
+\log \frac{p _ {ij}}{ 1 - p _ {ij}} = r(x, y _ i ; \phi) - r(x, y _ j; \phi),\quad p _ {ij} = \sigma( r(x, y_i;\phi) - r(x, y _ j; \phi))
 $$
 
+Then we want to find $\phi$ so that the sum of the probabilities is maximized: $\max _ \phi \sum _ {x, y _ i, y _ j \in D} \log p _ {ij}$.
+
+Note that there are some issues with the reward modeling:
+
+-   The scheme above does not model how much $y _ i$ is better than $y _ j$.
+
+## Policy Model
+
+-   PPO is preferred as it has more stable parameter update.
 
 # Additional Notes
 
@@ -64,6 +73,8 @@ $$
 -   The inputs are typically longer than outputs. This is one of the reasons why the models trained on the open-source datasets perform poor.
 -   The easier tasks (for example, simple arithmetic like `3 + 2 =`) is already solved pretty well by the pretrained models. The goal of the SFT and RLHF is to address the diverse and abstract prompts.
 -   The RM is called preference model by Anthropic.
+-   When we have $k$ responses to the **same** input, we could form $\binom{k}{2}$ sample pairs and put them in the same batch to avoid overfitting.
+-   The Constitutional AI (CAI) by Anthropic almost automates everything during RLHF; the only human efforts involved is writing the constitution itself. For example, the model is tasked to generate prompts; these prompts are sent to train reward models.
 
 
 # Reference

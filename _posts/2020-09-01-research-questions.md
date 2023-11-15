@@ -144,6 +144,13 @@ Given multiple datasets $D_1, D_2, \cdots$ with the same input and output space 
 
     >   Note: The dataset label normalization process may be questionable.
 
+## Adversarial Attack on RLHF
+
+We assume there is an underlying utility function $U: \mathcal{Y} \rightarrow [-1, 1]$ that measures a response $y$'s alignment to the input $x$: a response receives a high score when it is helpful, honest, and harmless.
+
+-   One thing we could do is investigating the relation between the ratio of reversed comparison pairs and the degradation on performance on the downstream tasks, such as HHH.
+-   The comparison reversal is not uniformly adversarial to the downstream tasks. If $U(y _ i)$ and $U(y _ j)$ is very close, then reversing them is not as effective as reversing another pair where $U(y _ i')$ and $U(y _ j ')$ is very different.
+
 # References
 
 1. [ScAN: Suicide Attempt and Ideation Events Dataset](https://aclanthology.org/2022.naacl-main.75) (Rawat et al., NAACL 2022)
