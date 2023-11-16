@@ -7,11 +7,18 @@ categories:
 - Talk
 ---
 
->   [Talk on LLM] - [[Talk on RLHF](https://www.youtube.com/watch?v=zjrM-MW-0y0)]
+>   [[Talk on LLM](https://www.youtube.com/watch?v=dbo3kNKPaUA)] - [[Talk on RLHF](https://www.youtube.com/watch?v=zjrM-MW-0y0)]
 >
 >   -   The presenter Hyungwon Chung is a research engineer at OpenAI; he was with Google. He was doing mechanical engineering during Ph.D. that is completely irrelevant (aka. pressure-retarded osmosis) from machine learning.
 
 [toc]
+
+-   Scaling Law, Phase Change, and Emergent Abilities
+    -   An idea that does not work now may work when scaling up the model size. We need to constantly unlearn intuitions built on outdated or even invalidated ideas. We can update our intuition by reruning experiments that previously do not work on newer models and pinpointing what is new in these newer models.
+
+<img src="https://raw.githubusercontent.com/guanqun-yang/remote-images/master/2023/11/upgit_20231116_1700110865.png" alt="Screenshot 2023-11-16 at 12.00.15 AM" style="zoom:50%;" />
+
+
 
 # Supervised Fine-Tuning (SFT)
 
