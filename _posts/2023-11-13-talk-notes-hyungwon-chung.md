@@ -45,10 +45,13 @@ categories:
 
 The lecture is based on the InstructGPT paper, which provides the **foundational** idea and **popularize** RLHF. There are many variants and extensions of this papers; they are easy to understand if we understand this foundational paper.
 
--   The goal of RLHF is encoding human preferences and (more generally) values.
--   It is difficult to evaluate open-ended generation directly, but it is easier to compare two completions.
+The goal of RLHF is encoding human preferences and (more generally) values. RLHF opens up a new **paradigm** of learning the objective function; the inductive bias from rule-based system to RLHF is gradually removed for more general use cases.
+
+<img src="https://raw.githubusercontent.com/guanqun-yang/remote-images/master/2023/11/upgit_20231115_1700109665.png" alt="image-20231115234105819" style="zoom:50%;" />
 
 ## Reward Model (RM)
+
+The intuition of training a reward model is It is difficult to evaluate open-ended generation directly, but it is easier to compare two completions.
 
 The reward model $r(x, y;\phi)$ is the SFT model that replaces the last layer with a layer that outputs a scalar; it could also be done differently like taking the probability of `[CLS]` token, etc. As long as the model outputs a scalar, how exactly we model this process is less relevant. 
 
@@ -59,13 +62,40 @@ $$
 
 Then we want to find $\phi$ so that the sum of the probabilities is maximized: $\max _ \phi \sum _ {x, y _ i, y _ j \in D} \log p _ {ij}$.
 
-Note that there are some issues with the reward modeling:
+Note that there are some issues with the reward modeling; there are many ways to improve this scheme:
 
 -   The scheme above does not model how much $y _ i$ is better than $y _ j$.
 
 ## Policy Model
 
--   PPO is preferred as it has more stable parameter update.
+Once we have the reward model $r(\cdot)$, we could use that to update the parameters of the language model itself $\pi _ \theta$. Specifically, we would like to maximize the following. Note that the prompt $X=(X _ 1, \cdots, X _ S)$ are from academic datasets or user traffic and completion $Y = (Y _ 1, \cdots, Y _ T)$ are sampled from the language model $\pi _ \theta$; the reward model is fixed in this process.
+$$
+J(\theta) = \mathbb{E} _ {(X, Y)\sim D _ {\pi _ \theta}} \left[  r(X, Y;\phi) \right]
+$$
+The specific algorithm used to update $\theta$ is PPO as it could give a stable gradient update. Here is the procedure:
+
+-   Initialize the policy model to a SFT model.
+
+-   Repeat the following:
+
+    1.   Sampling prompts from the input datasets.
+
+    2.   Generating the completion conditiong on the prompt with the current LM $\pi _ \theta$.
+
+    3.   Computing the reward of the input and the generated output using the (fixed) reward model $r(x, y;\phi)$.
+
+    4.   Back-propagating the policy model and updating the parameter.
+
+One issues (asked by He He) is that there might be distribution shift when applying the fixed reward model here; it could be an interesting problem to study: should we perodically update reward model (through something like continual learning) so that the distribution shift is mitigated? 
+
+## Regularization
+
+-   Preventing $\pi _ \theta$ from Deviating Too Much from the SFT Model (Overfitting to RM or Reward Hacking)
+
+    Adding the per-token penalty to prevent $\pi _ \theta(Y\vert X)$ from growing too large compared to $\phi _ \text{SFT}(Y\vert X)$. The intuition why this is important is that RM may model some human bias (for example, preference for longer texts) that may not be ideal for the task to solve.
+    $$
+    J(\theta) = \mathbb{E} _ {(X, Y)\sim D _ {\pi _ \theta}} \left[  r(X, Y;\phi) - \beta \log \frac{\pi _ \theta(Y\vert X)}{\pi _ \text{SFT}(Y\vert X)}\right]
+    $$
 
 # Additional Notes
 
@@ -81,3 +111,5 @@ Note that there are some issues with the reward modeling:
 
 1.   [[2210.11416] Scaling Instruction-Finetuned Language Models](https://arxiv.org/abs/2210.11416) (Chung et al., including Jason Wei)
 2.   [[2301.13688] The Flan Collection: Designing Data and Methods for Effective Instruction Tuning](https://arxiv.org/abs/2301.13688) (Longpre et al.)
+3.   [[2009.01325] Learning to summarize from human feedback](https://arxiv.org/abs/2009.01325) (Stiennon et al.): An example of reward hacking.
+4.   [[2212.08073] Constitutional AI: Harmlessness from AI Feedback](https://arxiv.org/abs/2212.08073) (Bai et al.)

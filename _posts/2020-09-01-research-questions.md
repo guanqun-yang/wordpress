@@ -151,6 +151,10 @@ We assume there is an underlying utility function $U: \mathcal{Y} \rightarrow [-
 -   One thing we could do is investigating the relation between the ratio of reversed comparison pairs and the degradation on performance on the downstream tasks, such as HHH.
 -   The comparison reversal is not uniformly adversarial to the downstream tasks. If $U(y _ i)$ and $U(y _ j)$ is very close, then reversing them is not as effective as reversing another pair where $U(y _ i')$ and $U(y _ j ')$ is very different.
 
+## OOD for Reward Model in RLHF
+
+The reward model $r(x, y; \phi)$ is fixed when fine-tuning the LM with PPO. There may be some distribution shifts between two stages. From the high level, this may not be an issue as the goal of RLHF is general enough (for example, HHH and Constitutional AI).
+
 # References
 
 1. [ScAN: Suicide Attempt and Ideation Events Dataset](https://aclanthology.org/2022.naacl-main.75) (Rawat et al., NAACL 2022)
