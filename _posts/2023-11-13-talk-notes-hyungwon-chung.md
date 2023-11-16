@@ -7,18 +7,38 @@ categories:
 - Talk
 ---
 
->   [[Talk on LLM](https://www.youtube.com/watch?v=dbo3kNKPaUA)] - [[Talk on RLHF](https://www.youtube.com/watch?v=zjrM-MW-0y0)]
+>   [[Talk on LLM](https://www.youtube.com/watch?v=dbo3kNKPaUA)] - [[Talk on RLHF](https://www.youtube.com/watch?v=zjrM-MW-0y0)] - [[Slides of LLM Talk](https://docs.google.com/presentation/d/1636wKStYdT_yRPbJNrf8MLKpQghuWGDmyHinHhAKeXY/edit#slide=id.g2885e521b53_0_0)] - [[Tweet Thread of the LLM Talk](https://twitter.com/hwchung27/status/1710003293223821658)]
 >
 >   -   The presenter Hyungwon Chung is a research engineer at OpenAI; he was with Google. He was doing mechanical engineering during Ph.D. that is completely irrelevant (aka. pressure-retarded osmosis) from machine learning.
+>   -   The "Pretraining" section mostly comes from the LLM talk. The other sections are from the RLHF talk.
 
 [toc]
 
+# Pretraining
+
+-   Functional Viewpoint of the Transformer LM
+
+    The transformer could be viewed as a computation module that receives **and** outputs the matrices of size `(b, d, l)`. **All** powerful LLMs are based on transformers. The interaction between tokens have minimal assumptions: each token could interact with any other token; this is done using a mechanism called "dot-product attention."
+
+    <img src="https://raw.githubusercontent.com/guanqun-yang/remote-images/master/2023/11/upgit_20231116_1700151374.png" alt="image-20231116111614647" style="zoom:50%;" />
+
+    For the sake of efficiency, the process above is done in batches. The **only** interdependence across the batch is finally the loss is divided by the batch size `b`.
+
+    <img src="https://raw.githubusercontent.com/guanqun-yang/remote-images/master/2023/11/upgit_20231116_1700151353.png" alt="image-20231116111552954" style="zoom:50%;" />
+
+-   Scaling Transformers
+    
+    This means efficiently doing matrix multiplication with many machines (with matrices distributed on each and every machine) while minimizing the communication costs between machines.
+    
 -   Scaling Law, Phase Change, and Emergent Abilities
+
     -   An idea that does not work now may work when scaling up the model size. We need to constantly unlearn intuitions built on outdated or even invalidated ideas. We can update our intuition by reruning experiments that previously do not work on newer models and pinpointing what is new in these newer models.
 
 <img src="https://raw.githubusercontent.com/guanqun-yang/remote-images/master/2023/11/upgit_20231116_1700110865.png" alt="Screenshot 2023-11-16 at 12.00.15 AM" style="zoom:50%;" />
 
-
+-   Post Training
+    -   Users could not immediately communicate with the pretrained model as the training objective of pretraining is next token prediction. Prompt engineering mitigates this problem by setting up the ground for the LM to generate the relevant content.
+    -   Pretrained models always generate something that is a natural continuation of the prompts even if the content is malicious.
 
 # Supervised Fine-Tuning (SFT)
 
@@ -28,7 +48,11 @@ categories:
 
     >   Pareto Improvements to Single Task Finetuning For both sets of Held-In and Held-Out tasks examined, finetuning Flan-T5 offers a pareto improvement over finetuning T5 directly. In some instances, usually where finetuning data is limited for a task, Flan-T5 without further finetuning outperforms T5 with task finetuning.
 
--   There are two flavors of instruction tuning
+-   An Unified Architecture
+
+    All tasks are unified with the single text-to-text format (proposed by T5). This was not obviously a valid choice because back to that time people do not believe LMs could "understand."
+    
+-   Two Flavors of Instruction Tuning
 
     -   Using Mixture of Academic Datasets: Flan and T0. The limitation of these models is that they could not generate longer texts due to the limitation of the academic datasets.
     -   Using User Traffic: For example, InstructGPT and ChatGPT. The user traffics are unavaialble in the academic datasets (for example, "explain the moon landing to a six year old.") as there is no way to evaluate them.
@@ -52,7 +76,7 @@ categories:
 
 The lecture is based on the InstructGPT paper, which provides the **foundational** idea and **popularize** RLHF. There are many variants and extensions of this papers; they are easy to understand if we understand this foundational paper.
 
-The goal of RLHF is encoding human preferences and (more generally) values. RLHF opens up a new **paradigm** of learning the objective function; the inductive bias from rule-based system to RLHF is gradually removed for more general use cases.
+The goal of RLHF is encoding human preferences and (more generally) values. RLHF opens up a new **paradigm** of learning the objective function; the inductive bias from rule-based system to RLHF is gradually removed for more general use cases (the blue block refers to the learnable block within a system).
 
 <img src="https://raw.githubusercontent.com/guanqun-yang/remote-images/master/2023/11/upgit_20231115_1700109665.png" alt="image-20231115234105819" style="zoom:50%;" />
 
@@ -112,6 +136,7 @@ One issues (asked by He He) is that there might be distribution shift when apply
 -   The RM is called preference model by Anthropic.
 -   When we have $k$ responses to the **same** input, we could form $\binom{k}{2}$ sample pairs and put them in the same batch to avoid overfitting.
 -   The Constitutional AI (CAI) by Anthropic almost automates everything during RLHF; the only human efforts involved is writing the constitution itself. For example, the model is tasked to generate prompts; these prompts are sent to train reward models.
+-   `np.einsum()` is the extension of `np.matmul()`.
 
 
 # Reference

@@ -155,6 +155,10 @@ We assume there is an underlying utility function $U: \mathcal{Y} \rightarrow [-
 
 The reward model $r(x, y; \phi)$ is fixed when fine-tuning the LM with PPO. There may be some distribution shifts between two stages. From the high level, this may not be an issue as the goal of RLHF is general enough (for example, HHH and Constitutional AI).
 
+## Applications of RLHF to Other Tasks
+
+According to Hyungwon Chung, RLHF is the new paradigm to create application-specific loss function. It is therefore likely beneficial to abandon traditional cross-entropy loss altogether and opt for RLHF; this is especially useful for highly abstract tasks like hate speech classification.
+
 # References
 
 1. [ScAN: Suicide Attempt and Ideation Events Dataset](https://aclanthology.org/2022.naacl-main.75) (Rawat et al., NAACL 2022)
