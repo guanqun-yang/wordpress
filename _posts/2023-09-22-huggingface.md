@@ -17,18 +17,33 @@ categories:
 ## Evaluation, Logging, and Saving
 
 - It is better to set `logging_steps` to `1` and `logging_strategy` to `step` as logging is beneficial whatsoever yet does not cause significant overhead.
-- It is better to specify`eval_steps` as  `1 / n`  and `eval_strategy` to `"steps"`, where `n` is number evaluations. This will help collect enough samples even if we have fewer training steps or training epochs.
+- It is better to specify `eval_steps` as  `1 / n`  and `eval_strategy` to `"steps"`, where `n` is number evaluations. This will help collect enough samples even if we have fewer training steps or training epochs.
 - `load_best_model_at_end=True` has to pair with the following configurations ([answer](https://discuss.huggingface.co/t/save-only-best-model-in-trainer/8442/5)). It will save the best checkpoints according to the evaluations done throughout the training process:
     - After setting `eval_steps` to a decimal number, `save_strategy` has to be set to `"steps"` since `save_steps` has to be multiple of `eval_steps`. As saving larger models will take long time, we need to set `save_steps` to a reasonable number. For example, if we would like to evaluate the model for 10 times (i.e., `eval_steps` is set to 0.1), we should save twice (i.e., `save_steps` is set to 0.5).
-
     - `save_total_limit` governs the saving of the latest models; it is likely to save `k+1` checkpoints even if `save_total_limit=k` as the best model is not the latest `k` models saved.
+    - `compute_metric` has special syntax to follow. For example, the following is taken from the official `run_glue.py`. Here `p.predictions` depends on the specific model. 
+
+```python
+# You can define your custom compute_metrics function. It takes an `EvalPrediction` object (a namedtuple with a
+# predictions and label_ids field) and has to return a dictionary string to float.
+def compute_metrics(p: EvalPrediction):
+    preds = p.predictions[0] if isinstance(p.predictions, tuple) else p.predictions
+    preds = np.squeeze(preds) if is_regression else np.argmax(preds, axis=1)
+    result = metric.compute(predictions=preds, references=p.label_ids)
+    if len(result) > 1:
+        result["combined_score"] = np.mean(list(result.values())).item()
+    return result
+```
 
 
-| Index | Hyperparameter                   | Value                                      |
-| ----- | -------------------------------- | ------------------------------------------ |
-| 1     | `save_strategy`, `eval_strategy` | `steps` or `epoch`; they have to be same.  |
-| 2     | `eval_steps`                     | A reasonable value such as `0.1`.          |
-| 3     | `save_steps`                     | Must be the multiples of the `eval_steps`. |
+
+
+| Index | Hyperparameter                               | Value                                                        |
+| ----- | -------------------------------------------- | ------------------------------------------------------------ |
+| 1     | `save_strategy`, `eval_strategy`             | `steps` or `epoch`; they have to be same.                    |
+| 2     | `eval_steps`                                 | A reasonable value such as `0.1`.                            |
+| 3     | `save_steps`                                 | Must be the multiples of the `eval_steps`.                   |
+| 4     | `metric_for_best_model` and `compute_metric` | `metric_for_best_model` defaults to `loss` (or `eval_loss` with an automatically prepended `eval_`). It could be set to other custom metrics defined in `compute_metric` |
 
 - It is recommended to use `wandb`. In order to do so, we need to set `report_to` and `run_name`. Note that if we need to use custom name on `wandb` portal, we should **not** rename the default output directory.
 
