@@ -157,7 +157,9 @@ The reward model $r(x, y; \phi)$ is fixed when fine-tuning the LM with PPO. Ther
 
 ## Applications of RLHF to Other Tasks
 
-According to Hyungwon Chung, RLHF is the new paradigm to create application-specific loss function. It is therefore likely beneficial to abandon traditional cross-entropy loss altogether and opt for RLHF; this is especially useful for highly abstract tasks like hate speech classification.
+According to Hyungwon Chung, RLHF is the new paradigm to create application-specific loss function. It is therefore likely beneficial to abandon traditional cross-entropy loss altogether and opt for RLHF.
+
+This is especially useful for highly abstract tasks like hate speech classification. For example, we could initialize a RM and use the normalized score $[0, 1]$ (for example, hatefulness) to fine-tune a hate speech regressor based on some open-source models. We could find a threshold on the validation set and then deployment the RM (with a threshold) to the testing environment.
 
 # References
 

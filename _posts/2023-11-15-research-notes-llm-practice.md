@@ -10,7 +10,27 @@ categories:
 
 # Prompt Engineering
 
+The OpenAI [official documentation](https://platform.openai.com/docs/guides/prompt-engineering) summarizes 6 tricks for prompt engineering.
 
+## Write Clear Instructions
+
+The LM could not do that is not instructed by the user automatically.
+
+## Provide Reference Texts
+
+## Split Complex Tasks into Simpler Subtasks
+
+Solving multiple problems in a cascade fashion often leads to smaller eventual error rate compared to solving the problem at the same time.
+
+## Give Model Time to Think or CoT
+
+## Use External Tools
+
+It is better to use tools to solve the tasks that require algorithmic solutions; the LM is good at reasoning rather than solving problems algorithmically. 
+
+## Test Changes Systematically
+
+The prompts that work well on small number of samples in the playground may not work as well for a representative set of test samples. It is important to run evaluation on the large test set every time we make non-trivial changes to the prompt.
 
 # Fine-Tuning
 
