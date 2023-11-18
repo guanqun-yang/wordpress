@@ -109,13 +109,17 @@ The specific algorithm used to update $\theta$ is PPO as it could give a stable 
 
 -   Repeat the following:
 
-    1.   Sampling prompts from the input datasets.
+    1.   Sampling: Sampling prompts from the input datasets.
 
-    2.   Generating the completion conditiong on the prompt with the current LM $\pi _ \theta$.
+    2.   Rollout: Generating the completion conditiong on the prompt with the current LM $\pi _ \theta$.
 
-    3.   Computing the reward of the input and the generated output using the (fixed) reward model $r(x, y;\phi)$.
+    3.   Evaluation: Computing the reward of the input and the generated output using the (fixed) reward model $r(x, y;\phi)$. Note that the reward model is not necessarily a model according to `trl` library, it could also come from a rule or a human.
 
-    4.   Back-propagating the policy model and updating the parameter.
+    4.   Optimization: Back-propagating the policy model and updating the parameter.
+
+The explanation is alreay clear. To make the understanding more concrete, we could take a look at the [MWE](https://huggingface.co/docs/trl/quickstart) provided by `trl` library.
+
+<img src="https://huggingface.co/datasets/trl-internal-testing/example-images/resolve/main/images/trl_overview.png" alt="img" style="zoom:50%;" />
 
 One issues (asked by He He) is that there might be distribution shift when applying the fixed reward model here; it could be an interesting problem to study: should we perodically update reward model (through something like continual learning) so that the distribution shift is mitigated? 
 

@@ -866,3 +866,9 @@ According to the [doc](https://www.sbert.net/docs/package_reference/losses.html)
 7.   [ParaNMT-50M: Pushing the Limits of Paraphrastic Sentence Embeddings with Millions of Machine Translations](https://aclanthology.org/P18-1042) (Wieting & Gimpel, ACL 2018)
 
 8.   [[1705.00652] Efficient Natural Language Response Suggestion for Smart Reply](https://arxiv.org/abs/1705.00652): Section 4.4 defines the multiple negative loss.
+
+# RLHF with trl Library
+
+The `trl` library provides a one-stop solution to instruction tuning (i.e., SFT), reward modeling, and PPO. The library supports `peft` and 4-bit (or 8-bit) tuning natively so that we could tune an LM on the customer device.
+
+The `trl` defines a custom class `AutoModelForCausalLMWithValueHead` and `AutoModelForSeq2SeqMWithValueHead` so that the PPO could be done; it returns an unbounded score (through `nn.Linear(hidden_size, 1)`) for each returned token.
