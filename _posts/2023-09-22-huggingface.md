@@ -872,3 +872,20 @@ According to the [doc](https://www.sbert.net/docs/package_reference/losses.html)
 The `trl` library provides a one-stop solution to instruction tuning (i.e., SFT), reward modeling, and PPO. The library supports `peft` and 4-bit (or 8-bit) tuning natively so that we could tune an LM on the customer device.
 
 The `trl` defines a custom class `AutoModelForCausalLMWithValueHead` and `AutoModelForSeq2SeqMWithValueHead` so that the PPO could be done; it returns an unbounded score (through `nn.Linear(hidden_size, 1)`) for each returned token.
+
+# ICL with Long Prompt
+
+There are several solutions to long-prompt generation, including Alibi and Yarn.
+
+-   Yarn
+
+    As of 2023-11-22, we have an open-source model of 128K context window. This does **not** mean that we could do in-context learning with arbitrary number of shots. There is a **major gap** between the paper and the real-world application: both model and data will consume graphic memory and the memory required for data scales with context length (see an [explanation](https://github.com/jquesnelle/yarn/issues/21) here); however, the paper performs evaluation using a surrogate metric; the authors show that they could successfully work with a context window of 128K by computing the perplexity with a sliding window.
+
+-   Alibi
+
+    -   `mosaicml/mpt-7b-8k-instruct`, `mosaicml/mpt-7b-8k-chat`, and `mosaicml/mpt-7b-8k`.
+    -   `mosaicml/mpt-7b-storywriter`: This model could extrapolate beyond 65K tokens.
+
+-   LLongMA
+
+    
