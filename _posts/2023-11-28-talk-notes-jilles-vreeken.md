@@ -10,10 +10,10 @@ categories:
 
 # Overview
 
--   Causality Ladder (Judea Pearl): Seeing $\rightarrow$ Intervening $\rightarrow$ Imagining
-    -   Seeing: This is where the traditional ML happens.
-    -   Invervening
-    -   Imaging: This requires structural causal model (SCM). This is not discussed in the talk.
+Causality Ladder (Judea Pearl): Seeing $\rightarrow$ Intervening $\rightarrow$ Imagining
+-   Seeing: This is where the traditional ML happens.
+-   Invervening
+-   Imaging: This requires structural causal model (SCM). This is not discussed in the talk.
 
 # Assumptions
 
@@ -36,8 +36,6 @@ categories:
     -   The formula above could be realized in practice with some assumptions in systems called SLOOPY, HECI (Xu et al. 2022 and Marx & Vreeken 2017, 2019) based on relatively simple regressions.
 
 -   These systems could be evaluated using radar plot of some established datasets.
-
-# Learning DAG
 
 
 
