@@ -39,7 +39,15 @@ Note that
 
 ## Safety Alignment
 
-1.   [[2307.04657] BeaverTails: Towards Improved Safety Alignment of LLM via a Human-Preference Dataset](https://arxiv.org/abs/2307.04657) (PKU-Alignment): This work provides a SFT dataset, a RLHF dataset, and the resulting model that fine-tunes upon `LLaMA2`; the authors claim a better safety than the base model.
+1.   [[2310.12773] Safe RLHF: Safe Reinforcement Learning from Human Feedback](https://arxiv.org/abs/2310.12773)
+
+2.   [[2307.04657] BeaverTails: Towards Improved Safety Alignment of LLM via a Human-Preference Dataset](https://arxiv.org/abs/2307.04657) (PKU-Alignment): 
+
+     This work find that separately annotating harmlessness and helpfulness (with the additional safe RLHF algorithm proposed in 1) substantially outperforms Anthropic's baselines; the authors claim that they are the first to do this. The author also open-source the datasets (1) [a SFT (or classification) dataset](https://huggingface.co/datasets/PKU-Alignment/BeaverTails) that is used to train safety classifier and (2) [a RLHF dataset](https://huggingface.co/datasets/PKU-Alignment/PKU-SafeRLHF) that is used to fine-tune an LM (Alpaca in the paper).
+
+     Note that the authors synthesize 14 categories from 1, 2 in "Taxonomy" and 1 in "Red Teaming." The authors acknowledge that these categories are **not** MECE.
+
+     <img src="https://raw.githubusercontent.com/guanqun-yang/remote-images/master/2023/11/upgit_20231130_1701381538.png" alt="image-20231130165858750" style="zoom:67%;" />
 
 ## Safety Benchmark
 
@@ -51,3 +59,8 @@ Note that
 
 1.   [[2209.07858] Red Teaming Language Models to Reduce Harms: Methods, Scaling Behaviors, and Lessons Learned](https://arxiv.org/abs/2209.07858) (Ganguli et al., Anthropic).
 2.   [[2202.03286] Red Teaming Language Models with Language Models](https://arxiv.org/abs/2202.03286) (Perez et al., DeepMind and NYU)
+
+## Taxonomy
+
+1.   [[2206.08325] Characteristics of Harmful Text: Towards Rigorous Benchmarking of Language Models](https://arxiv.org/abs/2206.08325) (Rauh et al., DeepMind)
+2.   [BBQ: A hand-built bias benchmark for question answering](https://aclanthology.org/2022.findings-acl.165) (Parrish et al., Findings 2022, NYU)
