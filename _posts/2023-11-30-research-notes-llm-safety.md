@@ -65,14 +65,13 @@ Note that
      
      | Dataset | Name                                                         | Note                                                         |
      | ------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
-     | 1       | [`PKU-Alignment/BeaverTails`](https://huggingface.co/datasets/PKU-Alignment/BeaverTails) | A classification dataset with `prompt`, `response`, `category`, and `is_safe` columns. |
+     | 1       | [`PKU-Alignment/BeaverTails`](https://huggingface.co/datasets/PKU-Alignment/BeaverTails) | A classification dataset with `prompt`, `response`, `category`, and `is_safe` columns; it could be used for 14 classes (if using `category`) or 2 classes (if using `is_safe`). |
      | 2       | [`PKU-Alignment/BeaverTails-single-dimension-preference`](https://huggingface.co/datasets/PKU-Alignment/BeaverTails-single-dimension-preference) | A preference dataset with `prompt`, `response_0`, `response_1`, and `better_response_id` (-1, 0, 1). |
      | 3       | [`PKU-Alignment/BeaverTails-Evaluation`](https://huggingface.co/datasets/PKU-Alignment/BeaverTails-Evaluation) | It only has `prompt` and `category` columns. It is not the test split of the dataset 1 and 2. |
-     | 4       | [`PKU-Alignment/PKU-SafeRLHF`](https://huggingface.co/datasets/PKU-Alignment/PKU-SafeRLHF) | A preference and classification dataset (N=330K) with `prompt`, `response_0`, `response_1`, `is_response_0_safe`, `is_response_1_safe`, `better_response_id`, `safer_response_id`; it has both training and test split. |
+     | 4       | [`PKU-Alignment/PKU-SafeRLHF`](https://huggingface.co/datasets/PKU-Alignment/PKU-SafeRLHF) | A preference and binary classification dataset (N=330K) with `prompt`, `response_0`, `response_1`, `is_response_0_safe`, `is_response_1_safe`, `better_response_id`, `safer_response_id`; it has both training and test split. |
      | 5       | [`PKU-Alignment/PKU-SafeRLHF-30K`](https://huggingface.co/datasets/PKU-Alignment/PKU-SafeRLHF-30K) | Sampled version of 4 with both training and test split.      |
      | 6       | [`PKU-Alignment/PKU-SafeRLHF-10K`](https://huggingface.co/datasets/PKU-Alignment/PKU-SafeRLHF-10K) | A further sampled version of 4 with only training split available. |
      | 7       | [`PKU-Alignment/processed-hh-rlhf`](https://huggingface.co/datasets/PKU-Alignment/processed-hh-rlhf?) | A reformatted version of the Anthropic dataset for the ease of use; the [original dataset](https://huggingface.co/datasets/Anthropic/hh-rlhf) is formatted in plain text. |
-     
      
 
 ## Safety Benchmark
