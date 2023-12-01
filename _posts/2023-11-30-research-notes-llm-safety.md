@@ -80,6 +80,10 @@ Note that
 2.   [[2308.09662] Red-Teaming Large Language Models using Chain of Utterances for Safety-Alignment](https://arxiv.org/abs/2308.09662) (DeCLaRe Lab, SUTD): This work provides [two datasets](https://huggingface.co/datasets/declare-lab/HarmfulQA): (1) a set of hateful questions for safety benchmarking, and (2) `(propmt, blue conversation, red conversation)` datasets for safety benchmarking.
 3.   [[2309.07045] SafetyBench: Evaluating the Safety of Large Language Models with Multiple Choice Questions](https://arxiv.org/abs/2309.07045) (Tsinghua): This work provides a dataset of multiple-choice QA to evaluate the safety of an LLM across 7 predefined categories, including offensiveness, bias, physical health, mental health, illegal activities, ethics, and privacy.
 
+## OOD and Safety
+
+1.   [[2311.14743] A Baseline Analysis of Reward Models' Ability To Accurately Analyze Foundation Models Under Distribution Shift](https://arxiv.org/abs/2311.14743) (Scale AI)
+
 ## Red Teaming
 
 1.   [[2209.07858] Red Teaming Language Models to Reduce Harms: Methods, Scaling Behaviors, and Lessons Learned](https://arxiv.org/abs/2209.07858) (Ganguli et al., Anthropic).
