@@ -5,12 +5,7 @@ tags:
 categories:
 - Basics
 ---
-Table of Contents
-
-1. [[#Overview|Overview]]
-1. [[#Rank Aggregation|Rank Aggregation]]
-1. [[#Reference|Reference]]
-
+[toc]
 
 # Overview
 

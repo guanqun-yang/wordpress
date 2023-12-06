@@ -6,22 +6,7 @@ tags:
 categories:
 - Research
 ---
-
-Table of Contents
-
-1. [[#Problem Description|Problem Description]]
-1. [[#Red Teaming|Red Teaming]]
-1. [[#Resources|Resources]]
-1. [[#Reference|Reference]]
-	1. [[#Reference#Safety Alignment|Safety Alignment]]
-	1. [[#Reference#Safety Benchmark|Safety Benchmark]]
-	1. [[#Reference#OOD and Safety|OOD and Safety]]
-	1. [[#Reference#Red Teaming|Red Teaming]]
-	1. [[#Reference#Taxonomy of Unsafe Behaviors|Taxonomy of Unsafe Behaviors]]
-	1. [[#Reference#Controlled Text Generation|Controlled Text Generation]]
-	1. [[#Reference#Adversarial Attack on LLM|Adversarial Attack on LLM]]
-	1. [[#Reference#Toxicity Detection|Toxicity Detection]]
-
+[toc]
 
 # Problem Description
 

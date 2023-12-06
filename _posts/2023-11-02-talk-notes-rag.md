@@ -13,7 +13,6 @@ categories:
 
 
 [toc]
-
 # Overview
 
 RALM is an LM that uses external databases **in the test time**.

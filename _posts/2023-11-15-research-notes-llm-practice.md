@@ -6,27 +6,7 @@ categories:
 - Coding
 ---
 
-Table of Contents
-
-1. [[#Prompt Engineering|Prompt Engineering]]
-	1. [[#Prompt Engineering#Write Clear Instructions|Write Clear Instructions]]
-	1. [[#Prompt Engineering#Provide Reference Texts|Provide Reference Texts]]
-	1. [[#Prompt Engineering#Split Complex Tasks into Simpler Subtasks|Split Complex Tasks into Simpler Subtasks]]
-	1. [[#Prompt Engineering#Give Model Time to Think or CoT|Give Model Time to Think or CoT]]
-	1. [[#Prompt Engineering#Use External Tools|Use External Tools]]
-	1. [[#Prompt Engineering#Test Changes Systematically|Test Changes Systematically]]
-1. [[#Fine-Tuning|Fine-Tuning]]
-	1. [[#Fine-Tuning#Overview|Overview]]
-	1. [[#Fine-Tuning#Recipe|Recipe]]
-		1. [[#Recipe#Workflow|Workflow]]
-		1. [[#Recipe#Step 1: Preparing Data|Step 1: Preparing Data]]
-		1. [[#Recipe#Step 2: Uploading Data|Step 2: Uploading Data]]
-		1. [[#Recipe#Step 3: Fine-Tuning|Step 3: Fine-Tuning]]
-		1. [[#Recipe#Step 4: Evaluation and Iteration|Step 4: Evaluation and Iteration]]
-			1. [[#Step 4: Evaluation and Iteration#Data Quality and Quantity|Data Quality and Quantity]]
-			1. [[#Step 4: Evaluation and Iteration#Model Hyperparameters|Model Hyperparameters]]
-1. [[#Reference|Reference]]
-
+[toc]
 
 # Prompt Engineering
 

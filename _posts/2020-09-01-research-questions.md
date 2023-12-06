@@ -4,34 +4,7 @@ tags:
 categories:
 - Research
 ---
-Table of Contents
-
-1. [[#Overview|Overview]]
-1. [[#General Topics|General Topics]]
-	1. [[#General Topics#Model Capacity|Model Capacity]]
-	1. [[#General Topics#Generalization|Generalization]]
-	1. [[#General Topics#Text Classification, Annotation Bias, and Spurious Correlation|Text Classification, Annotation Bias, and Spurious Correlation]]
-	1. [[#General Topics#Life Long and Continual Learning|Life Long and Continual Learning]]
-	1. [[#General Topics#Data Distribution|Data Distribution]]
-	1. [[#General Topics#Data Annotation|Data Annotation]]
-	1. [[#General Topics#Data Selection and Data Pruning for Classification Tasks|Data Selection and Data Pruning for Classification Tasks]]
-1. [[#Special Issues|Special Issues]]
-	1. [[#Special Issues#Improving Machine Learning Models with Specifications|Improving Machine Learning Models with Specifications]]
-		1. [[#Improving Machine Learning Models with Specifications#Guided Data Augmentation|Guided Data Augmentation]]
-		1. [[#Improving Machine Learning Models with Specifications#Detecting Inconsistent Labels with Specifications|Detecting Inconsistent Labels with Specifications]]
-	1. [[#Special Issues#Reverse Engineering Queries Given Documents|Reverse Engineering Queries Given Documents]]
-	1. [[#Special Issues#Geometry of Embeddings and its Implication for Text Generation|Geometry of Embeddings and its Implication for Text Generation]]
-	1. [[#Special Issues#Retrieval Augmented LM|Retrieval Augmented LM]]
-	1. [[#Special Issues#HateModerate|HateModerate]]
-	1. [[#Special Issues#Label Inconsistency of Different Datasets|Label Inconsistency of Different Datasets]]
-	1. [[#Special Issues#Adversarial Attack on RLHF|Adversarial Attack on RLHF]]
-	1. [[#Special Issues#OOD for Reward Model in RLHF|OOD for Reward Model in RLHF]]
-	1. [[#Special Issues#Applications of RLHF to Other Tasks|Applications of RLHF to Other Tasks]]
-		1. [[#Applications of RLHF to Other Tasks#Pairwise Regression|Pairwise Regression]]
-1. [[#References|References]]
-
-
-
+[toc]
 
 # Overview
 

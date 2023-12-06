@@ -8,23 +8,7 @@ categories:
 
 
 
-Table of Contents
-
-1. [[#Overview|Overview]]
-1. [[#Lecture 1 - Data-Centric AI vs. Model-Centric AI|Lecture 1 - Data-Centric AI vs. Model-Centric AI]]
-1. [[#Lecture 2 - Label Errors|Lecture 2 - Label Errors]]
-	1. [[#Lecture 2 - Label Errors#Notation|Notation]]
-	1. [[#Lecture 2 - Label Errors#Categories of Label Errors|Categories of Label Errors]]
-	1. [[#Lecture 2 - Label Errors#Uncertainty|Uncertainty]]
-	1. [[#Lecture 2 - Label Errors#Confident Learning|Confident Learning]]
-	1. [[#Lecture 2 - Label Errors#Theory of Confident Learning|Theory of Confident Learning]]
-	1. [[#Lecture 2 - Label Errors#Implications on Testing|Implications on Testing]]
-1. [[#Lecture 8 - Encoding Human Priors|Lecture 8 - Encoding Human Priors]]
-1. [[#cleanlab Library|cleanlab Library]]
-		1. [[#Implications on Testing#Anatomy|Anatomy]]
-	1. [[#cleanlab Library#Example|Example]]
-1. [[#Additional Notes|Additional Notes]]
-1. [[#Reference|Reference]]
+[toc]
 
 
 

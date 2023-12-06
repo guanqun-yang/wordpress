@@ -12,12 +12,7 @@ categories:
 >
 > -   2023-11-28: The data mentioned in the talk requires full specification. It may not likely work with text or image dataset. What is more relevant to text and images is called "causal representation learning."
 
-Table of Contents
-
-1. [[#Overview|Overview]]
-1. [[#Assumptions|Assumptions]]
-1. [[#Identifying Causality|Identifying Causality]]
-
+[toc]
 # Overview
 
 Causality Ladder (Judea Pearl): Seeing $\rightarrow$ Intervening $\rightarrow$ Imagining

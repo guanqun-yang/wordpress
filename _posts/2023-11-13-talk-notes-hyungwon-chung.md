@@ -12,17 +12,7 @@ categories:
 >   -   The presenter Hyungwon Chung is a research engineer at OpenAI; he was with Google. He was doing mechanical engineering during Ph.D. that is completely irrelevant (aka. pressure-retarded osmosis) from machine learning.
 >   -   The "Pretraining" section mostly comes from the LLM talk. The other sections are from the RLHF talk.
 
-Table of Contents
-
-1. [[#Pretraining|Pretraining]]
-1. [[#Supervised Fine-Tuning (SFT)|Supervised Fine-Tuning (SFT)]]
-1. [[#RLHF|RLHF]]
-	1. [[#RLHF#Reward Model (RM)|Reward Model (RM)]]
-	1. [[#RLHF#Policy Model|Policy Model]]
-	1. [[#RLHF#Regularization|Regularization]]
-1. [[#Additional Notes|Additional Notes]]
-1. [[#Reference|Reference]]
-
+[toc]
 
 # Pretraining
 

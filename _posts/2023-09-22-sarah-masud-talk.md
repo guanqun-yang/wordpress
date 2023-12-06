@@ -11,18 +11,7 @@ categories:
 >
 > - The presenter has authored several interesting papers ([1] through [5]) on hate speech detection.
 
-Table of Contents
-
-1. [[#Notes|Notes]]
-	1. [[#Notes#Status Quo of Hate Speech Detection|Status Quo of Hate Speech Detection]]
-	1. [[#Notes#Data Sources|Data Sources]]
-	1. [[#Notes#Annotations|Annotations]]
-	1. [[#Notes#Building Better Hate Speech Detection Models|Building Better Hate Speech Detection Models]]
-	1. [[#Notes#Lexical Bias|Lexical Bias]]
-	1. [[#Notes#Horizons|Horizons]]
-1. [[#Reference|Reference]]
-
-
+[toc]
 
 # Notes
 

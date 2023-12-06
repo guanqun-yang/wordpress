@@ -6,15 +6,7 @@ categories:
 - Research
 ---
 
-Table of Contents
-
-1. [[#Overview|Overview]]
-1. [[#cleanlab|cleanlab]]
-1. [[#Chong et al., EMNLP 2022|Chong et al., EMNLP 2022]]
-1. [[#Additional Notes|Additional Notes]]
-1. [[#Reference|Reference]]
-
-
+[toc]
 # Overview
 
 -   The standard procedure after detecting label errors is discarding samples with label errors rather than correcting them.

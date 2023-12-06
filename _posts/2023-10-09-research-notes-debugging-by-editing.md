@@ -7,22 +7,7 @@ categories:
 - Research
 ---
 
-Table of Contents
-
-1. [[#Overview|Overview]]
-1. [[#ROME|ROME]]
-1. [[#KnowledgeNeuron|KnowledgeNeuron]]
-1. [[#KnowledgeEditor|KnowledgeEditor]]
-1. [[#MEND|MEND]]
-1. [[#TransformerPatcher|TransformerPatcher]]
-1. [[#MEMIT|MEMIT]]
-1. [[#Experiments|Experiments]]
-	1. [[#Experiments#Datasets|Datasets]]
-1. [[#Additional Notes|Additional Notes]]
-1. [[#Reference|Reference]]
-
-
-
+[toc]
 # Overview
 
 The edited knowledge in this paper is in the form of triplets. Given the prompt `Eiffel Tower is located in the city of`, the original model will output `Paris` as expected. However, after model editing, the output could be other tokens with high probability. For example, `Seattle`.

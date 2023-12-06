@@ -13,14 +13,7 @@ categories:
 >
 > -   2023-12-05: First draft.
 
-Table of Contents
-
-1. [[#Overview|Overview]]
-1. [[#Method|Method]]
-	1. [[#Method#ALICE|ALICE]]
-	1. [[#Method#Demonstration|Demonstration]]
-1. [[#Experiments|Experiments]]
-
+[toc]
 
 # Overview
 

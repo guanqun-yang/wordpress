@@ -5,20 +5,7 @@ tags:
 categories:
 - Basics
 ---
-
-Table of Contents
-
-1. [[#Overview|Overview]]
-1. [[#Basic Statistics|Basic Statistics]]
-	1. [[#Basic Statistics#Correlation|Correlation]]
-1. [[#Sequence Classification|Sequence Classification]]
-	1. [[#Sequence Classification#Confusion Matrix|Confusion Matrix]]
-	1. [[#Sequence Classification#Matthews Correlation Coefficient (MCC)|Matthews Correlation Coefficient (MCC)]]
-1. [[#Ranking|Ranking]]
-1. [[#Reference|Reference]]
-
-
-
+[toc]
 # Overview
 
 This set of evaluation metrics I discuss in this post is organized based on the typical tasks in NLP (see [1]); they are:
