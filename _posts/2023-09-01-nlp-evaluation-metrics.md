@@ -6,7 +6,17 @@ categories:
 - Basics
 ---
 
-[toc]
+Table of Contents
+
+1. [Overview](#overview)
+1. [Basic Statistics](#basic-statistics)
+	1. [Correlation](#correlation)
+1. [Sequence Classification](#sequence-classification)
+	1. [Confusion Matrix](#confusion-matrix)
+	1. [Matthews Correlation Coefficient (MCC)](#matthews-correlation-coefficient-mcc)
+1. [Ranking](#ranking)
+1. [Reference](#reference)
+
 
 # Overview
 

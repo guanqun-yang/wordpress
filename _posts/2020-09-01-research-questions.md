@@ -4,8 +4,32 @@ tags:
 categories:
 - Research
 ---
+Table of Contents
 
-[toc]
+1. [Overview](#overview)
+1. [General Topics](#general-topics)
+	1. [Model Capacity](#model-capacity)
+	1. [Generalization](#generalization)
+	1. [Text Classification, Annotation Bias, and Spurious Correlation](#text-classification-annotation-bias-and-spurious-correlation)
+	1. [Life Long and Continual Learning](#life-long-and-continual-learning)
+	1. [Data Distribution](#data-distribution)
+	1. [Data Annotation](#data-annotation)
+	1. [Data Selection and Data Pruning for Classification Tasks](#data-selection-and-data-pruning-for-classification-tasks)
+1. [Special Issues](#special-issues)
+	1. [Improving Machine Learning Models with Specifications](#improving-machine-learning-models-with-specifications)
+		1. [Guided Data Augmentation](#guided-data-augmentation)
+		1. [Detecting Inconsistent Labels with Specifications](#detecting-inconsistent-labels-with-specifications)
+	1. [Reverse Engineering Queries Given Documents](#reverse-engineering-queries-given-documents)
+	1. [Geometry of Embeddings and its Implication for Text Generation](#geometry-of-embeddings-and-its-implication-for-text-generation)
+	1. [Retrieval Augmented LM](#retrieval-augmented-lm)
+	1. [HateModerate](#hatemoderate)
+	1. [Label Inconsistency of Different Datasets](#label-inconsistency-of-different-datasets)
+	1. [Adversarial Attack on RLHF](#adversarial-attack-on-rlhf)
+	1. [OOD for Reward Model in RLHF](#ood-for-reward-model-in-rlhf)
+	1. [Applications of RLHF to Other Tasks](#applications-of-rlhf-to-other-tasks)
+		1. [Pairwise Regression](#pairwise-regression)
+1. [References](#references)
+
 
 
 

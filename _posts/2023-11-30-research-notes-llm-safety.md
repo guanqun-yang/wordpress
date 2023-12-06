@@ -7,7 +7,21 @@ categories:
 - Research
 ---
 
-[toc]
+Table of Contents
+
+1. [Problem Description](#problem-description)
+1. [Red Teaming](#red-teaming)
+1. [Resources](#resources)
+1. [Reference](#reference)
+	1. [Safety Alignment](#safety-alignment)
+	1. [Safety Benchmark](#safety-benchmark)
+	1. [OOD and Safety](#ood-and-safety)
+	1. [Red Teaming](#red-teaming)
+	1. [Taxonomy of Unsafe Behaviors](#taxonomy-of-unsafe-behaviors)
+	1. [Controlled Text Generation](#controlled-text-generation)
+	1. [Adversarial Attack on LLM](#adversarial-attack-on-llm)
+	1. [Toxicity Detection](#toxicity-detection)
+
 
 # Problem Description
 

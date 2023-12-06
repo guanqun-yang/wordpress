@@ -5,8 +5,9 @@ tags:
 categories:
 - Basics
 ---
-
-[toc]
+1. [Overview](#overview)
+1. [Rank Aggregation](#rank-aggregation)
+1. [Reference](#reference)
 
 # Overview
 

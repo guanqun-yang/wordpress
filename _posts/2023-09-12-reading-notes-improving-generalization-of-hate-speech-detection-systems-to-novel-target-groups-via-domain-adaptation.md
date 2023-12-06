@@ -17,12 +17,12 @@ The paper studies the generalization to new hate target groups on the single Hat
 
 The paper also considers the back translation approach (specifically `(en, fr)`, `(en, de)`, and `(en, es)`) for data augmentation. 
 
+
 # Experiments
 
 - `Zero`: Directly apply a model trained on $\mathcal{D}_A$ to a new domain $\mathcal{D}_B$.
 - `Zero+`: Augmenting $\mathcal{D}_A$ using back-translation.
 - `ZeroB+`: Applying back-translation-based data augmentation while making sure that the each batch is class-balanced.
-
 # Reference
 
 1. [Unsupervised Domain Adaptation in Cross-corpora Abusive Language Detection](https://aclanthology.org/2021.socialnlp-1.10) (Bose et al., SocialNLP 2021): This paper considers the setting of training on dataset $\mathcal{D}_A$ and testing on another dataset $\mathcal{D}_B$, where $A, B$ are [HateEval](https://aclanthology.org/S19-2007/), [Waseem](https://aclanthology.org/N16-2013/), and [Davidson](https://arxiv.org/abs/1703.04009), resulting in 6 pairs. They use several existing methods to improve the test scores on $\mathcal{D}_B$.

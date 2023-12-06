@@ -6,7 +6,25 @@ categories:
 - Research
 ---
 
-[toc]
+Table of Contents
+
+1. [Problem Statement](#problem-statement)
+1. [Background](#background)
+1. [Adolphs et al., EMNLP 2022](#adolphs-et-al-emnlp-2022)
+	1. [Query Inverter](#query-inverter)
+	1. [Query Generation](#query-generation)
+1. [Vec2Text by Cideron et al.](#vec2text-by-cideron-et-al)
+	1. [Overview](#overview)
+	1. [Method](#method)
+	1. [Topic Convex Hull](#topic-convex-hull)
+1. [Vec2Text by Morris et al.](#vec2text-by-morris-et-al)
+	1. [Method](#method)
+	1. [Code](#code)
+		1. [Minimal Working Example](#minimal-working-example)
+		1. [Anatomy](#anatomy)
+1. [Additional Notes](#additional-notes)
+1. [Reference](#reference)
+
 
 # Problem Statement
 

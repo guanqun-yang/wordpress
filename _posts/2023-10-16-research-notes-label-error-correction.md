@@ -6,7 +6,14 @@ categories:
 - Research
 ---
 
-[toc]
+Table of Contents
+
+1. [Overview](#overview)
+1. [cleanlab](#cleanlab)
+1. [Chong et al., EMNLP 2022](#chong-et-al-emnlp-2022)
+1. [Additional Notes](#additional-notes)
+1. [Reference](#reference)
+
 
 # Overview
 

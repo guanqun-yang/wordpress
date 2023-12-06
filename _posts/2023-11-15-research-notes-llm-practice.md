@@ -6,7 +6,26 @@ categories:
 - Coding
 ---
 
-[toc]
+Table of Contents
+
+1. [Prompt Engineering](#prompt-engineering)
+	1. [Write Clear Instructions](#write-clear-instructions)
+	1. [Provide Reference Texts](#provide-reference-texts)
+	1. [Split Complex Tasks into Simpler Subtasks](#split-complex-tasks-into-simpler-subtasks)
+	1. [Give Model Time to Think or CoT](#give-model-time-to-think-or-cot)
+	1. [Use External Tools](#use-external-tools)
+	1. [Test Changes Systematically](#test-changes-systematically)
+1. [Fine-Tuning](#fine-tuning)
+	1. [Overview](#overview)
+	1. [Recipe](#recipe)
+		1. [Workflow](#workflow)
+		1. [Step 1: Preparing Data](#step-1-preparing-data)
+		1. [Step 2: Uploading Data](#step-2-uploading-data)
+		1. [Step 3: Fine-Tuning](#step-3-fine-tuning)
+		1. [Step 4: Evaluation and Iteration](#step-4-evaluation-and-iteration)
+			1. [Data Quality and Quantity](#data-quality-and-quantity)
+			1. [Model Hyperparameters](#model-hyperparameters)
+1. [Reference](#reference)
 
 # Prompt Engineering
 
