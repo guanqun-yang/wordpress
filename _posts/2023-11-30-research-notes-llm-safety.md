@@ -20,7 +20,7 @@ When receiving a prompt that queries for unsafe information (for example, toxic,
 
 -   Red-Teaming
     -   Manual Red-Teaming: Leveraging people's creativity to search for prompts that may elicit unsafe behaviors of LLMs.
-    -   Automated Red-Teaming
+    -   Automated Red-Teaming: Using automated search to deviate the region guarded by RLHF so that the unsafe content will be generated.
 
 Note that
 
@@ -89,7 +89,45 @@ Note that
 1.   [[2209.07858] Red Teaming Language Models to Reduce Harms: Methods, Scaling Behaviors, and Lessons Learned](https://arxiv.org/abs/2209.07858) (Ganguli et al., Anthropic).
 2.   [[2202.03286] Red Teaming Language Models with Language Models](https://arxiv.org/abs/2202.03286) (Perez et al., DeepMind and NYU)
 
-## Taxonomy
+## Taxonomy of Unsafe Behaviors
 
 1.   [[2206.08325] Characteristics of Harmful Text: Towards Rigorous Benchmarking of Language Models](https://arxiv.org/abs/2206.08325) (Rauh et al., DeepMind)
 2.   [BBQ: A hand-built bias benchmark for question answering](https://aclanthology.org/2022.findings-acl.165) (Parrish et al., Findings 2022, NYU)
+
+## Controlled Text Generation
+
+1.   [ToxiGen: A Large-Scale Machine-Generated Dataset for Adversarial and Implicit Hate Speech Detection](https://aclanthology.org/2022.acl-long.234) (Hartvigsen et al., ACL 2022)
+
+     The authors propose a classifier-in-the-loop constrained decoding scheme that allows for the generation of benign and (implicit) toxic content of 13 minority groups.
+
+     Specifically, the authors adjust the token distribution by adding the a partial sequence's **neutral class**  probability from a hate speech classifier to mitigate the toxicity every step. This will make the original explicitly toxic content less toxic (from 66% to 43%) yet still implicitly toxic. Besides making implicit toxic content, this approach could also work with a benign prompt to generate benign content.
+
+     ![image-20231204125814342](https://raw.githubusercontent.com/guanqun-yang/remote-images/master/2023/12/upgit_20231204_1701712694.png)
+
+2.   [[2310.14542] Evaluating Large Language Models on Controlled Generation Tasks](https://arxiv.org/abs/2310.14542) (Sun et al., EMNLP)
+
+     This paper shows that LLMs, including `gpt-3.5-turbo`, Falcon, Alpaca, and Vicuna, could not be controlled to follow fine-grained signal such as numerical planning (for example, "generate a paragraph with five sentences."); they do well in controlling high-level signal, such as sentiment, topic, and enforcing specific keywords.
+
+## Adversarial Attack on LLM
+
+1.   [[2307.15043] Universal and Transferable Adversarial Attacks on Aligned Language Models](https://arxiv.org/abs/2307.15043)
+
+     -   This paper proposes two ways to elicit unsafe behaviors of LLMs
+
+         -   Producing Affirmative Responses: Appending "Sure, here is [prompt]" to the original prompt that generates expected unsafe content.
+
+         -   Greedy Coordinate Gradient (GCG)
+
+             Given an input prompt $x _ {1:n}$, the algorithm iterates over all tokens and find the replacement that causes the smallest loss. Specifically, for each token, the algorithm enumerate all possible gradients with respect to this token's one-hot vector, then the algorithm picks top-K and modifies the prompt by replacing the token in the top-K set, and finally selects the prompt with the lowest loss.
+
+     -   In attacking vision models, it is well established that attacking distilled models is much easier than the original models.
+
+## Toxicity Detection
+
+1.   [[2312.01648] Characterizing Large Language Model Geometry Solves Toxicity Detection and Generation](https://arxiv.org/abs/2312.01648)
+
+     -   This paper proposes a method to attain almost perfect accuracy on the challenging `civil_comment` datasets. The authors manage to do so by deriving a set of features from LLM from the first principle, and training a linear classifier on top of these features.
+
+     -   Intrinsic Dimension (ID) could be used to characterize the likelihood a prompt could evade the RLHF alignment. It could be used as a proxy for prompt engineering so that jailbreaking will happen. 
+
+         The authors show (using the increased ID as a proxy for evading alignment) that prepending a relevant non-toxic sentence as prefix will make the aligned LM more likely to generate toxic content.
