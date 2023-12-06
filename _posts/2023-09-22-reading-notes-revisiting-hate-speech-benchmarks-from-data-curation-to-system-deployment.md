@@ -1,10 +1,10 @@
 ---
 title: Reading Notes | Revisiting Hate Speech Benchmarks - From Data Curation to System Deployment
-tags: 
-- Hate Speech Detection
-- MoE
+tags:
+  - MoE
+  - HateSpeech
 categories:
-- Reading
+  - Reading
 ---
 
 > [[Semantic Scholar](https://www.semanticscholar.org/paper/Revisiting-Hate-Speech-Benchmarks%3A-From-Data-to-Kulkarni-Masud/faf46bd0d88c582177d9bf9d0b3c3e30fd5a763e)] - [Code] - [Tweet] - [Video] - [Website] - [Slide]

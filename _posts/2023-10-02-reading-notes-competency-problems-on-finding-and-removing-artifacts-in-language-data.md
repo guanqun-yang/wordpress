@@ -1,10 +1,10 @@
 ---
 title: Reading Notes | Competency Problems - On Finding and Removing Artifacts in Language Data
-tags: 
-- Generalization
-- Spurious Correlation
+tags:
+  - Generalization
+  - SpuriousCorrelation
 categories:
-- Reading
+  - Reading
 ---
 
 > [[Semantic Scholar](https://www.semanticscholar.org/paper/Competency-Problems%3A-On-Finding-and-Removing-in-Gardner-Merrill/023fc86c932fbc36702a6ad11c94ba419e1d8d88)] - [Code] - [Tweet] - [[Video](https://aclanthology.org/2021.emnlp-main.135.mp4)] - [Website] - [Slide]

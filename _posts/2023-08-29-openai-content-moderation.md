@@ -2,7 +2,7 @@
 title: Talk Notes | Building End-to-End Content Moderation Pipelines in the Real World
 tags: 
 - LLM
-- Content Moderation
+- HateSpeech
 - OpenAI
 categories:
 - Talk

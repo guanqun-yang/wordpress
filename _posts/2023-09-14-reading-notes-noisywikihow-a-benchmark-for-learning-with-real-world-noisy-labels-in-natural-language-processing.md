@@ -1,10 +1,10 @@
 ---
 title: Reading Notes | NoisywikiHow - A Benchmark for Learning with Real-world Noisy Labels in Natural Language Processing
-tags: 
-- Learning with Noisy Labels
-- Generalization
+tags:
+  - Generalization
+  - NoisyLabel
 categories:
-- Reading
+  - Reading
 ---
 
 > [[Semantic Scholar](https://www.semanticscholar.org/paper/NoisywikiHow%3A-A-Benchmark-for-Learning-with-Noisy-Wu-Ding/35225d37ec210becb5af7c07a4b2af715f5b7e6c)] - [[Code](https://github.com/tangminji/NoisywikiHow)] - [Tweet] - [Video] - [Website] - [Slide]

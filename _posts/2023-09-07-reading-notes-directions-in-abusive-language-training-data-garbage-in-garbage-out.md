@@ -1,10 +1,10 @@
 ---
 title: Reading Notes | Directions in Abusive Language Training Data - Garbage In, Garbage Out
-tags: 
-- Hate Speech Detection
-- Datasets
+tags:
+  - Datasets
+  - HateSpeech
 categories:
-- Reading
+  - Reading
 ---
 
 > [[Semantic Scholar](https://www.semanticscholar.org/paper/Directions-in-abusive-language-training-data%2C-a-in%2C-Vidgen-Derczynski/8bd582c8edf3549f5c848b96c8d141fcbfd5ec24)]- [Code] - [Tweet] - [Video] - [[Website](https://hatespeechdata.com/)] - [Slide]

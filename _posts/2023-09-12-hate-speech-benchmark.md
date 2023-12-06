@@ -1,7 +1,7 @@
 ---
 title: Research Notes | A Benchmark for Hate Speech Detection
 tags: 
-- Hate Speech Detection
+- HateSpeech
 - Datasets
 - Benchmark
 categories:

@@ -1,7 +1,7 @@
 ---
 title: Research Notes | Generalizable Hate Speech Detection
 tags: 
-- Hate Speech Detection
+- HateSpeech
 - Generalization
 - Benchmark
 categories:

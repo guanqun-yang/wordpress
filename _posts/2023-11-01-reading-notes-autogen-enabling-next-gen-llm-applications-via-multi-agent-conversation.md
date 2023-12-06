@@ -1,9 +1,9 @@
 ---
 title: Reading Notes | AutoGen - Enabling Next-Gen LLM Applications via Multi-Agent Conversation
-tags: 
-- AI Agents
+tags:
+  - AIAgents
 categories:
-- Reading
+  - Reading
 ---
 
 # Overview

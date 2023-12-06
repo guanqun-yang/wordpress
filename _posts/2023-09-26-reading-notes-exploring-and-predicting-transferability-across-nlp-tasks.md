@@ -1,10 +1,10 @@
 ---
 title: Reading Notes | Exploring and Predicting Transferability across NLP Tasks
-tags: 
-- Transfer Learning
-- Data Selection
+tags:
+  - TransferLearning
+  - DataSelection
 categories:
-- Reading
+  - Reading
 ---
 
 > [[Semantic Scholar](https://www.semanticscholar.org/paper/Exploring-and-Predicting-Transferability-across-NLP-Vu-Wang/d1206ccabd1980848f14472d6548251c2fab7963)] - [[Code](https://github.com/tuvuumass/task-transferability)] - [Tweet] - [[Video](https://slideslive.com/38939047/exploring-and-predicting-transferability-across-nlp-tasks)] - [Website] - [[Slide](https://people.cs.umass.edu/~tuvu/docs/EMNLP2020_slides.pdf)]

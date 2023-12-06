@@ -1,8 +1,8 @@
 ---
 title: Research Notes | Training Data Optimization
 tags: 
-- Data Selection
-- Learning with Noisy Labels
+- DataSelection
+- NoisyLabel
 categories:
 - Research
 ---

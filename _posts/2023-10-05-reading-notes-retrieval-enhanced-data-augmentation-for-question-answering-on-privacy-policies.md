@@ -1,10 +1,10 @@
 ---
 title: Reading Notes | Retrieval Enhanced Data Augmentation for Question Answering on Privacy Policies
-tags: 
-- Retrieval
-- Data Augmentation
+tags:
+  - Retrieval
+  - DataAugmentation
 categories:
-- Reading
+  - Reading
 ---
 
 > [[Semantic Scholar](https://www.semanticscholar.org/paper/Retrieval-Enhanced-Data-Augmentation-for-Question-Parvez-Chi/a7972d8f9f1ed21293a355e925006536fe6fe4df#citing-papers)] - [Code] - [Tweet] - [[Video](https://aclanthology.org/2023.eacl-main.16.mp4)] - [Slide] 

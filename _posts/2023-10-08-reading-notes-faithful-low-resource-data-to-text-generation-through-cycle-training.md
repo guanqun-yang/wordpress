@@ -1,10 +1,10 @@
 ---
 title: Reading Notes | Faithful Low-Resource Data-to-Text Generation through Cycle Training
-tags: 
-- Data-to-Text Generation
-- Faithfulness
+tags:
+  - Faithfulness
+  - Data-to-TextGeneration
 categories:
-- Reading
+  - Reading
 ---
 
 > [[Semantic Scholar](https://www.semanticscholar.org/paper/Faithful-Low-Resource-Data-to-Text-Generation-Cycle-Wang-Collins/95e57961f7fb64e1059277b8e5578c74719d46b5)] - [Code] - [Tweet] - [Video] - [Website] - [[Slide](https://edillower.github.io/assets/pdf/ACL203-6min.pdf)] - [[Poster](https://edillower.github.io/assets/pdf/ACL2023-poster.pdf)]

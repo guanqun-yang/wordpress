@@ -1,21 +1,21 @@
 ---
 title: Basics | A Quick Reference of the Evaluation Metrics in NLP
 tags: 
-- Evaluation Metrics
+- Metrics
 categories:
 - Basics
 ---
 
 Table of Contents
 
-1. [Overview](#overview)
-1. [Basic Statistics](#basic-statistics)
-	1. [Correlation](#correlation)
-1. [Sequence Classification](#sequence-classification)
-	1. [Confusion Matrix](#confusion-matrix)
-	1. [Matthews Correlation Coefficient (MCC)](#matthews-correlation-coefficient-mcc)
-1. [Ranking](#ranking)
-1. [Reference](#reference)
+- [Overview](#overview)
+- [Basic Statistics](#basic-statistics)
+  - [Correlation](#correlation)
+- [Sequence Classification](#sequence-classification)
+  - [Confusion Matrix](#confusion-matrix)
+  - [Matthews Correlation Coefficient (MCC)](#matthews-correlation-coefficient-mcc)
+- [Ranking](#ranking)
+- [Reference](#reference)
 
 
 # Overview

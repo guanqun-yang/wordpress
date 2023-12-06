@@ -1,10 +1,10 @@
 ---
 title: Reading Notes | Towards Understanding Chain-of-Thought Prompting - An Empirical Study of What Matters
-tags: 
-- LLM
-- Prompt Engineering
+tags:
+  - LLM
+  - PromptEngineering
 categories:
-- Reading
+  - Reading
 ---
 
 > [[Semantic Scholar](https://www.semanticscholar.org/paper/Towards-Understanding-Chain-of-Thought-Prompting%3A-Wang-Min/35922cd0d6b17e45320917338e9f98cb5c1a4f6f)] - [Code] - [Tweet] - [Video] - [Website] - [Slide] - [Poster]

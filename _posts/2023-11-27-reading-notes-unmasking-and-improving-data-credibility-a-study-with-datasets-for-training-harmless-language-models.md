@@ -1,9 +1,9 @@
 ---
 title: Reading Notes | Unmasking and Improving Data Credibility - A Study with Datasets for Training Harmless Language Models
 tags:
-- Label Error
+  - LabelError
 categories:
-- Reading
+  - Reading
 ---
 
 >   [[Semantic Scholar](https://www.semanticscholar.org/paper/Unmasking-and-Improving-Data-Credibility%3A-A-Study-Zhu-Wang/9542a0c6121086be7abb8caf18ebaa9a245fab86)] - [[Code](https://github.com/Docta-ai/docta)] - [Tweet] - [Video] - [Website] - [Slide]

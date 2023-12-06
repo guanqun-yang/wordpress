@@ -1,7 +1,7 @@
 ---
 title: Talk Notes | Data-Centric NLP @ USC CSCI-699 Fall 2022
 tags: 
-- Data-Centric AI
+- Data-CentricAI
 categories:
 - Talk
 ---

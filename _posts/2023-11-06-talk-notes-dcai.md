@@ -1,7 +1,7 @@
 ---
 title: Talk Notes |  Data-Centric AI
 tags: 
-- Data-Centric AI
+- Data-CentricAI
 categories:
 - Talk
 ---
@@ -10,21 +10,21 @@ categories:
 
 Table of Contents
 
-1. [Overview](#overview)
-1. [Lecture 1 - Data-Centric AI vs. Model-Centric AI](#lecture-1---data-centric-ai-vs-model-centric-ai)
-1. [Lecture 2 - Label Errors](#lecture-2---label-errors)
-	1. [Notation](#notation)
-	1. [Categories of Label Errors](#categories-of-label-errors)
-	1. [Uncertainty](#uncertainty)
-	1. [Confident Learning](#confident-learning)
-	1. [Theory of Confident Learning](#theory-of-confident-learning)
-	1. [Implications on Testing](#implications-on-testing)
-1. [Lecture 8 - Encoding Human Priors](#lecture-8---encoding-human-priors)
-1. [cleanlab Library](#cleanlab-library)
-		1. [Anatomy](#anatomy)
-	1. [Example](#example)
-1. [Additional Notes](#additional-notes)
-1. [Reference](#reference)
+- [Overview](#overview)
+- [Lecture 1 - Data-Centric AI vs. Model-Centric AI](#lecture-1---data-centric-ai-vs-model-centric-ai)
+- [Lecture 2 - Label Errors](#lecture-2---label-errors)
+  - [Notation](#notation)
+  - [Categories of Label Errors](#categories-of-label-errors)
+  - [Uncertainty](#uncertainty)
+  - [Confident Learning](#confident-learning)
+  - [Theory of Confident Learning](#theory-of-confident-learning)
+  - [Implications on Testing](#implications-on-testing)
+- [Lecture 8 - Encoding Human Priors](#lecture-8---encoding-human-priors)
+- [cleanlab Library](#cleanlab-library)
+    - [Anatomy](#anatomy)
+  - [Example](#example)
+- [Additional Notes](#additional-notes)
+- [Reference](#reference)
 
 
 # Overview

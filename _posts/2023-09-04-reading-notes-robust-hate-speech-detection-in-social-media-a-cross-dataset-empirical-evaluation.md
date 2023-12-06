@@ -1,10 +1,10 @@
 ---
 title: Reading Notes | Robust Hate Speech Detection in Social Media - A Cross-Dataset Empirical Evaluation
-tags: 
-- Hate Speech Detection
-- Data Selection
+tags:
+  - HateSpeech
+  - DataSelection
 categories:
-- Reading
+  - Reading
 ---
 
 > [[Semantic Scholar](https://www.semanticscholar.org/paper/Robust-Hate-Speech-Detection-in-Social-Media%3A-A-Antypas-Camacho-Collados/92ebe45b5422c7b78fdab7520c7f2bce3e713733)] - [Code] - [Tweet] - [Video] - [Website] - [Slide] - [[HuggingFace](https://huggingface.co/cardiffnlp/twitter-roberta-base-hate-latest)]

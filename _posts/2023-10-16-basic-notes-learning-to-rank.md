@@ -1,13 +1,13 @@
 ---
 title: Basics | Learning to Rank
 tags: 
-- Learning to Rank
+- LTR
 categories:
 - Basics
 ---
-1. [Overview](#overview)
-1. [Rank Aggregation](#rank-aggregation)
-1. [Reference](#reference)
+- [Overview](#overview)
+- [Rank Aggregation](#rank-aggregation)
+- [Reference](#reference)
 
 # Overview
 

@@ -2,7 +2,7 @@
 title: Talk Notes |  Lessons Learned from Analyzing Systems for Hate Speech Detection and Bias Mitigation by Sarah Masud
 tags: 
 - Benchmark
-- Hate Speech
+- HateSpeech
 categories:
 - Talk
 ---

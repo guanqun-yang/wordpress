@@ -1,10 +1,10 @@
 ---
 title: Reading Notes | Improving Generalization of Hate Speech Detection Systems to Novel Target Groups via Domain Adaptation
-tags: 
-- Generalization
-- Hate Speech Detection
+tags:
+  - Generalization
+  - HateSpeech
 categories:
-- Reading
+  - Reading
 ---
 
 > [[Semantic Scholar](https://www.semanticscholar.org/paper/Improving-Generalization-of-Hate-Speech-Detection-Ludwig-Dolos/bb774e72ee7ba8a3bb4db5ae76c4f2937b7437e9)] - [Code] - [Tweet] - [[Video](https://aclanthology.org/2022.woah-1.4.mp4)] - [Website] - [Slide]

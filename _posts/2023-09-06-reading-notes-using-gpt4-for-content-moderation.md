@@ -1,11 +1,10 @@
 ---
 title: Reading Notes | Using GPT4 for Content Moderation
-tags: 
-- LLM
-- Hate Speech Detection
-- Customized LLM
+tags:
+  - LLM
+  - HateSpeech
 categories:
-- Reading
+  - Reading
 ---
 
 # Method

@@ -1,11 +1,11 @@
 ---
 title: Reading Notes | Distributionally Robust Neural Networks for Group Shifts - On the Importance of Regularization for Worst-Case Generalization
-tags: 
-- Robustness
-- Annotation Bias
-- Generalization
+tags:
+  - Robustness
+  - Generalization
+  - AnnotationBias
 categories:
-- Reading
+  - Reading
 ---
 
 > [[Semantic Scholar](https://www.semanticscholar.org/paper/Distributionally-Robust-Neural-Networks-for-Group-Sagawa-Koh/193092aef465bec868d1089ccfcac0279b914bda)] - [[Code](https://github.com/kohpangwei/group_DRO)] - [Tweet] - [Video] - [Website] - [[Slide](https://cs.stanford.edu/~ssagawa/assets/slides/groupDRO_ICLR2020.pdf)] - [HuggingFace]

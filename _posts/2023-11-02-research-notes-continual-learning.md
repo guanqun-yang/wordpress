@@ -1,7 +1,7 @@
 ---
 title: Research Notes | Continual Learning for NLP
 tags: 
-- Continual Learning
+- ContinualLearning
 categories:
 - Research
 ---

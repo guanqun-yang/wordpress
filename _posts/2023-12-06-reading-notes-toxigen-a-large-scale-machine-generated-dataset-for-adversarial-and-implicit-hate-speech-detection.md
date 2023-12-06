@@ -1,10 +1,10 @@
 ---
 title: Reading Notes | ToxiGen - A Large-Scale Machine-Generated Dataset for Adversarial and Implicit Hate Speech Detection
-tags: 
-- Hate Speech
-- Data Augmentation
+tags:
+  - HateSpeech
+  - DataAugmentation
 categories:
-- Reading
+  - Reading
 ---
 
 > [[Semantic Scholar](https://www.semanticscholar.org/paper/ToxiGen%3A-A-Large-Scale-Machine-Generated-Dataset-Hartvigsen-Gabriel/382ba0c4452aab6ecdaf8a62d567bb3c4684e4f0)] - [Code] - [Tweet] - [[Video](https://aclanthology.org/2022.acl-long.234.mp4)] - [Website] - [Slide]

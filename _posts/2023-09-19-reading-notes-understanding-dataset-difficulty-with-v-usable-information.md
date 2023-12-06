@@ -1,9 +1,9 @@
 ---
 title: Reading Notes | Understanding Dataset Difficulty with V-Usable Information
-tags: 
-- Data Selection
+tags:
+  - DataSelection
 categories:
-- Reading
+  - Reading
 ---
 
 > [[Semantic Scholar](https://www.semanticscholar.org/paper/Understanding-Dataset-Difficulty-with-V-Usable-Ethayarajh-Choi/39d05ffbc06fdca54ea6a90cd6d7fca202809aaa)] - [[Code](https://github.com/kawine/dataset_difficulty)] - [[Tweet](https://twitter.com/ethayarajh/status/1449203922057400329)] - [[Video](https://icml.cc/virtual/2022/oral/16634)] - [Website] - [Slide]
