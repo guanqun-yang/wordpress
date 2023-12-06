@@ -14,7 +14,16 @@ categories:
 >
 >       However, the code was last updated 2023-08-24.
 
-[toc]
+Table of Contents
+
+1. [[#Overview|Overview]]
+1. [[#Method|Method]]
+	1. [[#Method#Overall Dataset Quality|Overall Dataset Quality]]
+	1. [[#Method#Detecting Individual Label Errors|Detecting Individual Label Errors]]
+	1. [[#Method#Estimating Noise Transition Matrix|Estimating Noise Transition Matrix]]
+1. [[#Experiments|Experiments]]
+1. [[#Miscellaneous Notes|Miscellaneous Notes]]
+
 
 # Overview
 

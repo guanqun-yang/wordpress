@@ -9,18 +9,18 @@ categories:
 
 Table of Contents
 
-1. [Problem Description](#problem-description)
-1. [Red Teaming](#red-teaming)
-1. [Resources](#resources)
-1. [Reference](#reference)
-	1. [Safety Alignment](#safety-alignment)
-	1. [Safety Benchmark](#safety-benchmark)
-	1. [OOD and Safety](#ood-and-safety)
-	1. [Red Teaming](#red-teaming)
-	1. [Taxonomy of Unsafe Behaviors](#taxonomy-of-unsafe-behaviors)
-	1. [Controlled Text Generation](#controlled-text-generation)
-	1. [Adversarial Attack on LLM](#adversarial-attack-on-llm)
-	1. [Toxicity Detection](#toxicity-detection)
+1. [[#Problem Description|Problem Description]]
+1. [[#Red Teaming|Red Teaming]]
+1. [[#Resources|Resources]]
+1. [[#Reference|Reference]]
+	1. [[#Reference#Safety Alignment|Safety Alignment]]
+	1. [[#Reference#Safety Benchmark|Safety Benchmark]]
+	1. [[#Reference#OOD and Safety|OOD and Safety]]
+	1. [[#Reference#Red Teaming|Red Teaming]]
+	1. [[#Reference#Taxonomy of Unsafe Behaviors|Taxonomy of Unsafe Behaviors]]
+	1. [[#Reference#Controlled Text Generation|Controlled Text Generation]]
+	1. [[#Reference#Adversarial Attack on LLM|Adversarial Attack on LLM]]
+	1. [[#Reference#Toxicity Detection|Toxicity Detection]]
 
 
 # Problem Description

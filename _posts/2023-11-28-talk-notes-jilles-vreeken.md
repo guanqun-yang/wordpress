@@ -14,9 +14,9 @@ categories:
 
 Table of Contents
 
-1. [Overview](#overview)
-1. [Assumptions](#assumptions)
-1. [Identifying Causality](#identifying-causality)
+1. [[#Overview|Overview]]
+1. [[#Assumptions|Assumptions]]
+1. [[#Identifying Causality|Identifying Causality]]
 
 # Overview
 

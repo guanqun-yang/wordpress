@@ -8,14 +8,15 @@ categories:
 
 Table of Contents
 
-- [Overview](#overview)
-- [Basic Statistics](#basic-statistics)
-  - [Correlation](#correlation)
-- [Sequence Classification](#sequence-classification)
-  - [Confusion Matrix](#confusion-matrix)
-  - [Matthews Correlation Coefficient (MCC)](#matthews-correlation-coefficient-mcc)
-- [Ranking](#ranking)
-- [Reference](#reference)
+1. [[#Overview|Overview]]
+1. [[#Basic Statistics|Basic Statistics]]
+	1. [[#Basic Statistics#Correlation|Correlation]]
+1. [[#Sequence Classification|Sequence Classification]]
+	1. [[#Sequence Classification#Confusion Matrix|Confusion Matrix]]
+	1. [[#Sequence Classification#Matthews Correlation Coefficient (MCC)|Matthews Correlation Coefficient (MCC)]]
+1. [[#Ranking|Ranking]]
+1. [[#Reference|Reference]]
+
 
 
 # Overview

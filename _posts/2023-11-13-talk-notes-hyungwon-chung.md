@@ -14,14 +14,14 @@ categories:
 
 Table of Contents
 
-1. [Pretraining](#pretraining)
-1. [Supervised Fine-Tuning (SFT)](#supervised-fine-tuning-sft)
-1. [RLHF](#rlhf)
-	1. [Reward Model (RM)](#reward-model-rm)
-	1. [Policy Model](#policy-model)
-	1. [Regularization](#regularization)
-1. [Additional Notes](#additional-notes)
-1. [Reference](#reference)
+1. [[#Pretraining|Pretraining]]
+1. [[#Supervised Fine-Tuning (SFT)|Supervised Fine-Tuning (SFT)]]
+1. [[#RLHF|RLHF]]
+	1. [[#RLHF#Reward Model (RM)|Reward Model (RM)]]
+	1. [[#RLHF#Policy Model|Policy Model]]
+	1. [[#RLHF#Regularization|Regularization]]
+1. [[#Additional Notes|Additional Notes]]
+1. [[#Reference|Reference]]
 
 
 # Pretraining

@@ -9,17 +9,18 @@ categories:
 
 Table of Contents
 
-1. [Overview](#overview)
-1. [ROME](#rome)
-1. [KnowledgeNeuron](#knowledgeneuron)
-1. [KnowledgeEditor](#knowledgeeditor)
-1. [MEND](#mend)
-1. [TransformerPatcher](#transformerpatcher)
-1. [MEMIT](#memit)
-1. [Experiments](#experiments)
-	1. [Datasets](#datasets)
-1. [Additional Notes](#additional-notes)
-1. [Reference](#reference)
+1. [[#Overview|Overview]]
+1. [[#ROME|ROME]]
+1. [[#KnowledgeNeuron|KnowledgeNeuron]]
+1. [[#KnowledgeEditor|KnowledgeEditor]]
+1. [[#MEND|MEND]]
+1. [[#TransformerPatcher|TransformerPatcher]]
+1. [[#MEMIT|MEMIT]]
+1. [[#Experiments|Experiments]]
+	1. [[#Experiments#Datasets|Datasets]]
+1. [[#Additional Notes|Additional Notes]]
+1. [[#Reference|Reference]]
+
 
 
 # Overview

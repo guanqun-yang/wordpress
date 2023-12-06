@@ -5,25 +5,25 @@ tags:
 categories:
 - Research
 ---
-
 Table of Contents
 
-1. [Problem Statement](#problem-statement)
-1. [Background](#background)
-1. [Adolphs et al., EMNLP 2022](#adolphs-et-al-emnlp-2022)
-	1. [Query Inverter](#query-inverter)
-	1. [Query Generation](#query-generation)
-1. [Vec2Text by Cideron et al.](#vec2text-by-cideron-et-al)
-	1. [Overview](#overview)
-	1. [Method](#method)
-	1. [Topic Convex Hull](#topic-convex-hull)
-1. [Vec2Text by Morris et al.](#vec2text-by-morris-et-al)
-	1. [Method](#method)
-	1. [Code](#code)
-		1. [Minimal Working Example](#minimal-working-example)
-		1. [Anatomy](#anatomy)
-1. [Additional Notes](#additional-notes)
-1. [Reference](#reference)
+1. [[#Problem Statement|Problem Statement]]
+1. [[#Background|Background]]
+1. [[#Adolphs et al., EMNLP 2022|Adolphs et al., EMNLP 2022]]
+	1. [[#Adolphs et al., EMNLP 2022#Query Inverter|Query Inverter]]
+	1. [[#Adolphs et al., EMNLP 2022#Query Generation|Query Generation]]
+1. [[#Vec2Text by Cideron et al.|Vec2Text by Cideron et al.]]
+	1. [[#Vec2Text by Cideron et al.#Overview|Overview]]
+	1. [[#Vec2Text by Cideron et al.#Method|Method]]
+	1. [[#Vec2Text by Cideron et al.#Topic Convex Hull|Topic Convex Hull]]
+1. [[#Vec2Text by Morris et al.|Vec2Text by Morris et al.]]
+	1. [[#Vec2Text by Morris et al.#Method|Method]]
+	1. [[#Vec2Text by Morris et al.#Code|Code]]
+		1. [[#Code#Minimal Working Example|Minimal Working Example]]
+		1. [[#Code#Anatomy|Anatomy]]
+1. [[#Additional Notes|Additional Notes]]
+1. [[#Reference|Reference]]
+
 
 
 # Problem Statement

@@ -5,7 +5,38 @@ categories:
 - Coding
 ---
 
-[toc]
+Table of Contents
+
+1. [[#Basics|Basics]]
+	1. [[#Basics#Hyperparameters|Hyperparameters]]
+	1. [[#Basics#Evaluation, Logging, and Saving|Evaluation, Logging, and Saving]]
+	1. [[#Basics#Testing Training Scripts|Testing Training Scripts]]
+	1. [[#Basics#Checkpoints|Checkpoints]]
+1. [[#Inference|Inference]]
+	1. [[#Inference#langchain, Pipeline, and Model Classes|langchain, Pipeline, and Model Classes]]
+	1. [[#Inference#Controlled Generation|Controlled Generation]]
+		1. [[#Controlled Generation#Enforcing or Forbidding Specific Tokens|Enforcing or Forbidding Specific Tokens]]
+	1. [[#Inference#Inference on Multiple Devices|Inference on Multiple Devices]]
+1. [[#Instruction Tuning|Instruction Tuning]]
+	1. [[#Instruction Tuning#Using the Basic transformers Library|Using the Basic transformers Library]]
+	1. [[#Instruction Tuning#Using the trl Library|Using the trl Library]]
+1. [[#Tuning Large Models with Constrained Hardware|Tuning Large Models with Constrained Hardware]]
+	1. [[#Tuning Large Models with Constrained Hardware#Overview|Overview]]
+	1. [[#Tuning Large Models with Constrained Hardware#Using a Single GPU|Using a Single GPU]]
+	1. [[#Tuning Large Models with Constrained Hardware#Using Multiple GPUs|Using Multiple GPUs]]
+	1. [[#Tuning Large Models with Constrained Hardware#Reference|Reference]]
+1. [[#Using simpletransformers|Using simpletransformers]]
+	1. [[#Using simpletransformers#Minimal Working Example|Minimal Working Example]]
+	1. [[#Using simpletransformers#Validation and Early Stopping|Validation and Early Stopping]]
+1. [[#Using Sentence-Transformers|Using Sentence-Transformers]]
+	1. [[#Using Sentence-Transformers#Overview|Overview]]
+	1. [[#Using Sentence-Transformers#Fine-Tuning Embeddings|Fine-Tuning Embeddings]]
+	1. [[#Using Sentence-Transformers#Customization|Customization]]
+		1. [[#Customization#Saving Checkpoints|Saving Checkpoints]]
+		1. [[#Customization#Loss Functions|Loss Functions]]
+1. [[#RLHF with trl Library|RLHF with trl Library]]
+1. [[#ICL with Long Prompt|ICL with Long Prompt]]
+
 
 # Basics
 

@@ -8,24 +8,25 @@ categories:
 
 Table of Contents
 
-1. [Prompt Engineering](#prompt-engineering)
-	1. [Write Clear Instructions](#write-clear-instructions)
-	1. [Provide Reference Texts](#provide-reference-texts)
-	1. [Split Complex Tasks into Simpler Subtasks](#split-complex-tasks-into-simpler-subtasks)
-	1. [Give Model Time to Think or CoT](#give-model-time-to-think-or-cot)
-	1. [Use External Tools](#use-external-tools)
-	1. [Test Changes Systematically](#test-changes-systematically)
-1. [Fine-Tuning](#fine-tuning)
-	1. [Overview](#overview)
-	1. [Recipe](#recipe)
-		1. [Workflow](#workflow)
-		1. [Step 1: Preparing Data](#step-1-preparing-data)
-		1. [Step 2: Uploading Data](#step-2-uploading-data)
-		1. [Step 3: Fine-Tuning](#step-3-fine-tuning)
-		1. [Step 4: Evaluation and Iteration](#step-4-evaluation-and-iteration)
-			1. [Data Quality and Quantity](#data-quality-and-quantity)
-			1. [Model Hyperparameters](#model-hyperparameters)
-1. [Reference](#reference)
+1. [[#Prompt Engineering|Prompt Engineering]]
+	1. [[#Prompt Engineering#Write Clear Instructions|Write Clear Instructions]]
+	1. [[#Prompt Engineering#Provide Reference Texts|Provide Reference Texts]]
+	1. [[#Prompt Engineering#Split Complex Tasks into Simpler Subtasks|Split Complex Tasks into Simpler Subtasks]]
+	1. [[#Prompt Engineering#Give Model Time to Think or CoT|Give Model Time to Think or CoT]]
+	1. [[#Prompt Engineering#Use External Tools|Use External Tools]]
+	1. [[#Prompt Engineering#Test Changes Systematically|Test Changes Systematically]]
+1. [[#Fine-Tuning|Fine-Tuning]]
+	1. [[#Fine-Tuning#Overview|Overview]]
+	1. [[#Fine-Tuning#Recipe|Recipe]]
+		1. [[#Recipe#Workflow|Workflow]]
+		1. [[#Recipe#Step 1: Preparing Data|Step 1: Preparing Data]]
+		1. [[#Recipe#Step 2: Uploading Data|Step 2: Uploading Data]]
+		1. [[#Recipe#Step 3: Fine-Tuning|Step 3: Fine-Tuning]]
+		1. [[#Recipe#Step 4: Evaluation and Iteration|Step 4: Evaluation and Iteration]]
+			1. [[#Step 4: Evaluation and Iteration#Data Quality and Quantity|Data Quality and Quantity]]
+			1. [[#Step 4: Evaluation and Iteration#Model Hyperparameters|Model Hyperparameters]]
+1. [[#Reference|Reference]]
+
 
 # Prompt Engineering
 
