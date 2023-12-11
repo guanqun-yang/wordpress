@@ -53,6 +53,5 @@ print(borda_count(votes))
 ```
 
 
-
 # Reference
 

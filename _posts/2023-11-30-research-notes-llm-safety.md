@@ -29,7 +29,6 @@ Note that
 # Red Teaming
 
 
-
 # Resources
 
 -   An comprehensive [wiki](https://alignmentsurvey.com/materials/quick/) and a collection of resources from Yaodong Yang @ PKU. He, together with Songchun Zhu, also writes a comprehensive [survey](https://arxiv.org/abs/2310.19852) on AI alignment; it has [a Chinese version](https://alignmentsurvey.com/uploads/AI-Alignment-A-Comprehensive-Survey-CN.pdf).

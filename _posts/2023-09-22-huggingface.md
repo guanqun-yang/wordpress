@@ -402,6 +402,111 @@ According to [Jason Phang](https://github.com/zphang/minimal-llama), the ZeRO is
 
 # Using simpletransformers
 
+## Comparing transformers and simpletransformers
+`simpletransformers` is a wrapper of `transformers` that abstracts out some unnecessary details for training and inference a wide array of models, including text classification (multi-class and multi-label) and regression.
+
+The number of lines of code is significantly reduced if we switch from `transformers` to `simpletransformers`. For example, the code below tries to make a inference using `bert-base-uncased` on a safety dataset:
+
+```python
+import os
+
+os.environ["WANDB_DISABLED"] = "true"
+os.environ["TOKENIZERS_PARALLELISM"] = "false"
+
+import numpy as np
+import pandas as pd
+
+from sklearn.metrics import (
+    classification_report,
+)
+from datasets import (
+    Dataset,
+    load_dataset
+)
+from transformers import (
+    Trainer,
+    AutoTokenizer,
+    TrainingArguments,
+    default_data_collator,
+    AutoModelForSequenceClassification,
+)
+
+
+model_name = "distilbert-base-uncased-finetuned-sst-2-english"
+dataset = load_dataset("glue", "sst2", split="validation")
+
+model = AutoModelForSequenceClassification.from_pretrained(model_name)  
+tokenizer = AutoTokenizer.from_pretrained(model_name)  
+  
+tokenized_dataset = dataset.map(  
+lambda x: tokenizer(x["sentence"], padding="max_length", truncation=True, max_length=256),  
+)
+
+training_args = TrainingArguments(
+    output_dir="outputs",
+    per_device_eval_batch_size=256,
+    remove_unused_columns=True,
+
+)
+trainer = Trainer(
+    model=model,
+    tokenizer=tokenizer,
+    args=training_args,
+    data_collator=default_data_collator,
+)
+
+y_pred = np.argmax(trainer.predict(tokenized_dataset).predictions, axis=1)
+y_true = dataset["is_safe"]
+
+print(classification_report(
+    y_true=y_true,
+    y_pred=y_pred
+))
+```
+By comparison, we could obtain the exactly same results with `simpletransformers`:
+```python
+import os
+
+os.environ["WANDB_DISABLED"] = "true"
+os.environ["TOKENIZERS_PARALLELISM"] = "false"
+
+from sklearn.metrics import (
+    classification_report,
+)
+from datasets import (
+    load_dataset
+)
+
+from simpletransformers.classification import (
+    ClassificationModel,
+    ClassificationArgs,
+)
+
+
+model_name = "distilbert-base-uncased-finetuned-sst-2-english"
+dataset = load_dataset("glue", "sst2", split="validation")
+
+model_args = ClassificationArgs()
+
+model_args.eval_batch_size = 256
+model_args.max_seq_length = 256
+model_args.use_multiprocessing = False
+model_args.use_multiprocessing_for_evaluation = False
+
+model = ClassificationModel(
+    model_type="distilbert",
+    model_name=model_name,
+    num_labels=2,
+    args=model_args,
+)
+y_pred, _ = model.predict(dataset["sentence"])
+y_true = dataset["label"]
+
+print(classification_report(
+    y_true=y_true,
+    y_pred=y_pred
+))
+```
 ## Minimal Working Example
 
 `simpletransformers` could more quickly and cleanly train and evaluate PLMs compared to `transformers`, where the  `simpletransformers` library is based upon; it also comes with full support from `wandb`. Note that
